@@ -55,28 +55,25 @@ namespace UnityStandardAssets._2D
         public void Move(float move, bool crouch, bool jump)
         {
             //only control the player if grounded or airControl is turned on
-            if (m_Grounded)
+            if (m_Grounded || m_AirControl)
             {
-                if (m_AirControl)
-                {
-                    // Move the character
-                    m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_Rigidbody2D.velocity.y);
+                // Move the character
+                m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_Rigidbody2D.velocity.y);
 
-                    // If the input is moving the player right and the player is facing left...
-                    if (move > 0 && !m_FacingRight)
-                    {
-                        // ... flip the player.
-                        Flip();
-                    }
-                    // Otherwise if the input is moving the player left and the player is facing right...
-                    else if (move < 0 && m_FacingRight)
-                    {
-                        // ... flip the player.
-                        Flip();
-                    }
+                // If the input is moving the player right and the player is facing left...
+                if (move > 0 && !m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (move < 0 && m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
                 }
             }
-            else
+            if(m_Grounded == false)
             {
                 // reset belt force
                 m_beltForce = 0.0f;
