@@ -384,6 +384,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_ConveyerForce: 20
+  m_StartingHealth: 3
+  m_InvincibilityDuration: 2
+  m_FlickerDuration: 0.3
 --- !u!50 &500676884
 Rigidbody2D:
   serializedVersion: 4

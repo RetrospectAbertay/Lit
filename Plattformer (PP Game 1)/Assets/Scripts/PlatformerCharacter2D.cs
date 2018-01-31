@@ -10,6 +10,9 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private float m_ConveyerForce = 20.0f;
+        [SerializeField] private int m_StartingHealth = 3;
+        [SerializeField] private float m_InvincibilityDuration = 2;
+        [SerializeField] private float m_FlickerDuration = 2;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -17,12 +20,19 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private float m_beltForce = 0.0f;
+        private int m_curHealth;
+        private float m_invincibilityTimer;
+        private float m_flickerTimer;
+        private SpriteRenderer m_spriteRenderer;
 
         private void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            m_spriteRenderer = GetComponent<SpriteRenderer>();
+            m_curHealth = m_StartingHealth;
+            m_invincibilityTimer = 0.0f;
         }
 
 
@@ -44,6 +54,21 @@ namespace UnityStandardAssets._2D
                         // set force of belt to apply to the player
                         m_beltForce = colliders[i].transform.GetComponent<ConveyerBelt>().GetBeltForce();
                     }
+                }
+            }
+            if (m_invincibilityTimer > 0)
+            {
+                m_flickerTimer -= Time.deltaTime;
+                if (m_flickerTimer < 0)
+                {
+                    m_flickerTimer = m_FlickerDuration;
+                    m_spriteRenderer.enabled = !m_spriteRenderer.enabled;
+                }
+                m_invincibilityTimer -= Time.deltaTime;
+                if (m_invincibilityTimer <= 0)
+                {
+                    m_spriteRenderer.enabled = true;
+                    m_flickerTimer = m_FlickerDuration;
                 }
             }
         }
@@ -99,12 +124,13 @@ namespace UnityStandardAssets._2D
         {
             if (other.gameObject.tag == "Enemy")
             {
-                Debug.Log("collided with enemy");
+                m_curHealth--;
+                m_invincibilityTimer = m_InvincibilityDuration;
+                m_spriteRenderer.enabled = false;
             }
             if (other.gameObject.tag == "Head")
             {
                 Vector3 realGroundCheckPosition = transform.position + m_GroundCheck.position;
-                Debug.Log(other.transform.position.y + " = head position, " + realGroundCheckPosition + " player position");
                 if (other.GetComponentInParent<BasicEnemy>())
                 {
                     if (other.transform.position.y <= realGroundCheckPosition.y)
