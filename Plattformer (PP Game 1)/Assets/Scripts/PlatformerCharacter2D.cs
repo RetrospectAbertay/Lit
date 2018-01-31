@@ -14,8 +14,6 @@ namespace UnityStandardAssets._2D
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
-        private Transform m_CeilingCheck;   // A position marking where to check for ceilings
-        const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private float m_beltForce = 0.0f;
@@ -24,7 +22,6 @@ namespace UnityStandardAssets._2D
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
-            m_CeilingCheck = transform.Find("CeilingCheck");
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
@@ -96,6 +93,26 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.tag == "Enemy")
+            {
+                Debug.Log("collided with enemy");
+            }
+            if (other.gameObject.tag == "Head")
+            {
+                Vector3 realGroundCheckPosition = transform.position + m_GroundCheck.position;
+                Debug.Log(other.transform.position.y + " = head position, " + realGroundCheckPosition + " player position");
+                if (other.GetComponentInParent<BasicEnemy>())
+                {
+                    if (other.transform.position.y <= realGroundCheckPosition.y)
+                    {
+                        other.GetComponentInParent<BasicEnemy>().KillEnemy();
+                    }
+                }
+            }
         }
     }
 }

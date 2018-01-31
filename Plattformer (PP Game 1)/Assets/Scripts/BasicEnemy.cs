@@ -38,11 +38,8 @@ public class BasicEnemy : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void KillEnemy()
     {
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log("collided with player");
-        }
+        Destroy(gameObject);
     }
 }
