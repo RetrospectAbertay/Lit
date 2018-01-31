@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class BasicEnemy : MonoBehaviour
 {
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_PathTime;
