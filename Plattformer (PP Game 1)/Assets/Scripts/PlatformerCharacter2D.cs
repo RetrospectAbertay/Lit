@@ -33,11 +33,6 @@ namespace UnityStandardAssets._2D
         public Image E;
         public Image X;
 
-        public void Start()
-        {
-            T.enabled = true;
-        }
-
         private void Awake()
         {
             // Setting up references.
@@ -46,6 +41,12 @@ namespace UnityStandardAssets._2D
             m_spriteRenderer = GetComponent<SpriteRenderer>();
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
+
+            T.enabled = true;
+            I.enabled = true;
+            M.enabled = true;
+            E.enabled = true;
+            X.enabled = true;
         }
 
 
@@ -84,8 +85,6 @@ namespace UnityStandardAssets._2D
                     m_flickerTimer = m_FlickerDuration;
                 }
             }
-
-            T.enabled = false;
         }
 
 
@@ -160,18 +159,23 @@ namespace UnityStandardAssets._2D
             {
                 case "T" :
                     other.gameObject.SetActive(false);
+                    T.enabled = false;
                     break;
                 case "I":
                     other.gameObject.SetActive(false);
+                    I.enabled = false;
                     break;
                 case "M":
                     other.gameObject.SetActive(false);
+                    M.enabled = false;
                     break;
                 case "E":
                     other.gameObject.SetActive(false);
+                    E.enabled = false;
                     break;
                 case "X":
                     other.gameObject.SetActive(false);
+                    X.enabled = false;
                     break;
             }
         }

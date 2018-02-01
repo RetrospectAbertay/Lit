@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 411475627}
   m_Layer: 5
   m_Name: M Image
-  m_TagString: Untagged
+  m_TagString: M
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -792,7 +792,7 @@ MonoBehaviour:
   I: {fileID: 866976439}
   M: {fileID: 411475627}
   E: {fileID: 1752831081}
-  X: {fileID: 692395083}
+  X: {fileID: 2107772369}
 --- !u!50 &500676884
 Rigidbody2D:
   serializedVersion: 4
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 692395083}
   m_Layer: 5
   m_Name: X Image
-  m_TagString: Untagged
+  m_TagString: X
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 866976439}
   m_Layer: 5
   m_Name: I Image
-  m_TagString: Untagged
+  m_TagString: I
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1367,7 +1367,7 @@ GameObject:
   - component: {fileID: 1752831081}
   m_Layer: 5
   m_Name: E Image
-  m_TagString: Untagged
+  m_TagString: E
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1561,7 +1561,7 @@ GameObject:
   - component: {fileID: 2107772369}
   m_Layer: 5
   m_Name: T Image
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
