@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Head
+  - T
+  - I
+  - M
+  - E
+  - X
   layers:
   - Default
   - TransparentFX
