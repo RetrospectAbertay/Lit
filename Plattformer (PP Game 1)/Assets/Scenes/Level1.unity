@@ -792,7 +792,7 @@ MonoBehaviour:
   I: {fileID: 866976439}
   M: {fileID: 411475627}
   E: {fileID: 1752831081}
-  X: {fileID: 2107772369}
+  X: {fileID: 692395083}
 --- !u!50 &500676884
 Rigidbody2D:
   serializedVersion: 4
@@ -1545,6 +1545,10 @@ Prefab:
     - target: {fileID: 1123108648501192, guid: df244874aa9d5bd42b0aaee3335fc850, type: 2}
       propertyPath: m_Name
       value: PickUp T
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123108648501192, guid: df244874aa9d5bd42b0aaee3335fc850, type: 2}
+      propertyPath: m_TagString
+      value: T
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df244874aa9d5bd42b0aaee3335fc850, type: 2}
