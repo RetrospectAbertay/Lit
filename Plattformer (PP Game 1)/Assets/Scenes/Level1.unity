@@ -196,8 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 3
-  m_leftWaypoint: {fileID: 0}
-  m_rightWaypoint: {fileID: 0}
 --- !u!212 &152044467
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -843,28 +841,13 @@ GameObject:
   m_Component:
   - component: {fileID: 587998620}
   - component: {fileID: 587998619}
-  - component: {fileID: 587998618}
   m_Layer: 0
-  m_Name: T_PolisRightStand
+  m_Name: EnemyBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &587998618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 587998617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c33b43afd86fe84eb3382856bd3fc6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Speed: 3
-  m_leftWaypoint: {fileID: 1178640688}
-  m_rightWaypoint: {fileID: 1338261230}
 --- !u!212 &587998619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1030,6 +1013,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1321760661}
+  - component: {fileID: 1321760662}
   m_Layer: 0
   m_Name: Basic Enemy
   m_TagString: Untagged
@@ -1053,6 +1037,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1321760662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1321760660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c33b43afd86fe84eb3382856bd3fc6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Speed: 3
 --- !u!1 &1338261229
 GameObject:
   m_ObjectHideFlags: 0
