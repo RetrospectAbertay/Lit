@@ -12,7 +12,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_ConveyerForce = 20.0f;
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private float m_InvincibilityDuration = 2;
-        [SerializeField] private float m_FlickerDuration = 2;
+        [SerializeField] private float m_FlickerDuration = 0.3f;
+        [SerializeField] private float m_BounceOnKillForce = 100.0f;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -49,10 +50,10 @@ namespace UnityStandardAssets._2D
                 {
                     m_Grounded = true;
                     // check if the player is on a conveyer belt
-                    if (colliders[i].transform.GetComponent<ConveyerBelt>())
+                    if (colliders[i].transform.GetComponent<ConveyourBelt>())
                     {
                         // set force of belt to apply to the player
-                        m_beltForce = colliders[i].transform.GetComponent<ConveyerBelt>().GetBeltForce();
+                        m_beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
                     }
                 }
             }
@@ -122,20 +123,28 @@ namespace UnityStandardAssets._2D
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.tag == "Enemy")
+            // don't apply enemy collision when player has taken damage
+            if (m_invincibilityTimer <= 0)
             {
-                m_curHealth--;
-                m_invincibilityTimer = m_InvincibilityDuration;
-                m_spriteRenderer.enabled = false;
-            }
-            if (other.gameObject.tag == "Head")
-            {
-                Vector3 realGroundCheckPosition = transform.position + m_GroundCheck.position;
-                if (other.GetComponentInParent<BasicEnemy>())
+                if (other.gameObject.tag == "Enemy")
                 {
-                    if (other.transform.position.y <= realGroundCheckPosition.y)
+                    m_curHealth--;
+                    m_invincibilityTimer = m_InvincibilityDuration;
+                    m_spriteRenderer.enabled = false;
+                }
+                if (other.gameObject.tag == "Head")
+                {
+                    Vector3 realGroundCheckPosition = transform.position + m_GroundCheck.position;
+                    if (other.GetComponentInParent<BasicEnemy>())
                     {
-                        other.GetComponentInParent<BasicEnemy>().KillEnemy();
+                        if (other.transform.position.y <= realGroundCheckPosition.y)
+                        {
+                            // kill enemy
+                            other.GetComponentInParent<BasicEnemy>().KillEnemy();
+                            // add force after killing enemy
+                            m_Grounded = false;
+                            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                        }
                     }
                 }
             }
