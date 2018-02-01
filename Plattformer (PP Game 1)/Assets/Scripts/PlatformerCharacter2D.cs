@@ -24,6 +24,7 @@ namespace UnityStandardAssets._2D
         private float m_invincibilityTimer;
         private float m_flickerTimer;
         private SpriteRenderer m_spriteRenderer;
+        private Vector3 m_platformForce;
 
         private void Awake()
         {
@@ -54,6 +55,12 @@ namespace UnityStandardAssets._2D
                         // set force of belt to apply to the player
                         m_beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
                     }
+                    // check for moving platform
+                    if (colliders[i].transform.GetComponent<PlatformMovement>())
+                    {
+                        // update platform momentum
+                        m_platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
+                    }
                 }
             }
             if (m_invincibilityTimer > 0)
@@ -80,7 +87,7 @@ namespace UnityStandardAssets._2D
             if (m_grounded || m_AirControl)
             {
                 // Move the character
-                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
+                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce + m_platformForce.x, m_rigidbody2D.velocity.y + m_platformForce.y);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_facingRight)
@@ -99,6 +106,7 @@ namespace UnityStandardAssets._2D
             {
                 // reset belt force
                 m_beltForce = 0.0f;
+                m_platformForce = new Vector3(0, 0, 0);
             }
             // If the player should jump...
             if (m_grounded && jump)
@@ -153,6 +161,11 @@ namespace UnityStandardAssets._2D
                 m_rigidbody2D.velocity = Vector2.zero;
                 m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
             }
+        }
+
+        void OnCollisionEnter2D(Collision2D other)
+        {
+
         }
     }
 }
