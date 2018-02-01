@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BouncePad : MonoBehaviour {
 
-    [SerializeField] private float m_BounceForce = 600f;
+    [SerializeField] private Vector2 m_BounceForce;
 
     // Use this for initialization
     void Start () {
@@ -15,4 +15,9 @@ public class BouncePad : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public Vector2 GetBounceForce()
+    {
+        return m_BounceForce;
+    }
 }

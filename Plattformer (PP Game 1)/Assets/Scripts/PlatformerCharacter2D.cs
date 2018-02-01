@@ -147,6 +147,12 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+            if (other.gameObject.GetComponent<BouncePad>())
+            {
+                m_grounded = false;
+                m_rigidbody2D.velocity = Vector2.zero;
+                m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
+            }
         }
     }
 }
