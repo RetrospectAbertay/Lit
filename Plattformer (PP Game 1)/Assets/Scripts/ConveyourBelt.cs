@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConveyerBelt : MonoBehaviour
+public class ConveyourBelt : MonoBehaviour
 {
 
     [SerializeField] private float m_Force;

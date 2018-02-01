@@ -13,13 +13,14 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_ConveyerForce = 20.0f;
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private float m_InvincibilityDuration = 2;
-        [SerializeField] private float m_FlickerDuration = 2;
+        [SerializeField] private float m_FlickerDuration = 0.3f;
+        [SerializeField] private float m_BounceOnKillForce = 100.0f;
 
-        private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-        const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-        private bool m_Grounded;            // Whether or not the player is grounded.
-        private Rigidbody2D m_Rigidbody2D;
-        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
+        const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        private bool m_grounded;            // Whether or not the player is grounded.
+        private Rigidbody2D m_rigidbody2D;
+        private bool m_facingRight = true;  // For determining which way the player is currently facing.
         private float m_beltForce = 0.0f;
         private int m_curHealth;
         private float m_invincibilityTimer;
@@ -36,8 +37,8 @@ namespace UnityStandardAssets._2D
         private void Awake()
         {
             // Setting up references.
-            m_GroundCheck = transform.Find("GroundCheck");
-            m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            m_groundCheck = transform.Find("GroundCheck");
+            m_rigidbody2D = GetComponent<Rigidbody2D>();
             m_spriteRenderer = GetComponent<SpriteRenderer>();
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
@@ -52,21 +53,21 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
-            m_Grounded = false;
+            m_grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheck.position, k_groundedRadius, m_WhatIsGround);
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
                 {
-                    m_Grounded = true;
+                    m_grounded = true;
                     // check if the player is on a conveyer belt
-                    if (colliders[i].transform.GetComponent<ConveyerBelt>())
+                    if (colliders[i].transform.GetComponent<ConveyourBelt>())
                     {
                         // set force of belt to apply to the player
-                        m_beltForce = colliders[i].transform.GetComponent<ConveyerBelt>().GetBeltForce();
+                        m_beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
                     }
                 }
             }
@@ -91,42 +92,42 @@ namespace UnityStandardAssets._2D
         public void Move(float move, bool crouch, bool jump)
         {
             //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
+            if (m_grounded || m_AirControl)
             {
                 // Move the character
-                m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_Rigidbody2D.velocity.y);
+                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
-                if (move > 0 && !m_FacingRight)
+                if (move > 0 && !m_facingRight)
                 {
                     // ... flip the player.
                     Flip();
                 }
                 // Otherwise if the input is moving the player left and the player is facing right...
-                else if (move < 0 && m_FacingRight)
+                else if (move < 0 && m_facingRight)
                 {
                     // ... flip the player.
                     Flip();
                 }
             }
-            if(m_Grounded == false)
+            if(m_grounded == false)
             {
                 // reset belt force
                 m_beltForce = 0.0f;
             }
             // If the player should jump...
-            if (m_Grounded && jump)
+            if (m_grounded && jump)
             {
                 // Add a vertical force to the player.
-                m_Grounded = false;
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                m_grounded = false;
+                m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }
 
         private void Flip()
         {
             // Switch the way the player is labelled as facing.
-            m_FacingRight = !m_FacingRight;
+            m_facingRight = !m_facingRight;
 
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
@@ -136,20 +137,28 @@ namespace UnityStandardAssets._2D
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.tag == "Enemy")
+            // don't apply enemy collision when player has taken damage
+            if (m_invincibilityTimer <= 0)
             {
-                m_curHealth--;
-                m_invincibilityTimer = m_InvincibilityDuration;
-                m_spriteRenderer.enabled = false;
-            }
-            if (other.gameObject.tag == "Head")
-            {
-                Vector3 realGroundCheckPosition = transform.position + m_GroundCheck.position;
-                if (other.GetComponentInParent<BasicEnemy>())
+                if (other.gameObject.tag == "Enemy")
                 {
-                    if (other.transform.position.y <= realGroundCheckPosition.y)
+                    m_curHealth--;
+                    m_invincibilityTimer = m_InvincibilityDuration;
+                    m_spriteRenderer.enabled = false;
+                }
+                if (other.gameObject.tag == "Head")
+                {
+                    Vector3 realGroundCheckPosition = transform.position + m_groundCheck.position;
+                    if (other.GetComponentInParent<BasicEnemy>())
                     {
-                        other.GetComponentInParent<BasicEnemy>().KillEnemy();
+                        if (other.transform.position.y <= realGroundCheckPosition.y)
+                        {
+                            // kill enemy
+                            other.GetComponentInParent<BasicEnemy>().KillEnemy();
+                            // add force after killing enemy
+                            m_grounded = false;
+                            m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                        }
                     }
                 }
             }
