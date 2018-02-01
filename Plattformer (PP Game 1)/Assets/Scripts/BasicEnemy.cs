@@ -5,34 +5,39 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour
 {
     [SerializeField] private float m_Speed;
-    [SerializeField] private float m_PathTime;
-    private float m_timer;
+    [SerializeField] private Transform m_leftWaypoint;
+    [SerializeField] private Transform m_rightWaypoint;
+    private bool m_movingRight;
 
     // Use this for initialization
     void Start ()
 	{
-	    m_timer = 0.0f;
-    }
+	    m_movingRight = true;
+	}
 	
 	// Update is called once per frame
 	void Update () {
         // move player
 		transform.position = new Vector3(transform.position.x + m_Speed * Time.deltaTime, transform.position.y, transform.position.z);
-	    m_timer += Time.deltaTime;
+	   
         // if the m_timer exceeds the time, 
-	    if (m_timer > m_PathTime)
+	    if (m_movingRight && transform.position.x >= m_rightWaypoint.position.x)
 	    {
             // flip sprite
 	        Flip();
-            // inverse speed
-	        m_Speed *= -1;
-	        m_timer = 0;
+	    }
+	    if (!m_movingRight && transform.position.x <= m_leftWaypoint.position.x)
+	    {
+	        Flip();
 	    }
 	}
 
     private void Flip()
     {
-        // Multiply the player's x local scale by -1.
+        m_movingRight = !m_movingRight;
+        // inverse speed
+        m_Speed *= -1;
+        // multiply the AI's x local scale by -1
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
