@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets._2D
 {
@@ -24,6 +25,18 @@ namespace UnityStandardAssets._2D
         private float m_invincibilityTimer;
         private float m_flickerTimer;
         private SpriteRenderer m_spriteRenderer;
+
+        // PICK UPS
+        public Image T;
+        public Image I;
+        public Image M;
+        public Image E;
+        public Image X;
+
+        public void Start()
+        {
+            T.enabled = true;
+        }
 
         private void Awake()
         {
@@ -71,6 +84,8 @@ namespace UnityStandardAssets._2D
                     m_flickerTimer = m_FlickerDuration;
                 }
             }
+
+            T.enabled = false;
         }
 
 
@@ -139,7 +154,6 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
-
 
             // PICK UP LETTERS
             switch (other.gameObject.tag)
