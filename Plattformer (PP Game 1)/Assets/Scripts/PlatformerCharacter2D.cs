@@ -78,6 +78,8 @@ namespace UnityStandardAssets._2D
                     m_flickerTimer = m_FlickerDuration;
                 }
             }
+
+            transform.position += (m_platformForce * Time.deltaTime);
         }
 
 
@@ -87,7 +89,7 @@ namespace UnityStandardAssets._2D
             if (m_grounded || m_AirControl)
             {
                 // Move the character
-                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce + m_platformForce.x, m_rigidbody2D.velocity.y + m_platformForce.y);
+                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_facingRight)
@@ -150,6 +152,7 @@ namespace UnityStandardAssets._2D
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
                             m_grounded = false;
+                            m_rigidbody2D.velocity = Vector2.zero;
                             m_rigidbody2D.AddForce(new Vector2(0f, m_BounceOnKillForce));
                         }
                     }

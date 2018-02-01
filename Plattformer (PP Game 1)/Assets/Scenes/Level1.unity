@@ -643,7 +643,7 @@ MonoBehaviour:
   m_StartingHealth: 3
   m_InvincibilityDuration: 2
   m_FlickerDuration: 0.3
-  m_BounceOnKillForce: 200
+  m_BounceOnKillForce: 300
 --- !u!50 &500676884
 Rigidbody2D:
   serializedVersion: 4
