@@ -139,6 +139,27 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+
+
+            // PICK UP LETTERS
+            switch (other.gameObject.tag)
+            {
+                case "T" :
+                    other.gameObject.SetActive(false);
+                    break;
+                case "I":
+                    other.gameObject.SetActive(false);
+                    break;
+                case "M":
+                    other.gameObject.SetActive(false);
+                    break;
+                case "E":
+                    other.gameObject.SetActive(false);
+                    break;
+                case "X":
+                    other.gameObject.SetActive(false);
+                    break;
+            }
         }
     }
 }
