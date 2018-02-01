@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlatformMovement : MonoBehaviour {
 
     [SerializeField] private Vector3 m_MovementVector;
-    [SerializeField] private float m_MovementDuration;
+    [SerializeField] private float m_MovementDuration = 2.0f;
     private float m_movementTimer;
 
     // Use this for initialization

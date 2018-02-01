@@ -9,7 +9,6 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-        [SerializeField] private float m_ConveyerForce = 20.0f;
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private float m_InvincibilityDuration = 2;
         [SerializeField] private float m_FlickerDuration = 0.3f;
@@ -143,7 +142,7 @@ namespace UnityStandardAssets._2D
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
                             m_grounded = false;
-                            m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                            m_rigidbody2D.AddForce(new Vector2(0f, m_BounceOnKillForce));
                         }
                     }
                 }
