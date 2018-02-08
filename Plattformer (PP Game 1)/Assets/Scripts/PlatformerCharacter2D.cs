@@ -45,7 +45,7 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
 
-            // SET THE RIGHT LETTERS TO BE ACTIVE
+            // SET THE RIGHT LETTERS TO BE ACTIVE IN THE UI
             scene = SceneManager.GetActiveScene();
             switch (scene.name)
             {
@@ -100,39 +100,34 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
-            // MOVE TO THE NEXT SCENE
+            // MOVE TO THE NEXT SCENE AFTER COLLECTING THE APPROPRIATE LETTER IN EACH SCENE
             // T
             if (T.enabled == true && scene.name == "1. T Level")
             {
-                //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
                 SceneManager.LoadScene("1.1 T Level");
             }
             // I
             else if (I.enabled == true && scene.name == "2. I Level")
             {
-                //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
                 SceneManager.LoadScene("2.1 I Level");
             }
             // M
             else if (M.enabled == true && scene.name == "3. M Level")
             {
-                //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
                 SceneManager.LoadScene("3.1 M Level");
             }
             // E
             else if (E.enabled == true && scene.name == "4. E Level")
             {
-                //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
                 SceneManager.LoadScene("4.1 E Level");
             }
             // X
             else if (X.enabled == true && scene.name == "5. X Level")
             {
-                //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
                 SceneManager.LoadScene("5.1 X Level");
             }
