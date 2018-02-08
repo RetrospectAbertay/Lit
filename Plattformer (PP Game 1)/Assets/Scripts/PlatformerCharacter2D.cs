@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace UnityStandardAssets._2D
 {
@@ -56,7 +57,9 @@ namespace UnityStandardAssets._2D
             // MOVE TO THE NXT SCENE
             if (T.enabled == true)
             {
-                Debug.Log("move to the next scene");
+                //Debug.Log("move to the next scene");
+                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
+                SceneManager.LoadScene("1.1 T Level");
             }
 
 
