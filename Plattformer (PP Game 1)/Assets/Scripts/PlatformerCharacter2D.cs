@@ -67,6 +67,33 @@ namespace UnityStandardAssets._2D
                         X.enabled = false;
                     }
                     break;
+                case "3. M Level":
+                    {
+                        T.enabled = true;
+                        I.enabled = true;
+                        M.enabled = false;
+                        E.enabled = false;
+                        X.enabled = false;
+                    }
+                    break;
+                case "4. E Level":
+                    {
+                        T.enabled = true;
+                        I.enabled = true;
+                        M.enabled = true;
+                        E.enabled = false;
+                        X.enabled = false;
+                    }
+                    break;
+                case "5. X Level":
+                    {
+                        T.enabled = true;
+                        I.enabled = true;
+                        M.enabled = true;
+                        E.enabled = true;
+                        X.enabled = false;
+                    }
+                    break;
             }
         }
 
