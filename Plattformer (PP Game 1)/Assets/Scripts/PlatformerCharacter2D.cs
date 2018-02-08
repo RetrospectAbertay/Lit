@@ -53,6 +53,13 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+            // MOVE TO THE NXT SCENE
+            if (T.enabled == true)
+            {
+                Debug.Log("move to the next scene");
+            }
+
+
             m_grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
