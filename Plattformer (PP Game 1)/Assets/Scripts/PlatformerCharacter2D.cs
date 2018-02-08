@@ -27,6 +27,7 @@ namespace UnityStandardAssets._2D
         private float m_invincibilityTimer;
         private float m_flickerTimer;
         private SpriteRenderer m_spriteRenderer;
+        private Scene scene;
 
         // PICK UPS
         public Image T;
@@ -44,18 +45,36 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
 
-            T.enabled = false;
-            I.enabled = false;
-            M.enabled = false;
-            E.enabled = false;
-            X.enabled = false;
+            // SET THE RIGHT LETTERS TO BE ACTIVE
+            scene = SceneManager.GetActiveScene();
+            switch (scene.name)
+            {
+                case "1. T Level":
+                    {
+                        T.enabled = false;
+                        I.enabled = false;
+                        M.enabled = false;
+                        E.enabled = false;
+                        X.enabled = false;
+                    }
+                    break;
+                case "2. I Level":
+                    {
+                        T.enabled = true;
+                        I.enabled = false;
+                        M.enabled = false;
+                        E.enabled = false;
+                        X.enabled = false;
+                    }
+                    break;
+            }
         }
 
 
         private void FixedUpdate()
         {
             // MOVE TO THE NXT SCENE
-            if (T.enabled == true)
+            if (T.enabled == true && scene.name == "1. T Level")
             {
                 //Debug.Log("move to the next scene");
                 // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
