@@ -43,11 +43,11 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
 
-            T.enabled = true;
-            I.enabled = true;
-            M.enabled = true;
-            E.enabled = true;
-            X.enabled = true;
+            T.enabled = false;
+            I.enabled = false;
+            M.enabled = false;
+            E.enabled = false;
+            X.enabled = false;
         }
 
 
@@ -168,23 +168,23 @@ namespace UnityStandardAssets._2D
             {
                 case "T" :
                     other.gameObject.SetActive(false);
-                    T.enabled = false;
+                    T.enabled = true;
                     break;
                 case "I":
                     other.gameObject.SetActive(false);
-                    I.enabled = false;
+                    I.enabled = true;
                     break;
                 case "M":
                     other.gameObject.SetActive(false);
-                    M.enabled = false;
+                    M.enabled = true;
                     break;
                 case "E":
                     other.gameObject.SetActive(false);
-                    E.enabled = false;
+                    E.enabled = true;
                     break;
                 case "X":
                     other.gameObject.SetActive(false);
-                    X.enabled = false;
+                    X.enabled = true;
                     break;
             }
         }
