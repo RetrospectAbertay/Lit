@@ -100,7 +100,7 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
-            // MOVE TO THE NXT SCENE
+            // MOVE TO THE NEXT SCENE
             if (T.enabled == true && scene.name == "1. T Level")
             {
                 //Debug.Log("move to the next scene");
