@@ -5,16 +5,16 @@ namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
-        [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
+        [SerializeField] private float m_MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
+        [SerializeField] private float m_JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField] private bool m_AirControl = true;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private float m_InvincibilityDuration = 2;
         [SerializeField] private float m_FlickerDuration = 0.3f;
-        [SerializeField] private float m_BounceOnKillForce = 100.0f;
-        [SerializeField] private float m_MaxMomentum = 2.0f;
-        [SerializeField] private float m_MomentumTime = 2.0f;
+        [SerializeField] private float m_BounceOnKillForce = 300.0f;
+        [SerializeField] private float m_MaxMomentum = 4.0f;
+        [SerializeField] private float m_MomentumTime = 4.0f;
         private float m_momentum = 0.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
