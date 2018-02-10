@@ -8,15 +8,11 @@ public class PlatformMovement : MonoBehaviour {
     [SerializeField] private Vector3 m_MovementVector;
     [SerializeField] private float m_MovementDuration = 2.0f;
     private float m_movementTimer;
-    private PlatformerCharacter2D player;
-    private bool m_playerOnPlatform = false;
 
     // Use this for initialization
     void Start ()
     {
-        m_playerOnPlatform = false;
         m_movementTimer = 0.0f;
-        player = GameObject.FindWithTag("Player").GetComponent<PlatformerCharacter2D>();
     }
 	
 	// Update is called once per frame

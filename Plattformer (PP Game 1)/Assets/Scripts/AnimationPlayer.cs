@@ -27,6 +27,7 @@ public class AnimationPlayer : MonoBehaviour
 	{
         // get sprite renderer component
 	    spriteRenderer = GetComponent<SpriteRenderer>();
+	    shouldAnimate = true;
 	}
 	
 	// Update is called once per frame

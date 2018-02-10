@@ -108,7 +108,7 @@ namespace UnityStandardAssets._2D
                     m_momentum = -m_MaxMomentum;
                 }
                 // determine if the player has stopped moving
-                if (move < 0.1 && move > -0.1)
+                if (move < 0.01 && move > -0.01)
                 {
                     // slowly move them back to 0 momentum
                     m_momentum = Mathf.Lerp(m_momentum, 0, m_MomentumTime * Time.deltaTime);
