@@ -13,6 +13,9 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_InvincibilityDuration = 2;
         [SerializeField] private float m_FlickerDuration = 0.3f;
         [SerializeField] private float m_BounceOnKillForce = 100.0f;
+        [SerializeField] private float m_MaxMomentum = 2.0f;
+        [SerializeField] private float m_MomentumTime = 2.0f;
+        private float m_momentum = 0.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -63,6 +66,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+            // handle flicker animation
             if (m_invincibilityTimer > 0)
             {
                 m_flickerTimer -= Time.deltaTime;
@@ -78,10 +82,9 @@ namespace UnityStandardAssets._2D
                     m_flickerTimer = m_FlickerDuration;
                 }
             }
-
+            // move player along with the plattform
             transform.position += (m_platformForce * Time.deltaTime);
         }
-
 
         public void Move(float move, bool crouch, bool jump)
         {
@@ -89,19 +92,26 @@ namespace UnityStandardAssets._2D
             if (m_grounded || m_AirControl)
             {
                 // Move the character
-                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
-
+                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce + m_momentum, m_rigidbody2D.velocity.y);
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_facingRight)
                 {
                     // ... flip the player.
                     Flip();
+                    m_momentum = m_MaxMomentum;
                 }
                 // Otherwise if the input is moving the player left and the player is facing right...
                 else if (move < 0 && m_facingRight)
                 {
                     // ... flip the player.
                     Flip();
+                    m_momentum = -m_MaxMomentum;
+                }
+                // determine if the player has stopped moving
+                if (move < 0.1 && move > -0.1)
+                {
+                    // slowly move them back to 0 momentum
+                    m_momentum = Mathf.Lerp(m_momentum, 0, m_MomentumTime * Time.deltaTime);
                 }
             }
             if(m_grounded == false)
@@ -160,6 +170,7 @@ namespace UnityStandardAssets._2D
             }
             if (other.gameObject.GetComponent<BouncePad>())
             {
+                // apply force to bounce pad
                 m_grounded = false;
                 m_rigidbody2D.velocity = Vector2.zero;
                 m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());

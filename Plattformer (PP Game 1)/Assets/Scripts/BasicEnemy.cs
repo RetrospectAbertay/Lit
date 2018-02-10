@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BasicEnemy : MonoBehaviour
 {
-    [SerializeField] private float m_Speed;
-    private Transform m_leftWaypoint;
-    private Transform m_rightWaypoint;
-    private Transform m_enemyBody;
-    private bool m_movingRight;
+    [SerializeField] public float m_Speed;
+    public Transform m_leftWaypoint;
+    public Transform m_rightWaypoint;
+    public Transform m_enemyBody;
+    public bool m_movingRight;
 
     // Use this for initialization
     void Start ()
@@ -37,7 +37,7 @@ public class BasicEnemy : MonoBehaviour
 	    }
 	}
 
-    private void Flip()
+    public void Flip()
     {
         m_movingRight = !m_movingRight;
         // inverse speed
