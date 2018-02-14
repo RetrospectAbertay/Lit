@@ -29,6 +29,7 @@ namespace UnityStandardAssets._2D
         private SpriteRenderer m_spriteRenderer;
         private Scene scene;
 
+
         // PICK UPS
         public Image T;
         public Image I;
@@ -151,6 +152,9 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+
+
+	
             if (m_invincibilityTimer > 0)
             {
                 m_flickerTimer -= Time.deltaTime;
@@ -175,7 +179,7 @@ namespace UnityStandardAssets._2D
             if (m_grounded || m_AirControl)
             {
                 // Move the character
-                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
+				m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_facingRight)
@@ -202,7 +206,9 @@ namespace UnityStandardAssets._2D
                 m_grounded = false;
                 m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
-        }
+      
+
+		}
 
         private void Flip()
         {
@@ -269,4 +275,5 @@ namespace UnityStandardAssets._2D
             }
         }
     }
-}
+
+		};
