@@ -7,15 +7,17 @@ namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
-        [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
+        [SerializeField] private float m_MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
+        [SerializeField] private float m_JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField] private bool m_AirControl = true;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-        [SerializeField] private float m_ConveyerForce = 20.0f;
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private float m_InvincibilityDuration = 2;
         [SerializeField] private float m_FlickerDuration = 0.3f;
-        [SerializeField] private float m_BounceOnKillForce = 100.0f;
+        [SerializeField] private float m_BounceOnKillForce = 300.0f;
+        [SerializeField] private float m_DropTime = 3.0f;
+        [SerializeField] private float m_DefaultGravScale = 5.0f;
+        [SerializeField] private float m_JumpGravScale = 1.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -27,14 +29,13 @@ namespace UnityStandardAssets._2D
         private float m_invincibilityTimer;
         private float m_flickerTimer;
         private SpriteRenderer m_spriteRenderer;
-        private Scene scene;
+        private Vector3 m_platformForce;
+        private float m_dropTimer = 0.0f;
 
-        // PICK UPS
-        public Image T;
-        public Image I;
-        public Image M;
-        public Image E;
-        public Image X;
+        // Timex UI elements
+        public Image[] timexLetters;
+        private Scene curScene;
+        int unlockedLetters = 0;
 
         private void Awake()
         {
@@ -44,95 +45,54 @@ namespace UnityStandardAssets._2D
             m_spriteRenderer = GetComponent<SpriteRenderer>();
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
+            m_rigidbody2D.gravityScale = m_DefaultGravScale;
 
-            // SET THE RIGHT LETTERS TO BE ACTIVE IN THE UI
-            scene = SceneManager.GetActiveScene();
-            switch (scene.name)
+            curScene = SceneManager.GetActiveScene();
+
+            switch (curScene.name)
             {
                 case "1. T Level":
                     {
-                        T.enabled = false;
-                        I.enabled = false;
-                        M.enabled = false;
-                        E.enabled = false;
-                        X.enabled = false;
+                        
                     }
                     break;
                 case "2. I Level":
                     {
-                        T.enabled = true;
-                        I.enabled = false;
-                        M.enabled = false;
-                        E.enabled = false;
-                        X.enabled = false;
+                        unlockedLetters = 1;
                     }
                     break;
                 case "3. M Level":
                     {
-                        T.enabled = true;
-                        I.enabled = true;
-                        M.enabled = false;
-                        E.enabled = false;
-                        X.enabled = false;
+                        unlockedLetters = 2;
                     }
                     break;
                 case "4. E Level":
                     {
-                        T.enabled = true;
-                        I.enabled = true;
-                        M.enabled = true;
-                        E.enabled = false;
-                        X.enabled = false;
+                        unlockedLetters = 3;
                     }
                     break;
                 case "5. X Level":
                     {
-                        T.enabled = true;
-                        I.enabled = true;
-                        M.enabled = true;
-                        E.enabled = true;
-                        X.enabled = false;
+                        unlockedLetters = 4;
                     }
                     break;
             }
-        }
 
+            for (int i = 0; i < timexLetters.Length; i++)
+            {
+                if (i < unlockedLetters)
+                {
+                    timexLetters[i].enabled = true;
+                }
+                else
+                {
+                    timexLetters[i].enabled = false;
+                }
+            }
+        }
 
         private void FixedUpdate()
         {
-            // MOVE TO THE NEXT SCENE AFTER COLLECTING THE APPROPRIATE LETTER IN EACH SCENE
-            // T
-            if (T.enabled == true && scene.name == "1. T Level")
-            {
-                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
-                SceneManager.LoadScene("1.1 T Level");
-            }
-            // I
-            else if (I.enabled == true && scene.name == "2. I Level")
-            {
-                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
-                SceneManager.LoadScene("2.1 I Level");
-            }
-            // M
-            else if (M.enabled == true && scene.name == "3. M Level")
-            {
-                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
-                SceneManager.LoadScene("3.1 M Level");
-            }
-            // E
-            else if (E.enabled == true && scene.name == "4. E Level")
-            {
-                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
-                SceneManager.LoadScene("4.1 E Level");
-            }
-            // X
-            else if (X.enabled == true && scene.name == "5. X Level")
-            {
-                // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
-                SceneManager.LoadScene("5.1 X Level");
-            }
-
-
             m_grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -143,14 +103,22 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                 {
                     m_grounded = true;
+                    m_rigidbody2D.gravityScale = m_DefaultGravScale;
                     // check if the player is on a conveyer belt
                     if (colliders[i].transform.GetComponent<ConveyourBelt>())
                     {
                         // set force of belt to apply to the player
                         m_beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
                     }
+                    // check for moving platform
+                    if (colliders[i].transform.GetComponent<PlatformMovement>())
+                    {
+                        // update platform momentum
+                        m_platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
+                    }
                 }
             }
+            // handle flicker animation
             if (m_invincibilityTimer > 0)
             {
                 m_flickerTimer -= Time.deltaTime;
@@ -166,41 +134,63 @@ namespace UnityStandardAssets._2D
                     m_flickerTimer = m_FlickerDuration;
                 }
             }
+            // axisInput player along with the plattform
+            transform.position += (m_platformForce * Time.deltaTime);
+            // check for the drop timer
+            if (m_dropTimer > 0.0f)
+            {
+                m_dropTimer -= Time.deltaTime;
+                if (m_dropTimer <= 0.0f)
+                {
+                    m_rigidbody2D.gravityScale = m_DefaultGravScale;
+                }
+            }
         }
 
-
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(float axisInput, bool crouch, bool jump)
         {
             //only control the player if grounded or airControl is turned on
             if (m_grounded || m_AirControl)
             {
-                // Move the character
-                m_rigidbody2D.velocity = new Vector2(move * m_MaxSpeed + m_beltForce, m_rigidbody2D.velocity.y);
-
+                float appliedForce = 0.0f;
                 // If the input is moving the player right and the player is facing left...
-                if (move > 0 && !m_facingRight)
+                if (axisInput > 0.01)
                 {
-                    // ... flip the player.
-                    Flip();
+                    appliedForce = m_MaxSpeed;
+                    if (!m_facingRight)
+                    {
+                        // ... flip the player.
+                        Flip();
+                    }
                 }
                 // Otherwise if the input is moving the player left and the player is facing right...
-                else if (move < 0 && m_facingRight)
+                else if (axisInput < -0.01)
                 {
-                    // ... flip the player.
-                    Flip();
+                    appliedForce = -m_MaxSpeed;
+                    if (m_facingRight)
+                    {
+                        // ... flip the player.
+                        Flip();
+                    }
                 }
+                // Move the character
+                m_rigidbody2D.velocity = new Vector2(appliedForce + m_beltForce, m_rigidbody2D.velocity.y);
             }
             if(m_grounded == false)
             {
                 // reset belt force
                 m_beltForce = 0.0f;
+                m_platformForce = new Vector3(0, 0, 0);
             }
             // If the player should jump...
             if (m_grounded && jump)
             {
                 // Add a vertical force to the player.
                 m_grounded = false;
+                m_rigidbody2D.gravityScale = m_JumpGravScale;
+                m_dropTimer = m_DropTime;
                 m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                Debug.Log("Attempted to jump!");
             }
         }
 
@@ -237,36 +227,50 @@ namespace UnityStandardAssets._2D
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
                             m_grounded = false;
-                            m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                            m_rigidbody2D.velocity = Vector2.zero;
+                            m_rigidbody2D.AddForce(new Vector2(0f, m_BounceOnKillForce));
                         }
                     }
                 }
             }
-
-            // PICK UP LETTERS
-            switch (other.gameObject.tag)
+            //if (other.gameObject.GetComponent<BouncePad>())
+            //{
+            //    // apply force to bounce pad
+            //    m_grounded = false;
+            //    m_rigidbody2D.velocity = Vector2.zero;
+            //    m_rigidbody2D.gravityScale = m_DefaultGravScale;
+            //    m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
+            //}
+            if(other.gameObject.tag == "Collectible")
             {
-                case "T" :
-                    other.gameObject.SetActive(false);
-                    T.enabled = true;
-                    break;
-                case "I":
-                    other.gameObject.SetActive(false);
-                    I.enabled = true;
-                    break;
-                case "M":
-                    other.gameObject.SetActive(false);
-                    M.enabled = true;
-                    break;
-                case "E":
-                    other.gameObject.SetActive(false);
-                    E.enabled = true;
-                    break;
-                case "X":
-                    other.gameObject.SetActive(false);
-                    X.enabled = true;
-                    break;
+                switch(unlockedLetters)
+                {
+                    case 0:
+                        SceneManager.LoadScene("1.1 T Level");
+                        break;
+                    case 1:
+                        SceneManager.LoadScene("2.1 I Level");
+                        break;
+                    case 2:
+                        SceneManager.LoadScene("3.1 M Level");
+                        break;
+                    case 3:
+                        SceneManager.LoadScene("4.1 E Level");
+                        break;
+                    case 4:
+                        SceneManager.LoadScene("5.1 X Level");
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        break;
+                }
             }
+        }
+
+        void OnCollisionEnter2D(Collision2D other)
+        {
+
         }
     }
 }
