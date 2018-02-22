@@ -251,7 +251,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 1314809592}
   - component: {fileID: 1314809594}
   - component: {fileID: 1314809593}
+  - component: {fileID: 1314809595}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -378,15 +379,15 @@ RectTransform:
   m_GameObject: {fileID: 1314809591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0438666, y: 1.0438669, z: 1.0438669}
   m_Children: []
   m_Father: {fileID: 610601561}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315, y: -309}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 14, y: 10.8}
+  m_SizeDelta: {x: 772.6, y: 416.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1314809593
 MonoBehaviour:
@@ -400,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -408,22 +409,39 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 35cb14f9f35e5ee4f8e3bef8ee055e6d, type: 3}
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 0
+    m_MaxSize: 113
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: uygytfuytfuytf
+  m_Text: By the 1980s the Timex Corporation had been a major employer in Dundee for
+    four decades. From the early part of that decade the company attempted to streamline
+    their operations in the city, due to difficulties in competing with the Far East.
+    The facility had enjoyed a temporary reprieve in the early part of the decade
+    due to Timex' contract with Sinclair Research to manufacture its personal computer
+    products (principally the ZX81 and ZX Spectrum) which sold in huge numbers.
 --- !u!222 &1314809594
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314809591}
+--- !u!114 &1314809595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1314809591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeeaf242e7782c48b5c69d72339544c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  writeSpeed: 0.1

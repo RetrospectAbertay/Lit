@@ -18,6 +18,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_DropTime = 3.0f;
         [SerializeField] private float m_DefaultGravScale = 5.0f;
         [SerializeField] private float m_JumpGravScale = 1.0f;
+        [SerializeField] private float m_FinalCollectTime = 2.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -33,9 +34,9 @@ namespace UnityStandardAssets._2D
         private float m_dropTimer = 0.0f;
 
         // Timex UI elements
-        public Image[] timexLetters;
-        private Scene curScene;
+        public GameObject[] timexLetters;
         int unlockedLetters = 0;
+        bool letterCollected = false;
 
         private void Awake()
         {
@@ -46,6 +47,8 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
             m_rigidbody2D.gravityScale = m_DefaultGravScale;
+
+            Scene curScene;
 
             curScene = SceneManager.GetActiveScene();
 
@@ -82,11 +85,11 @@ namespace UnityStandardAssets._2D
             {
                 if (i < unlockedLetters)
                 {
-                    timexLetters[i].enabled = true;
+                    timexLetters[i].SetActive(true);
                 }
                 else
                 {
-                    timexLetters[i].enabled = false;
+                    timexLetters[i].SetActive(false);
                 }
             }
         }
@@ -144,6 +147,11 @@ namespace UnityStandardAssets._2D
                 {
                     m_rigidbody2D.gravityScale = m_DefaultGravScale;
                 }
+            }
+
+            if (letterCollected == true)
+            {
+
             }
         }
 
@@ -243,28 +251,31 @@ namespace UnityStandardAssets._2D
             //}
             if(other.gameObject.tag == "Collectible")
             {
-                switch(unlockedLetters)
-                {
-                    case 0:
-                        SceneManager.LoadScene("1.1 T Level");
-                        break;
-                    case 1:
-                        SceneManager.LoadScene("2.1 I Level");
-                        break;
-                    case 2:
-                        SceneManager.LoadScene("3.1 M Level");
-                        break;
-                    case 3:
-                        SceneManager.LoadScene("4.1 E Level");
-                        break;
-                    case 4:
-                        SceneManager.LoadScene("5.1 X Level");
-                        break;
-                    case 5:
-                        break;
-                    default:
-                        break;
-                }
+                timexLetters[(unlockedLetters + 1)].SetActive(true);
+                other.gameObject.SetActive(false);
+                letterCollected = true;
+                //switch(unlockedLetters)
+                //{
+                //    case 0:
+                //        SceneManager.LoadScene("1.1 T Level");
+                //        break;
+                //    case 1:
+                //        SceneManager.LoadScene("2.1 I Level");
+                //        break;
+                //    case 2:
+                //        SceneManager.LoadScene("3.1 M Level");
+                //        break;
+                //    case 3:
+                //        SceneManager.LoadScene("4.1 E Level");
+                //        break;
+                //    case 4:
+                //        SceneManager.LoadScene("5.1 X Level");
+                //        break;
+                //    case 5:
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
         }
 
