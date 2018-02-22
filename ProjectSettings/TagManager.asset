@@ -7,6 +7,12 @@ TagManager:
   - Enemy
   - Head
   - Collectible
+  - M
+  - X
+  - I
+  - E
+  - T
+  - MovingObject
   layers:
   - Default
   - TransparentFX

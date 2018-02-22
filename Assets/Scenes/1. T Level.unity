@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 108963608}
   - component: {fileID: 108963607}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: ui_letter_t
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,8 +242,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 108963606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.69, y: -3.56, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.69, y: -3.52, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -940,7 +940,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 500676880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.95, y: 4.48, z: 0}
+  m_LocalPosition: {x: -0.31, y: 4.48, z: 0}
   m_LocalScale: {x: 0.8196106, y: 0.64218175, z: 1}
   m_Children:
   - {fileID: 1519764358}
@@ -1126,7 +1126,7 @@ GameObject:
   - component: {fileID: 794177572}
   m_Layer: 0
   m_Name: t_belt3green (5)
-  m_TagString: Untagged
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1588,14 +1588,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
 --- !u!212 &1369274381
 SpriteRenderer:
@@ -1647,7 +1647,7 @@ Transform:
   m_GameObject: {fileID: 1369274379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.876, y: 2.836, z: 0}
-  m_LocalScale: {x: 0.29062498, y: 0.2699997, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -1858,7 +1858,7 @@ GameObject:
   - component: {fileID: 1786157439}
   m_Layer: 0
   m_Name: t_belt3green (3)
-  m_TagString: Untagged
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -6,10 +6,8 @@ using UnityStandardAssets._2D;
 public class PlatformMovement : MonoBehaviour
 {
 
-    [SerializeField]
-    private Vector3 m_MovementVector;
-    [SerializeField]
-    private float m_MovementDuration = 2.0f;
+    [SerializeField] private Vector3 m_MovementVector;
+    [SerializeField] private float m_MovementDuration = 2.0f;
     private float m_movementTimer;
 
     // Use this for initialization
@@ -28,6 +26,11 @@ public class PlatformMovement : MonoBehaviour
             m_MovementVector *= -1;
             m_movementTimer = 0;
         }
+    }
+
+    public void FreezePlatform()
+    {
+        m_MovementVector = new Vector3(0, 0, 0);
     }
 
     public Vector3 getPlatformMovement()
