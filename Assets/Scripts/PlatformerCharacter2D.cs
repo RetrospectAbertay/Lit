@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 namespace UnityStandardAssets._2D
 {
@@ -34,7 +35,7 @@ namespace UnityStandardAssets._2D
         private float m_dropTimer = 0.0f;
 
         // Timex UI elements
-        public GameObject[] timexLetters;
+        GameObject[] timexLetters;
         int unlockedLetters = 0;
         bool letterCollected = false;
 
@@ -47,6 +48,8 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
             m_rigidbody2D.gravityScale = m_DefaultGravScale;
+
+            timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
 
             Scene curScene;
 
@@ -291,7 +294,7 @@ namespace UnityStandardAssets._2D
             if(other.gameObject.tag == "Collectible")
             {
                 // collect letter
-                timexLetters[(unlockedLetters + 1)].SetActive(true);
+                timexLetters[(unlockedLetters)].SetActive(true);
                 other.gameObject.SetActive(false);
                 letterCollected = true;
                 // freeze rigid body

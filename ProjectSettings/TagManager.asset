@@ -13,6 +13,7 @@ TagManager:
   - E
   - T
   - MovingObject
+  - LetterUI
   layers:
   - Default
   - TransparentFX
