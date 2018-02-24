@@ -19,7 +19,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_DropTime = 3.0f;
         [SerializeField] private float m_DefaultGravScale = 5.0f;
         [SerializeField] private float m_JumpGravScale = 1.0f;
-        [SerializeField] private float m_FinalCollectTime = 2.0f;
+		[SerializeField] private float m_FinalCollectTime = 2.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -295,11 +295,15 @@ namespace UnityStandardAssets._2D
             {
                 // collect letter
                 timexLetters[(unlockedLetters)].SetActive(true);
-                other.gameObject.SetActive(false);
+                // other.gameObject.SetActive(false);
                 letterCollected = true;
                 // freeze rigid body
                 m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 FreezeOtherObjects();
+                if(other.GetComponent<Collectible>())
+                {
+                    other.GetComponent<Collectible>().ToggleMovement();
+                }
             }
         }
 
