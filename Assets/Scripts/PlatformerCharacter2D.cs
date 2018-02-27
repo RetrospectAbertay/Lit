@@ -233,15 +233,6 @@ namespace UnityStandardAssets._2D
                             Flip();
                         }
                     }
-                    if (m_grounded)
-                    {
-                        if (Mathf.Abs(axisInput) > 0.0f)
-                        {
-                            // Character is walking
-                            m_animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
-                            m_animResetTimer = m_AnimTime;
-                        }
-                    }
                     // Move the character
                     m_rigidbody2D.velocity = new Vector2(appliedForce + m_beltForce, m_rigidbody2D.velocity.y);
                 }
@@ -250,6 +241,23 @@ namespace UnityStandardAssets._2D
                     // reset belt force
                     m_beltForce = 0.0f;
                     m_platformForce = new Vector3(0, 0, 0);
+                    if (!m_animator.RunningAirFrame())
+                    {
+                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
+                    }
+                }
+                else
+                {
+                    if (m_animator.RunningAirFrame())
+                    {
+                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                    }
+                    if (Mathf.Abs(axisInput) > 0.0f)
+                    {
+                        // Character is walking
+                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
+                        m_animResetTimer = m_AnimTime;
+                    }
                 }
                 // If the player should jump...
                 if (m_grounded && jump)
