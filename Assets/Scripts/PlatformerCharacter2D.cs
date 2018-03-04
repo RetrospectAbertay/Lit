@@ -20,6 +20,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_DefaultGravScale = 5.0f;
         [SerializeField] private float m_JumpGravScale = 1.0f;
 		[SerializeField] private float m_FinalCollectTime = 2.0f;
+        [SerializeField] private float m_AnimTime = 1.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -33,6 +34,8 @@ namespace UnityStandardAssets._2D
         private SpriteRenderer m_spriteRenderer;
         private Vector3 m_platformForce;
         private float m_dropTimer = 0.0f;
+        private float m_animResetTimer;
+        AnimationPlayer m_animator;
 
         // Timex UI elements
         GameObject[] timexLetters;
@@ -48,7 +51,7 @@ namespace UnityStandardAssets._2D
             m_curHealth = m_StartingHealth;
             m_invincibilityTimer = 0.0f;
             m_rigidbody2D.gravityScale = m_DefaultGravScale;
-
+            m_animator = GetComponent<AnimationPlayer>();
             timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
 
             Scene curScene;
@@ -125,6 +128,14 @@ namespace UnityStandardAssets._2D
                             // update platform momentum
                             m_platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
                         }
+                    }
+                }
+                if (m_animResetTimer > 0.0f)
+                {
+                    m_animResetTimer -= Time.deltaTime;
+                    if(m_animResetTimer <= 0.0f)
+                    {
+                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     }
                 }
                 // handle flicker animation
@@ -222,6 +233,15 @@ namespace UnityStandardAssets._2D
                             Flip();
                         }
                     }
+                    if (m_grounded)
+                    {
+                        if (Mathf.Abs(appliedForce) > 0.0f)
+                        {
+                            // Character is walking
+                            m_animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
+                            m_animResetTimer = m_AnimTime;
+                        }
+                    }
                     // Move the character
                     m_rigidbody2D.velocity = new Vector2(appliedForce + m_beltForce, m_rigidbody2D.velocity.y);
                 }
@@ -300,6 +320,7 @@ namespace UnityStandardAssets._2D
                 // freeze rigid body
                 m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 FreezeOtherObjects();
+                m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                 if(other.GetComponent<Collectible>())
                 {
                     other.GetComponent<Collectible>().ToggleMovement();
