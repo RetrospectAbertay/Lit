@@ -8,13 +8,11 @@ public class AnimationPlayer : MonoBehaviour
     {
         IDLE,
         WALKING,
-        JUMPING,
-        FALLING
+        JUMPING
     }
     public Sprite[] IdleAnimation;
     public Sprite[] WalkingAnimation;
     public Sprite[] JumpingAnimation;
-    public Sprite[] FallingAnimation;
     private Sprite[] curAnimation;
     public float FrameDuration;
     private int frameCounter = 0;
@@ -61,7 +59,7 @@ public class AnimationPlayer : MonoBehaviour
 
     public void ChangeAnimation(AnimationState newAnimation)
     {
-        // switch statement checks for each possible animation state and allocates the right one
+        //// switch statement checks for each possible animation state and allocates the right one
         switch (newAnimation)
         {
             case AnimationState.IDLE:
@@ -77,5 +75,14 @@ public class AnimationPlayer : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public bool RunningAirFrame()
+    {
+        if(curAnimation == JumpingAnimation)
+        {
+            return true;
+        }
+        return false;
     }
 }
