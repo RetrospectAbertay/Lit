@@ -262,8 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c4c966c816cf0458bf2d7243a48114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkSpeed: 0.35
-  animTime: 3
 --- !u!1 &610601557
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,4 +613,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeeaf242e7782c48b5c69d72339544c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  writeSpeed: 0.1
+  paragraphs:
+  - "The river Tay lies sparkling before you. You cross the bridge with growing excitement
+    as the first buildings of She-Town are starting to take shape. She-Town, just
+    as you remember it, beautiful and brutal\u2026no place for the faint-hearted or
+    the dainty-handed."
+  - "You know that you\u2019ll be safe here, She-Town belonged to them. And that\u2019s
+    the way it\u2019s been since those first bales of jute docked in 1820. Even further
+    back, to the women weaving linen in the flax mills. Perhaps even further back
+    to the housewives who spun and sold their yarns at markets. There's no sure way
+    of knowing how far back the story of She-Town stretches."
+  - "What\u2019s certain is that it is the magic of their hands that built the city.
+    And their hands were like the cloth they spun, coarse but strong. They wore cracks
+    and wounds instead of rings. These hands cradled and comforted like they spun
+    and weaved, with a firm yet gentle touch."
+  - Alas, the magic running through their hands does not come cheap. And they all
+    paid. Songs often fell on deaf ears, smiles often wasted on blind eyes, breaths
+    often cut short by fevered lungs. Their youth fed She-Town, and She-Town bloomed.
+  writeSpeed: 0.01
+  timeBetweenParagraphs: 2

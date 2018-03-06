@@ -3,61 +3,90 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WriteText : MonoBehaviour {
+public class WriteText : MonoBehaviour
+{
 
     Text textObject;
     string stringToDisplay;
+    public List<string> paragraphs;
     public float writeSpeed;
+    public float timeBetweenParagraphs = 2.0f;
+    float paraTimer;
     float timer;
     int curChar = 0;
+    int curParagraph = 0;
+    bool finishedWriting = false;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         // get the text object iself
         textObject = this.GetComponent<Text>();
+        textObject.text = "";
         // get the contents of the string
-        stringToDisplay = textObject.text;
+        stringToDisplay = paragraphs[0];
         Debug.Log(stringToDisplay);
         // setup timer to init to 0
         timer = 0.0f;
-        // display empty text
-        updateText();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         // check if we still need to write
-		if(curChar < stringToDisplay.Length)
+        if (!finishedWriting)
         {
-            Debug.Log("updating timer");
-            // increment timer
-            timer += Time.deltaTime;
-            if(timer > writeSpeed)
+            if (paraTimer > 0)
             {
-                // increment cur char
-                curChar++;
-                // display a new character
-                updateText();
-                // reset timer
-                timer = 0.0f;
+                paraTimer -= Time.deltaTime;
+                // clear screen before starting to update again
+                if (paraTimer <= 0)
+                {
+                    textObject.text = "";
+                    curChar = 0;
+                }
+            }
+            else
+            {
+                // increment timer
+                timer += Time.deltaTime;
+                if (timer > writeSpeed)
+                {
+                    // display a new character
+                    updateText();
+                    // increment cur char
+                    curChar++;
+                    // reset timer
+                    timer = 0.0f;
+                }
             }
         }
-	}
+    }
 
     void updateText()
     {
-        // initialise new string
-        string curText = "";
-        // iterate through the initial message
-        for(int i = 0; i < curChar; i++)
+        // check if we need to switch paragraphs
+        if (curChar >= stringToDisplay.Length)
         {
-            // add each char to the current text
-            curText += stringToDisplay[i];
+            if (curParagraph < paragraphs.Count)
+            {
+                // increment paragraph to display
+                curParagraph++;
+                // set string to display
+                stringToDisplay = paragraphs[curParagraph];
+                // changing paragraph - need to wait for a short period before switching
+                paraTimer = timeBetweenParagraphs;
+            }
+            else
+            {
+                finishedWriting = true;
+            }
         }
-        Debug.Log(curText);
-        // update text object
-        textObject.text = curText;
+        else
+        {
+            // update text
+            textObject.text += stringToDisplay[curChar];
+        }
     }
 }
