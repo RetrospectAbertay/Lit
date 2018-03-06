@@ -8,47 +8,35 @@ namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField]
-        private float m_MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
-        [SerializeField]
-        private float m_JumpForce = 800f;                  // Amount of force added when the player jumps.
-        [SerializeField]
-        private bool m_AirControl = true;                 // Whether or not a player can steer while jumping;
-        [SerializeField]
-        private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-        [SerializeField]
-        private int m_StartingHealth = 3;
-        [SerializeField]
-        private float m_InvincibilityDuration = 2;
-        [SerializeField]
-        private float m_FlickerDuration = 0.3f;
-        [SerializeField]
-        private float m_BounceOnKillForce = 300.0f;
-        [SerializeField]
-        private float m_DropTime = 3.0f;
-        [SerializeField]
-        private float m_DefaultGravScale = 5.0f;
-        [SerializeField]
-        private float m_JumpGravScale = 1.0f;
-        [SerializeField]
-        private float m_FinalCollectTime = 2.0f;
-        [SerializeField]
-        private float m_AnimTime = 1.0f;
+        [SerializeField] private float MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
+        [SerializeField] private float JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField] private bool AirControl = true;                 // Whether or not a player can steer while jumping;
+        [SerializeField] private LayerMask WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField] private int StartingHealth = 3;
+        [SerializeField] private float InvincibilityDuration = 2;
+        [SerializeField] private float FlickerDuration = 0.3f;
+        [SerializeField] private float BounceOnKillForce = 300.0f;
+        [SerializeField] private float DropTime = 3.0f;
+        [SerializeField] private float DefaultGravScale = 5.0f;
+        [SerializeField] private float JumpGravScale = 1.0f;
+        [SerializeField] private float FinalCollectTime = 2.0f;
+        [SerializeField] private float AnimTime = 1.0f;
 
-        private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
-        const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-        private bool m_grounded;            // Whether or not the player is grounded.
-        private Rigidbody2D m_rigidbody2D;
-        private bool m_facingRight = true;  // For determining which way the player is currently facing.
-        private float m_beltForce = 0.0f;
-        private int m_curHealth;
-        private float m_invincibilityTimer;
-        private float m_flickerTimer;
-        private SpriteRenderer m_spriteRenderer;
-        private Vector3 m_platformForce;
-        private float m_dropTimer = 0.0f;
-        private float m_animResetTimer;
-        AnimationPlayer m_animator;
+        private Transform groundCheck;    // A position marking where to check if the player is grounded.
+        const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        private bool grounded;            // Whether or not the player is grounded.
+        private Rigidbody2D rigidbody2D;
+        private bool facingRight = true;  // For determining which way the player is currently facing.
+        private float beltForce = 0.0f;
+        private int curHealth;
+        private float invincibilityTimer;
+        private float flickerTimer;
+        private SpriteRenderer spriteRenderer;
+        private Vector3 platformForce;
+        private float dropTimer = 0.0f;
+        private float animResetTimer;
+        private AudioSource audioSorce;
+        AnimationPlayer animator;
 
         // Timex UI elements
         GameObject[] timexLetters;
@@ -58,13 +46,13 @@ namespace UnityStandardAssets._2D
         private void Awake()
         {
             // Setting up references.
-            m_groundCheck = transform.Find("GroundCheck");
-            m_rigidbody2D = GetComponent<Rigidbody2D>();
-            m_spriteRenderer = GetComponent<SpriteRenderer>();
-            m_curHealth = m_StartingHealth;
-            m_invincibilityTimer = 0.0f;
-            m_rigidbody2D.gravityScale = m_DefaultGravScale;
-            m_animator = GetComponent<AnimationPlayer>();
+            groundCheck = transform.Find("GroundCheck");
+            rigidbody2D = GetComponent<Rigidbody2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            curHealth = StartingHealth;
+            invincibilityTimer = 0.0f;
+            rigidbody2D.gravityScale = DefaultGravScale;
+            animator = GetComponent<AnimationPlayer>();
             timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
 
             Scene curScene;
@@ -118,79 +106,79 @@ namespace UnityStandardAssets._2D
             // check if letter has been collected
             if (letterCollected == false)
             {
-                m_grounded = false;
+                grounded = false;
 
                 // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
                 // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheck.position, k_groundedRadius, m_WhatIsGround);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, WhatIsGround);
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     if (colliders[i].gameObject != gameObject)
                     {
-                        m_grounded = true;
-                        m_rigidbody2D.gravityScale = m_DefaultGravScale;
+                        grounded = true;
+                        rigidbody2D.gravityScale = DefaultGravScale;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
                         {
                             // set force of belt to apply to the player
-                            m_beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
+                            beltForce = colliders[i].transform.GetComponent<ConveyourBelt>().GetBeltForce();
                         }
                         // check for moving platform
                         if (colliders[i].transform.GetComponent<PlatformMovement>())
                         {
                             // update platform momentum
-                            m_platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
+                            platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
                         }
                     }
                 }
-                if (m_animResetTimer > 0.0f)
+                if (animResetTimer > 0.0f)
                 {
-                    m_animResetTimer -= Time.deltaTime;
-                    if (m_animResetTimer <= 0.0f)
+                    animResetTimer -= Time.deltaTime;
+                    if (animResetTimer <= 0.0f)
                     {
-                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     }
                 }
                 // handle flicker animation
-                if (m_invincibilityTimer > 0)
+                if (invincibilityTimer > 0)
                 {
-                    m_flickerTimer -= Time.deltaTime;
-                    if (m_flickerTimer < 0)
+                    flickerTimer -= Time.deltaTime;
+                    if (flickerTimer < 0)
                     {
-                        m_flickerTimer = m_FlickerDuration;
-                        m_spriteRenderer.enabled = !m_spriteRenderer.enabled;
+                        flickerTimer = FlickerDuration;
+                        spriteRenderer.enabled = !spriteRenderer.enabled;
                     }
-                    m_invincibilityTimer -= Time.deltaTime;
-                    if (m_invincibilityTimer <= 0)
+                    invincibilityTimer -= Time.deltaTime;
+                    if (invincibilityTimer <= 0)
                     {
-                        m_spriteRenderer.enabled = true;
-                        m_flickerTimer = m_FlickerDuration;
+                        spriteRenderer.enabled = true;
+                        flickerTimer = FlickerDuration;
                     }
                 }
                 // axisInput player along with the plattform
-                transform.position += (m_platformForce * Time.deltaTime);
+                transform.position += (platformForce * Time.deltaTime);
                 // check for the drop timer
-                if (m_dropTimer > 0.0f)
+                if (dropTimer > 0.0f)
                 {
-                    m_dropTimer -= Time.deltaTime;
-                    if (m_dropTimer <= 0.0f)
+                    dropTimer -= Time.deltaTime;
+                    if (dropTimer <= 0.0f)
                     {
-                        m_rigidbody2D.gravityScale = m_DefaultGravScale;
+                        rigidbody2D.gravityScale = DefaultGravScale;
                     }
                 }
             }
             else
             {
                 // decrement timer
-                m_FinalCollectTime -= Time.deltaTime;
+                FinalCollectTime -= Time.deltaTime;
                 // flicker player
-                m_flickerTimer -= Time.deltaTime;
-                if (m_flickerTimer < 0)
+                flickerTimer -= Time.deltaTime;
+                if (flickerTimer < 0)
                 {
-                    m_flickerTimer = m_FlickerDuration;
-                    m_spriteRenderer.enabled = !m_spriteRenderer.enabled;
+                    flickerTimer = FlickerDuration;
+                    spriteRenderer.enabled = !spriteRenderer.enabled;
                 }
-                if (m_FinalCollectTime <= 0)
+                if (FinalCollectTime <= 0)
                 {
                     switch (unlockedLetters)
                     {
@@ -223,14 +211,14 @@ namespace UnityStandardAssets._2D
             if (!letterCollected)
             {
                 //only control the player if grounded or airControl is turned on
-                if (m_grounded || m_AirControl)
+                if (grounded || AirControl)
                 {
                     float appliedForce = 0.0f;
                     // If the input is moving the player right and the player is facing left...
                     if (axisInput > 0.01)
                     {
-                        appliedForce = m_MaxSpeed;
-                        if (!m_facingRight)
+                        appliedForce = MaxSpeed;
+                        if (!facingRight)
                         {
                             // ... flip the player.
                             Flip();
@@ -239,47 +227,47 @@ namespace UnityStandardAssets._2D
                     // Otherwise if the input is moving the player left and the player is facing right...
                     else if (axisInput < -0.01)
                     {
-                        appliedForce = -m_MaxSpeed;
-                        if (m_facingRight)
+                        appliedForce = -MaxSpeed;
+                        if (facingRight)
                         {
                             // ... flip the player.
                             Flip();
                         }
                     }
                     // Move the character
-                    m_rigidbody2D.velocity = new Vector2(appliedForce + m_beltForce, m_rigidbody2D.velocity.y);
+                    rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
                 }
-                if (m_grounded == false)
+                if (grounded == false)
                 {
                     // reset belt force
-                    m_beltForce = 0.0f;
-                    m_platformForce = new Vector3(0, 0, 0);
-                    if (!m_animator.RunningAirFrame())
+                    beltForce = 0.0f;
+                    platformForce = new Vector3(0, 0, 0);
+                    if (!animator.RunningAirFrame())
                     {
-                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
                     }
                 }
                 else
                 {
-                    if (m_animator.RunningAirFrame())
+                    if (animator.RunningAirFrame())
                     {
-                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     }
                     if (Mathf.Abs(axisInput) > 0.0f)
                     {
                         // Character is walking
-                        m_animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
-                        m_animResetTimer = m_AnimTime;
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
+                        animResetTimer = AnimTime;
                     }
                 }
                 // If the player should jump...
-                if (m_grounded && jump)
+                if (grounded && jump)
                 {
                     // Add a vertical force to the player.
-                    m_grounded = false;
-                    m_rigidbody2D.gravityScale = m_JumpGravScale;
-                    m_dropTimer = m_DropTime;
-                    m_rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                    grounded = false;
+                    rigidbody2D.gravityScale = JumpGravScale;
+                    dropTimer = DropTime;
+                    rigidbody2D.AddForce(new Vector2(0f, JumpForce));
                     Debug.Log("Attempted to jump!");
                 }
             }
@@ -288,7 +276,7 @@ namespace UnityStandardAssets._2D
         private void Flip()
         {
             // Switch the way the player is labelled as facing.
-            m_facingRight = !m_facingRight;
+            facingRight = !facingRight;
 
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
@@ -299,17 +287,17 @@ namespace UnityStandardAssets._2D
         void OnTriggerEnter2D(Collider2D other)
         {
             // don't apply enemy collision when player has taken damage
-            if (m_invincibilityTimer <= 0)
+            if (invincibilityTimer <= 0)
             {
                 if (other.gameObject.tag == "Enemy")
                 {
-                    m_curHealth--;
-                    m_invincibilityTimer = m_InvincibilityDuration;
-                    m_spriteRenderer.enabled = false;
+                    curHealth--;
+                    invincibilityTimer = InvincibilityDuration;
+                    spriteRenderer.enabled = false;
                 }
                 if (other.gameObject.tag == "Head")
                 {
-                    Vector3 realGroundCheckPosition = transform.position + m_groundCheck.position;
+                    Vector3 realGroundCheckPosition = transform.position + groundCheck.position;
                     if (other.GetComponentInParent<BasicEnemy>())
                     {
                         if (other.transform.position.y <= realGroundCheckPosition.y)
@@ -317,9 +305,9 @@ namespace UnityStandardAssets._2D
                             // kill enemy
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
-                            m_grounded = false;
-                            m_rigidbody2D.velocity = Vector2.zero;
-                            m_rigidbody2D.AddForce(new Vector2(0f, m_BounceOnKillForce));
+                            grounded = false;
+                            rigidbody2D.velocity = Vector2.zero;
+                            rigidbody2D.AddForce(new Vector2(0f, BounceOnKillForce));
                         }
                     }
                 }
@@ -339,9 +327,9 @@ namespace UnityStandardAssets._2D
                 // other.gameObject.SetActive(false);
                 letterCollected = true;
                 // freeze rigid body
-                m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 FreezeOtherObjects();
-                m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                 if (other.GetComponent<Collectible>())
                 {
                     other.GetComponent<Collectible>().ToggleMovement();

@@ -259,9 +259,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 337796964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73c4c966c816cf0458bf2d7243a48114, type: 3}
+  m_Script: {fileID: 11500000, guid: f4aeb9005db164349b71777b935d8e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blinkSpeed: 0.3
+  animTime: 4
 --- !u!1 &610601557
 GameObject:
   m_ObjectHideFlags: 0
