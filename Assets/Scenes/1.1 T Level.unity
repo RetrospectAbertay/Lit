@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 1314809594}
   - component: {fileID: 1314809593}
   - component: {fileID: 1314809595}
+  - component: {fileID: 1314809596}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -615,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeeaf242e7782c48b5c69d72339544c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paragraphs:
+  Paragraphs:
   - "The river Tay lies sparkling before you. You cross the bridge with growing excitement
     as the first buildings of She-Town are starting to take shape. She-Town, just
     as you remember it, beautiful and brutal\u2026no place for the faint-hearted or
@@ -632,5 +633,86 @@ MonoBehaviour:
   - Alas, the magic running through their hands does not come cheap. And they all
     paid. Songs often fell on deaf ears, smiles often wasted on blind eyes, breaths
     often cut short by fevered lungs. Their youth fed She-Town, and She-Town bloomed.
-  writeSpeed: 0.1
-  timeBetweenParagraphs: 1
+  WriteSpeed: 0.1
+  TimeBetweenParagraphs: 1
+  TypingSound: {fileID: 8300000, guid: e5fc97563ab33be4f9d6e902171aca41, type: 3}
+--- !u!82 &1314809596
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1314809591}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0

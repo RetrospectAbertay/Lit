@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class WriteText : MonoBehaviour
 {
-
+    public List<string> Paragraphs;
+    public float WriteSpeed;
+    public float TimeBetweenParagraphs = 2.0f;
+    public AudioClip TypingSound;
+    private AudioSource audioSource;
     Text textObject;
     string stringToDisplay;
-    public List<string> paragraphs;
-    public float writeSpeed;
-    public float timeBetweenParagraphs = 2.0f;
     float paraTimer;
     float timer;
     int curChar = 0;
@@ -24,10 +25,10 @@ public class WriteText : MonoBehaviour
         textObject = this.GetComponent<Text>();
         textObject.text = "";
         // get the contents of the string
-        stringToDisplay = paragraphs[0];
+        stringToDisplay = Paragraphs[0];
         // setup timer to init to 0
         timer = 0.0f;
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -50,7 +51,7 @@ public class WriteText : MonoBehaviour
             {
                 // increment timer
                 timer += Time.deltaTime;
-                if (timer > writeSpeed)
+                if (timer > WriteSpeed)
                 {
                     // display a new character
                     updateText();
@@ -68,14 +69,14 @@ public class WriteText : MonoBehaviour
         // check if we need to switch paragraphs
         if (curChar >= stringToDisplay.Length)
         {
-            if (curParagraph < paragraphs.Count)
+            if (curParagraph < Paragraphs.Count)
             {
                 // increment paragraph to display
                 curParagraph++;
                 // set string to display
-                stringToDisplay = paragraphs[curParagraph];
+                stringToDisplay = Paragraphs[curParagraph];
                 // changing paragraph - need to wait for a short period before switching
-                paraTimer = timeBetweenParagraphs;
+                paraTimer = TimeBetweenParagraphs;
             }
             else
             {
@@ -86,6 +87,8 @@ public class WriteText : MonoBehaviour
         {
             // update text
             textObject.text += stringToDisplay[curChar];
+            // play audio
+            audioSource.PlayOneShot(TypingSound);
         }
     }
 }
