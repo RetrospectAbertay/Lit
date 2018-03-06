@@ -25,7 +25,6 @@ public class WriteText : MonoBehaviour
         textObject.text = "";
         // get the contents of the string
         stringToDisplay = paragraphs[0];
-        Debug.Log(stringToDisplay);
         // setup timer to init to 0
         timer = 0.0f;
 

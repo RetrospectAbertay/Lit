@@ -42,13 +42,11 @@ public class AnimationPlayer : MonoBehaviour
             }
             // increment frame counter
             frameCounter++;
-            Debug.Log(frameCounter);
             // check that our frame counter has not exceeded the maximum number of frames in our animation
             if (frameCounter >= curAnimation.Length)
             {
                 // otherwise we want to reset our frame counter, which will display the first frame
                 frameCounter = 0;
-                Debug.Log("reseting frame counter");
             }
             // reset the timer for the next update
             timer = 0.0f;

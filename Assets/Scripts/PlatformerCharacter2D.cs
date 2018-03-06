@@ -16,11 +16,12 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
-        [SerializeField] private float DropTime = 3.0f;
         [SerializeField] private float DefaultGravScale = 5.0f;
-        [SerializeField] private float JumpGravScale = 1.0f;
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
+        [SerializeField] private AudioClip JumpAudio;
+        [SerializeField] private AudioClip WalkingAudio;
+        [SerializeField] private AudioClip CollectionAudio;
 
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
         const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -35,7 +36,7 @@ namespace UnityStandardAssets._2D
         private Vector3 platformForce;
         private float dropTimer = 0.0f;
         private float animResetTimer;
-        private AudioSource audioSorce;
+        private AudioSource audioSource;
         AnimationPlayer animator;
 
         // Timex UI elements
@@ -54,11 +55,10 @@ namespace UnityStandardAssets._2D
             rigidbody2D.gravityScale = DefaultGravScale;
             animator = GetComponent<AnimationPlayer>();
             timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
-
+            audioSource = GetComponent<AudioSource>();
+            // Determine the level that the player is in
             Scene curScene;
-
             curScene = SceneManager.GetActiveScene();
-
             switch (curScene.name)
             {
                 case "1. T Level":
@@ -116,7 +116,6 @@ namespace UnityStandardAssets._2D
                     if (colliders[i].gameObject != gameObject)
                     {
                         grounded = true;
-                        rigidbody2D.gravityScale = DefaultGravScale;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
                         {
@@ -157,15 +156,6 @@ namespace UnityStandardAssets._2D
                 }
                 // axisInput player along with the plattform
                 transform.position += (platformForce * Time.deltaTime);
-                // check for the drop timer
-                if (dropTimer > 0.0f)
-                {
-                    dropTimer -= Time.deltaTime;
-                    if (dropTimer <= 0.0f)
-                    {
-                        rigidbody2D.gravityScale = DefaultGravScale;
-                    }
-                }
             }
             else
             {
@@ -265,10 +255,9 @@ namespace UnityStandardAssets._2D
                 {
                     // Add a vertical force to the player.
                     grounded = false;
-                    rigidbody2D.gravityScale = JumpGravScale;
-                    dropTimer = DropTime;
                     rigidbody2D.AddForce(new Vector2(0f, JumpForce));
                     Debug.Log("Attempted to jump!");
+                    audioSource.PlayOneShot(JumpAudio);
                 }
             }
         }
@@ -334,6 +323,7 @@ namespace UnityStandardAssets._2D
                 {
                     other.GetComponent<Collectible>().ToggleMovement();
                 }
+                audioSource.PlayOneShot(CollectionAudio);
             }
         }
 
