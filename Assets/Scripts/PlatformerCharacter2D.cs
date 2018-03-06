@@ -38,6 +38,7 @@ namespace UnityStandardAssets._2D
         private float dropTimer = 0.0f;
         private float animResetTimer;
         private float footstepsTimer;
+        private float movTimer;
         private AudioSource audioSource;
         AnimationPlayer animator;
 
@@ -197,6 +198,11 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+            // update timer that checks the last time player input was recieved
+            if(movTimer > 0)
+            {
+                movTimer -= Time.deltaTime;
+            }
         }
 
         public void Move(float axisInput, bool crouch, bool jump)
@@ -251,9 +257,15 @@ namespace UnityStandardAssets._2D
                         // Character is walking
                         animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
                         animResetTimer = AnimTime;
+                        // check for when the last time was, that player input was recieved - if it was not recenlty, play footstep sound immediately
+                        if(movTimer <= 0)
+                        {
+                            movTimer = 0.3f;
+                            footstepsTimer = TimeBetweenFootsteps;
+                        }
                         // Increment footsteps timer to see if a sound should be played
                         footstepsTimer += Time.deltaTime;
-                        if (footstepsTimer > TimeBetweenFootsteps)
+                        if (footstepsTimer >= TimeBetweenFootsteps)
                         {
                             audioSource.PlayOneShot(WalkingAudio);
                             footstepsTimer = 0.0f;
