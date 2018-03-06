@@ -7,39 +7,42 @@ public class WriteText : MonoBehaviour {
 
     Text textObject;
     string stringToDisplay;
+    public List<string> paragraphs;
     public float writeSpeed;
     float timer;
     int curChar = 0;
+    int curParagraph = 0;
+    bool finishedWriting = false;
 
 	// Use this for initialization
 	void Start ()
     {
         // get the text object iself
         textObject = this.GetComponent<Text>();
+        textObject.text = "";
         // get the contents of the string
-        stringToDisplay = textObject.text;
+        stringToDisplay = paragraphs[0];
         Debug.Log(stringToDisplay);
         // setup timer to init to 0
         timer = 0.0f;
-        // display empty text
-        updateText();
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         // check if we still need to write
-		if(curChar < stringToDisplay.Length)
+		if(!finishedWriting)
         {
             Debug.Log("updating timer");
             // increment timer
             timer += Time.deltaTime;
             if(timer > writeSpeed)
-            {
-                // increment cur char
-                curChar++;
+            { 
                 // display a new character
                 updateText();
+                // increment cur char
+                curChar++;
                 // reset timer
                 timer = 0.0f;
             }
@@ -48,16 +51,31 @@ public class WriteText : MonoBehaviour {
 
     void updateText()
     {
-        // initialise new string
-        string curText = "";
-        // iterate through the initial message
-        for(int i = 0; i < curChar; i++)
+        // check if we need to switch paragraphs
+        if (curChar >= stringToDisplay.Length)
         {
-            // add each char to the current text
-            curText += stringToDisplay[i];
+            if (curParagraph < paragraphs.Count)
+            {
+                // increment paragraph to display
+                curParagraph++;
+                // set string to display
+                stringToDisplay = paragraphs[curParagraph];
+                // reset current char
+                curChar = 0;
+                // clear text object
+                textObject.text = "";
+                // update text
+                textObject.text += stringToDisplay[curChar];
+            }
+            else
+            {
+                finishedWriting = true;
+            }
         }
-        Debug.Log(curText);
-        // update text object
-        textObject.text = curText;
+        else
+        {
+            // update text
+            textObject.text += stringToDisplay[curChar];
+        }
     }
 }
