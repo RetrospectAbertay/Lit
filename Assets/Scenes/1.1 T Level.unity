@@ -630,5 +630,5 @@ MonoBehaviour:
   - Alas, the magic running through their hands does not come cheap. And they all
     paid. Songs often fell on deaf ears, smiles often wasted on blind eyes, breaths
     often cut short by fevered lungs. Their youth fed She-Town, and She-Town bloomed.
-  writeSpeed: 0.01
-  timeBetweenParagraphs: 2
+  writeSpeed: 0.1
+  timeBetweenParagraphs: 1

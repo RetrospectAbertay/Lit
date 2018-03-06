@@ -8,19 +8,32 @@ namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 800f;                  // Amount of force added when the player jumps.
-        [SerializeField] private bool m_AirControl = true;                 // Whether or not a player can steer while jumping;
-        [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-        [SerializeField] private int m_StartingHealth = 3;
-        [SerializeField] private float m_InvincibilityDuration = 2;
-        [SerializeField] private float m_FlickerDuration = 0.3f;
-        [SerializeField] private float m_BounceOnKillForce = 300.0f;
-        [SerializeField] private float m_DropTime = 3.0f;
-        [SerializeField] private float m_DefaultGravScale = 5.0f;
-        [SerializeField] private float m_JumpGravScale = 1.0f;
-		[SerializeField] private float m_FinalCollectTime = 2.0f;
-        [SerializeField] private float m_AnimTime = 1.0f;
+        [SerializeField]
+        private float m_MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
+        [SerializeField]
+        private float m_JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField]
+        private bool m_AirControl = true;                 // Whether or not a player can steer while jumping;
+        [SerializeField]
+        private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField]
+        private int m_StartingHealth = 3;
+        [SerializeField]
+        private float m_InvincibilityDuration = 2;
+        [SerializeField]
+        private float m_FlickerDuration = 0.3f;
+        [SerializeField]
+        private float m_BounceOnKillForce = 300.0f;
+        [SerializeField]
+        private float m_DropTime = 3.0f;
+        [SerializeField]
+        private float m_DefaultGravScale = 5.0f;
+        [SerializeField]
+        private float m_JumpGravScale = 1.0f;
+        [SerializeField]
+        private float m_FinalCollectTime = 2.0f;
+        [SerializeField]
+        private float m_AnimTime = 1.0f;
 
         private Transform m_groundCheck;    // A position marking where to check if the player is grounded.
         const float k_groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -62,7 +75,7 @@ namespace UnityStandardAssets._2D
             {
                 case "1. T Level":
                     {
-                        
+
                     }
                     break;
                 case "2. I Level":
@@ -133,7 +146,7 @@ namespace UnityStandardAssets._2D
                 if (m_animResetTimer > 0.0f)
                 {
                     m_animResetTimer -= Time.deltaTime;
-                    if(m_animResetTimer <= 0.0f)
+                    if (m_animResetTimer <= 0.0f)
                     {
                         m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     }
@@ -233,15 +246,6 @@ namespace UnityStandardAssets._2D
                             Flip();
                         }
                     }
-                    if (m_grounded)
-                    {
-                        if (Mathf.Abs(appliedForce) > 0.0f)
-                        {
-                            // Character is walking
-                            m_animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
-                            m_animResetTimer = m_AnimTime;
-                        }
-                    }
                     // Move the character
                     m_rigidbody2D.velocity = new Vector2(appliedForce + m_beltForce, m_rigidbody2D.velocity.y);
                 }
@@ -328,7 +332,7 @@ namespace UnityStandardAssets._2D
             //    m_rigidbody2D.gravityScale = m_DefaultGravScale;
             //    m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
             //}
-            if(other.gameObject.tag == "Collectible")
+            if (other.gameObject.tag == "Collectible")
             {
                 // collect letter
                 timexLetters[(unlockedLetters)].SetActive(true);
@@ -338,7 +342,7 @@ namespace UnityStandardAssets._2D
                 m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 FreezeOtherObjects();
                 m_animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
-                if(other.GetComponent<Collectible>())
+                if (other.GetComponent<Collectible>())
                 {
                     other.GetComponent<Collectible>().ToggleMovement();
                 }
@@ -349,10 +353,10 @@ namespace UnityStandardAssets._2D
         {
             GameObject[] movingObjects = GameObject.FindGameObjectsWithTag("MovingObject");
             // iterate through all moving objects
-            for(int i = 0; i < movingObjects.Length; i++)
+            for (int i = 0; i < movingObjects.Length; i++)
             {
                 // freeze moving platforms
-                if(movingObjects[i].GetComponent<PlatformMovement>())
+                if (movingObjects[i].GetComponent<PlatformMovement>())
                 {
                     movingObjects[i].GetComponent<PlatformMovement>().FreezePlatform();
                 }

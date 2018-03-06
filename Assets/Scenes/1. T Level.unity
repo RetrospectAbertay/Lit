@@ -1192,10 +1192,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: acef9702413a56947b834bdd55293c27, type: 3}
   - {fileID: 21300000, guid: a1916115796b71b4ca1804e9169f0a87, type: 3}
   - {fileID: 21300000, guid: 499ba8315b902aa41a3055f17cf376a2, type: 3}
+  - {fileID: 21300000, guid: a1916115796b71b4ca1804e9169f0a87, type: 3}
   JumpingAnimation:
-  - {fileID: 21300000, guid: a1916115796b71b4ca1804e9169f0a87, type: 3}
-  FallingAnimation:
-  - {fileID: 21300000, guid: a1916115796b71b4ca1804e9169f0a87, type: 3}
+  - {fileID: 21300000, guid: f2146331dd0aa7648bc8b325376daed5, type: 3}
   FrameDuration: 0.3
 --- !u!1 &508784571
 GameObject:
