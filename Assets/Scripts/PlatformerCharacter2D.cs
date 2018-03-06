@@ -19,6 +19,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float DefaultGravScale = 5.0f;
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
+        [SerializeField] private float TimeBetweenFootsteps;
         [SerializeField] private AudioClip JumpAudio;
         [SerializeField] private AudioClip WalkingAudio;
         [SerializeField] private AudioClip CollectionAudio;
@@ -36,6 +37,7 @@ namespace UnityStandardAssets._2D
         private Vector3 platformForce;
         private float dropTimer = 0.0f;
         private float animResetTimer;
+        private float footstepsTimer;
         private AudioSource audioSource;
         AnimationPlayer animator;
 
@@ -56,6 +58,7 @@ namespace UnityStandardAssets._2D
             animator = GetComponent<AnimationPlayer>();
             timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
             audioSource = GetComponent<AudioSource>();
+            footstepsTimer = 0.0f;
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();
@@ -248,6 +251,13 @@ namespace UnityStandardAssets._2D
                         // Character is walking
                         animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
                         animResetTimer = AnimTime;
+                        // Increment footsteps timer to see if a sound should be played
+                        footstepsTimer += Time.deltaTime;
+                        if (footstepsTimer > TimeBetweenFootsteps)
+                        {
+                            audioSource.PlayOneShot(WalkingAudio);
+                            footstepsTimer = 0.0f;
+                        }
                     }
                 }
                 // If the player should jump...

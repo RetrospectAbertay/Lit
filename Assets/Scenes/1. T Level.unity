@@ -1069,6 +1069,7 @@ MonoBehaviour:
   DefaultGravScale: 5
   FinalCollectTime: 2
   AnimTime: 1
+  TimeBetweenFootsteps: 0.3
   JumpAudio: {fileID: 8300000, guid: 599d1fcff2ed4e84f81bdc90ad883b4a, type: 3}
   WalkingAudio: {fileID: 8300000, guid: 4e10d2ff3519e0a488bd7eb5419990e8, type: 3}
   CollectionAudio: {fileID: 8300000, guid: f68f6e8887bb0b74eab02cbaefcbff32, type: 3}
