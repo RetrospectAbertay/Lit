@@ -39,6 +39,7 @@ namespace UnityStandardAssets._2D
         private float animResetTimer;
         private float footstepsTimer;
         private float movTimer;
+        private GameObject mainCam;
         private AudioSource audioSource;
         AnimationPlayer animator;
 
@@ -60,6 +61,7 @@ namespace UnityStandardAssets._2D
             timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
             audioSource = GetComponent<AudioSource>();
             footstepsTimer = 0.0f;
+            mainCam = GameObject.FindGameObjectWithTag("MainCamera");
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();
@@ -340,6 +342,7 @@ namespace UnityStandardAssets._2D
                 // freeze rigid body
                 rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
                 FreezeOtherObjects();
+                mainCam.GetComponent<AudioSource>().Stop();
                 animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                 if (other.GetComponent<Collectible>())
                 {

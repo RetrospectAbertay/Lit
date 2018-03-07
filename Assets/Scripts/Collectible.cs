@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour {
 
-    public GameObject uiTransform;
+    public Transform uiTransform;
     public float moveSpeed;
-    public float minDistance;
+    public float lerpSpeed;
+    public Vector3 finalScale;
     public GameObject particle;
+    public GameObject winningSound;
+    private float minDistance = 0.1f;
     bool isMoving;
 
 	// Use this for initialization
 	void Start () {
-
 	}
 	
 	// Update is called once per frame
@@ -21,7 +23,8 @@ public class Collectible : MonoBehaviour {
         {
             float step = Time.deltaTime * moveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, uiTransform.transform.position, step);
-            if(Vector3.Distance(transform.position, uiTransform.transform.position) < minDistance)
+            transform.localScale = Vector3.Lerp(transform.localScale, finalScale, Time.deltaTime);
+            if (Vector3.Distance(transform.position, uiTransform.position) < minDistance)
             {
                 DeactiveObject();
             }
@@ -36,8 +39,9 @@ public class Collectible : MonoBehaviour {
     public void DeactiveObject()
     {
         Debug.Log("collided with ui object");
-        uiTransform.GetComponent<SpriteRenderer>().enabled = true;
-        gameObject.SetActive(false);
+        transform.position = uiTransform.position;
         Instantiate(particle, uiTransform.transform);
+        Instantiate(winningSound, uiTransform.transform);
+        isMoving = false;
     }
 }

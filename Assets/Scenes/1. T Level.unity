@@ -507,11 +507,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f571073464b66104783b4d07467ec6c9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.213
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -701,12 +701,14 @@ Prefab:
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 61562019786893662, guid: 4ce8bffd991d73a48bd8fd3dbcef4162, type: 2}
+    - {fileID: 212698432881420608, guid: 4ce8bffd991d73a48bd8fd3dbcef4162, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 4ce8bffd991d73a48bd8fd3dbcef4162, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &302278835 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1446974029318882, guid: 4ce8bffd991d73a48bd8fd3dbcef4162,
+--- !u!4 &302278836 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4558779746564172, guid: 4ce8bffd991d73a48bd8fd3dbcef4162,
     type: 2}
   m_PrefabInternal: {fileID: 302278833}
 --- !u!1 &380628310
@@ -1148,9 +1150,9 @@ MonoBehaviour:
   FlickerDuration: 0.3
   BounceOnKillForce: 300
   DefaultGravScale: 5
-  FinalCollectTime: 2
+  FinalCollectTime: 5
   AnimTime: 0.2
-  TimeBetweenFootsteps: 0.3
+  TimeBetweenFootsteps: 0.4
   JumpAudio: {fileID: 8300000, guid: 599d1fcff2ed4e84f81bdc90ad883b4a, type: 3}
   WalkingAudio: {fileID: 8300000, guid: 4e10d2ff3519e0a488bd7eb5419990e8, type: 3}
   CollectionAudio: {fileID: 8300000, guid: f68f6e8887bb0b74eab02cbaefcbff32, type: 3}
@@ -1252,7 +1254,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 500676880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.42, y: -2.85, z: 0}
+  m_LocalPosition: {x: 5.03, y: -2.99, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1519764358}
@@ -3017,7 +3019,7 @@ GameObject:
   - component: {fileID: 1369274381}
   - component: {fileID: 1369274380}
   - component: {fileID: 1369274383}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: timex_t
   m_TagString: Collectible
   m_Icon: {fileID: 0}
@@ -3078,8 +3080,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -172649667
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9f209d1943507944c85b194efc28a75c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3115,10 +3117,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59843f60520ca5409275189f3520b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiTransform: {fileID: 302278835}
+  uiTransform: {fileID: 302278836}
   moveSpeed: 10
-  minDistance: 1
+  lerpSpeed: 10
+  finalScale: {x: 8, y: 8, z: 1}
   particle: {fileID: 1208854680702444, guid: d2d60ae9b85b84240a51497113067d54, type: 2}
+  winningSound: {fileID: 1540094546997842, guid: e03017551860260468219e9414f852d3,
+    type: 2}
 --- !u!1 &1400654013
 GameObject:
   m_ObjectHideFlags: 0
