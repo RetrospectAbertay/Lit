@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class WriteText : MonoBehaviour
 {
     public List<string> Paragraphs;
-    public float WriteSpeed;
+    public float maxWriteSpeed;
+    public float minWriteSpeed;
     public float TimeBetweenParagraphs = 2.0f;
     public AudioClip TypingSound;
     private AudioSource audioSource;
@@ -14,6 +15,7 @@ public class WriteText : MonoBehaviour
     string stringToDisplay;
     float paraTimer;
     float timer;
+    float curWriteSpeed;
     int curChar = 0;
     int curParagraph = 0;
     bool finishedWriting = false;
@@ -29,6 +31,9 @@ public class WriteText : MonoBehaviour
         // setup timer to init to 0
         timer = 0.0f;
         audioSource = GetComponent<AudioSource>();
+        // clamp frame rate for that spectrum feel
+        Application.targetFrameRate = 60;
+        curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
     }
 
     // Update is called once per frame
@@ -51,7 +56,7 @@ public class WriteText : MonoBehaviour
             {
                 // increment timer
                 timer += Time.deltaTime;
-                if (timer > WriteSpeed)
+                if (timer > curWriteSpeed)
                 {
                     // display a new character
                     updateText();
@@ -59,6 +64,8 @@ public class WriteText : MonoBehaviour
                     curChar++;
                     // reset timer
                     timer = 0.0f;
+                    // randomise the speed at which the next letter should be written
+                    curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
                 }
             }
         }
