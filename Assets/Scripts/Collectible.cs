@@ -10,6 +10,7 @@ public class Collectible : MonoBehaviour {
     public Vector3 finalScale;
     public GameObject particle;
     public GameObject winningSound;
+    public List<GameObject> previouslyCollectedObj;
     private float minDistance = 0.1f;
     bool isMoving;
 
@@ -43,5 +44,12 @@ public class Collectible : MonoBehaviour {
         Instantiate(particle, uiTransform.transform);
         Instantiate(winningSound, uiTransform.transform);
         isMoving = false;
+        for(int i = 0; i < previouslyCollectedObj.Count; i++)
+        {
+            if(previouslyCollectedObj[i].GetComponent<SpriteRenderer>())
+            {
+                previouslyCollectedObj[i].GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
     }
 }

@@ -7,13 +7,9 @@ TagManager:
   - Enemy
   - Head
   - Collectible
-  - M
-  - X
-  - I
-  - E
-  - T
   - MovingObject
   - LetterUI
+  - Death Collider
   layers:
   - Default
   - TransparentFX

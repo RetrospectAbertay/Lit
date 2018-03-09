@@ -27,7 +27,9 @@ namespace UnityStandardAssets._2D
         [SerializeField] private AudioClip JumpAudio;
         [SerializeField] private AudioClip WalkingAudio;
         [SerializeField] private AudioClip CollectionAudio;
+        [SerializeField] private bool EndlessPlayer = false;
 
+        private Transform respawnPosition;
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
         const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
@@ -46,9 +48,6 @@ namespace UnityStandardAssets._2D
         private GameObject mainCam;
         private AudioSource audioSource;
         AnimationPlayer animator;
-
-        // Timex UI elements
-        GameObject[] timexLetters;
         int unlockedLetters = 0;
         bool letterCollected = false;
 
@@ -62,13 +61,16 @@ namespace UnityStandardAssets._2D
             invincibilityTimer = 0.0f;
             rigidbody2D.gravityScale = DefaultGravScale;
             animator = GetComponent<AnimationPlayer>();
-            timexLetters = GameObject.FindGameObjectsWithTag("LetterUI").OrderBy(go => go.name).ToArray();
             audioSource = GetComponent<AudioSource>();
             footstepsTimer = 0.0f;
             mainCam = GameObject.FindGameObjectWithTag("MainCamera");
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();
+            if(!EndlessPlayer)
+            {
+                respawnPosition = GameObject.FindGameObjectWithTag("Respawn").transform;
+            }
             switch (curScene.name)
             {
                 case "1. T Level":
@@ -96,18 +98,6 @@ namespace UnityStandardAssets._2D
                         unlockedLetters = 4;
                     }
                     break;
-            }
-
-            for (int i = 0; i < timexLetters.Length; i++)
-            {
-                if (i < unlockedLetters)
-                {
-                    timexLetters[i].SetActive(true);
-                }
-                else
-                {
-                    timexLetters[i].SetActive(false);
-                }
             }
             // clamp frame rate for that spectrum feel
             Application.targetFrameRate = fpsClamp;
@@ -353,8 +343,6 @@ namespace UnityStandardAssets._2D
             //}
             if (other.gameObject.tag == "Collectible")
             {
-                // collect letter
-                timexLetters[(unlockedLetters)].SetActive(true);
                 // other.gameObject.SetActive(false);
                 letterCollected = true;
                 // freeze rigid body
@@ -367,6 +355,15 @@ namespace UnityStandardAssets._2D
                     other.GetComponent<Collectible>().ToggleMovement();
                 }
                 audioSource.PlayOneShot(CollectionAudio);
+            }
+
+            if(other.gameObject.tag == "Death Collider")
+            {
+                if(EndlessPlayer == false)
+                {
+                    transform.position = respawnPosition.position;
+                    invincibilityTimer = InvincibilityDuration;
+                }
             }
         }
 
