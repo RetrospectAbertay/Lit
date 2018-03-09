@@ -10,9 +10,13 @@ namespace UnityStandardAssets._2D
     {
         [SerializeField] private float MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField] private float JumpFwdForce = 200f;
+        [SerializeField] private float HighJumpForce = 800f;
+        [SerializeField] private float HighJumpFwdForce = 200f;
         [SerializeField] private bool AirControl = true;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private int StartingHealth = 3;
+        [SerializeField] private int fpsClamp = 15;
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
@@ -105,6 +109,8 @@ namespace UnityStandardAssets._2D
                     timexLetters[i].SetActive(false);
                 }
             }
+            // clamp frame rate for that spectrum feel
+            Application.targetFrameRate = fpsClamp;
         }
 
         private void FixedUpdate()
@@ -207,7 +213,7 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void Move(float axisInput, bool crouch, bool jump)
+        public void Move(float axisInput, bool highJump, bool jump)
         {
             if (!letterCollected)
             {
@@ -279,7 +285,19 @@ namespace UnityStandardAssets._2D
                 {
                     // Add a vertical force to the player.
                     grounded = false;
-                    rigidbody2D.AddForce(new Vector2(0f, JumpForce));
+                    rigidbody2D.velocity = Vector2.zero;
+                    float finalFwdForce = JumpFwdForce;
+                    float highJumpForce = JumpForce;
+                    if (highJump)
+                    {
+                        finalFwdForce = HighJumpFwdForce;
+                        highJumpForce = HighJumpForce;
+                    }
+                    if(!facingRight)
+                    {
+                        finalFwdForce = -finalFwdForce;
+                    }
+                    rigidbody2D.AddForce(new Vector2(finalFwdForce, highJumpForce));
                     Debug.Log("Attempted to jump!");
                     audioSource.PlayOneShot(JumpAudio);
                 }

@@ -30,7 +30,7 @@ namespace UnityStandardAssets._2D
         private void FixedUpdate()
         {
             // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
+            bool highJump = CrossPlatformInputManager.GetButton("Up");
             float h = 0.0f;
             if (CrossPlatformInputManager.GetButton("Right"))
             {
@@ -40,12 +40,13 @@ namespace UnityStandardAssets._2D
             {
                 h = -1.0f;
             }
-            if(m_Jump)
+
+            if (m_Jump)
             {
                 Debug.Log("attempting to jump!");
             }
             // Pass all parameters to the character control script.
-            m_Character.Move(h, crouch, m_Jump);
+            m_Character.Move(h, highJump, m_Jump);
             m_Jump = false;
         }
     }
