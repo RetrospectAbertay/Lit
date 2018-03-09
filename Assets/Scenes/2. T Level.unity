@@ -1684,6 +1684,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1173652978722990, guid: 3a1f24f2e8673154e87f67a762a00ef5,
         type: 2}
+    - target: {fileID: 114220943333788118, guid: 7f92e28dda19e0b42995664a4b49f4c2,
+        type: 2}
+      propertyPath: lerpSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7f92e28dda19e0b42995664a4b49f4c2, type: 2}
   m_IsPrefabParent: 0

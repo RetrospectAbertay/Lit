@@ -24,7 +24,7 @@ public class Collectible : MonoBehaviour {
         {
             float step = Time.deltaTime * moveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, uiTransform.transform.position, step);
-            transform.localScale = Vector3.Lerp(transform.localScale, finalScale, Time.deltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale, finalScale, lerpSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, uiTransform.position) < minDistance)
             {
                 DeactiveObject();

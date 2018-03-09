@@ -1623,6 +1623,11 @@ Prefab:
       propertyPath: uiTransform
       value: 
       objectReference: {fileID: 302278836}
+    - target: {fileID: 114220943333788118, guid: 7f92e28dda19e0b42995664a4b49f4c2,
+        type: 2}
+      propertyPath: lerpSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7f92e28dda19e0b42995664a4b49f4c2, type: 2}
   m_IsPrefabParent: 0
@@ -3383,11 +3388,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.03
+      value: 4.21
       objectReference: {fileID: 0}
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.99
+      value: 4.62
       objectReference: {fileID: 0}
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.z
