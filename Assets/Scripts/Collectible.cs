@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour {
 
-    public Transform uiTransform;
+    public Transform destinationTransform;
     public float moveSpeed;
-    public float lerpSpeed;
     public Vector3 finalScale;
     public GameObject particle;
     public GameObject winningSound;
     public List<GameObject> previouslyCollectedObj;
     private float minDistance = 0.1f;
     bool isMoving;
+    private float finalLerpAmnt;
+    private Vector3 initPos;
 
 	// Use this for initialization
 	void Start () {
+        initPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -23,9 +25,9 @@ public class Collectible : MonoBehaviour {
 		if(isMoving)
         {
             float step = Time.deltaTime * moveSpeed;
-            transform.position = Vector3.MoveTowards(transform.position, uiTransform.transform.position, step);
-            transform.localScale = Vector3.Lerp(transform.localScale, finalScale, lerpSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, uiTransform.position) < minDistance)
+            transform.position = Vector3.MoveTowards(transform.position, destinationTransform.transform.position, step);
+            transform.localScale = Vector3.Lerp(transform.localScale, finalScale, (Vector3.Distance(initPos, destinationTransform.position) / Vector3.Distance(transform.position, destinationTransform.position)) * Time.deltaTime);
+            if (Vector3.Distance(transform.position, destinationTransform.position) < minDistance)
             {
                 DeactiveObject();
             }
@@ -40,9 +42,9 @@ public class Collectible : MonoBehaviour {
     public void DeactiveObject()
     {
         Debug.Log("collided with ui object");
-        transform.position = uiTransform.position;
-        Instantiate(particle, uiTransform.transform);
-        Instantiate(winningSound, uiTransform.transform);
+        transform.position = destinationTransform.position;
+        Instantiate(particle, destinationTransform.transform);
+        Instantiate(winningSound, destinationTransform.transform);
         isMoving = false;
         for(int i = 0; i < previouslyCollectedObj.Count; i++)
         {
