@@ -64,11 +64,6 @@ namespace UnityStandardAssets._2D
             {
                 h = -1.0f;
             }
-
-            if (m_Jump)
-            {
-                h = 0.0f;   
-            }
             // Pass all parameters to the character control script.
             m_Character.Move(h, highJump, m_Jump);
             // Reset jump variables 

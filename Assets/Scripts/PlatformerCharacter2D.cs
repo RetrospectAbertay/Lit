@@ -230,6 +230,7 @@ namespace UnityStandardAssets._2D
         {
             if (!letterCollected)
             {
+                // this timer is used to make sure that axis input doesnt effect the jump
                 if (jumpTimer < 0.0f)
                 {
                     //only control the player if grounded or airControl is turned on
@@ -308,7 +309,9 @@ namespace UnityStandardAssets._2D
                         finalFwdForce *= -1;
                     }
                     Debug.Log(rigidbody2D.velocity);
+                    // reset velocity
                     rigidbody2D.velocity = new Vector2(0, 0);
+                    // add jump force
                     rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
                     audioSource.PlayOneShot(JumpAudio);
                     jumpTimer = 0.3f;

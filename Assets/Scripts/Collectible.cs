@@ -43,7 +43,6 @@ public class Collectible : MonoBehaviour {
     public void DeactiveObject()
     {
         Debug.Log("collided with ui object");
-        transform.position = destinationTransform.position;
         Instantiate(particle, destinationTransform.transform);
         Instantiate(winningSound, destinationTransform.transform);
         isMoving = false;

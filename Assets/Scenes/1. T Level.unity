@@ -3431,7 +3431,7 @@ Prefab:
     - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
         type: 2}
       propertyPath: JumpFwdForce
-      value: 300
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
         type: 2}
