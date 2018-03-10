@@ -10,6 +10,11 @@ TagManager:
   - MovingObject
   - LetterUI
   - Death Collider
+  - M
+  - X
+  - I
+  - E
+  - T
   layers:
   - Default
   - TransparentFX
@@ -19,7 +24,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Floor
   - 
   - 
   - 

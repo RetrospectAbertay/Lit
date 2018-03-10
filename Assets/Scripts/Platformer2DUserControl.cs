@@ -67,7 +67,7 @@ namespace UnityStandardAssets._2D
 
             if (m_Jump)
             {
-                
+                h = 0.0f;   
             }
             // Pass all parameters to the character control script.
             m_Character.Move(h, highJump, m_Jump);

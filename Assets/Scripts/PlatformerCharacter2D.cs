@@ -46,6 +46,7 @@ namespace UnityStandardAssets._2D
         private float movTimer;
         private GameObject mainCam;
         private AudioSource audioSource;
+        private float jumpTimer = 0.3f;
         AnimationPlayer animator;
         int unlockedLetters = 0;
         bool letterCollected = false;
@@ -173,6 +174,11 @@ namespace UnityStandardAssets._2D
                         flickerTimer = FlickerDuration;
                     }
                 }
+
+                if(jumpTimer > 0.0f)
+                {
+                    jumpTimer -= Time.deltaTime;
+                }
                 // axisInput player along with the plattform
                 transform.position += (platformForce * Time.deltaTime);
             }
@@ -224,67 +230,70 @@ namespace UnityStandardAssets._2D
         {
             if (!letterCollected)
             {
-                //only control the player if grounded or airControl is turned on
-                if (grounded || AirControl)
+                if (jumpTimer < 0.0f)
                 {
-                    float appliedForce = 0.0f;
-                    // If the input is moving the player right and the player is facing left...
-                    if (axisInput > 0.01)
+                    //only control the player if grounded or airControl is turned on
+                    if (grounded || AirControl)
                     {
-                        appliedForce = MaxSpeed;
-                        if (!facingRight)
+                        float appliedForce = 0.0f;
+                        // If the input is moving the player right and the player is facing left...
+                        if (axisInput > 0.01)
                         {
-                            // ... flip the player.
-                            Flip();
+                            appliedForce = MaxSpeed;
+                            if (!facingRight)
+                            {
+                                // ... flip the player.
+                                Flip();
+                            }
                         }
+                        // Otherwise if the input is moving the player left and the player is facing right...
+                        else if (axisInput < -0.01)
+                        {
+                            appliedForce = -MaxSpeed;
+                            if (facingRight)
+                            {
+                                // ... flip the player.
+                                Flip();
+                            }
+                        }
+                        // Move the character
+                        rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
                     }
-                    // Otherwise if the input is moving the player left and the player is facing right...
-                    else if (axisInput < -0.01)
+                    if (grounded == false)
                     {
-                        appliedForce = -MaxSpeed;
-                        if (facingRight)
-                        {
-                            // ... flip the player.
-                            Flip();
-                        }
-                    }
-                    // Move the character
-                    rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
-                }
-                if (grounded == false)
-                {
 
-                }
-                else
-                {
-                    if (Mathf.Abs(axisInput) > 0.0f)
-                    {
-                        // Character is walking
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
-                        animResetTimer = AnimTime;
-                        // check for when the last time was, that player input was recieved - if it was not recenlty, play footstep sound immediately
-                        if(movTimer <= 0)
-                        {
-                            movTimer = 0.3f;
-                            footstepsTimer = TimeBetweenFootsteps;
-                        }
-                        // Increment footsteps timer to see if a sound should be played
-                        footstepsTimer += Time.deltaTime;
-                        if (footstepsTimer >= TimeBetweenFootsteps)
-                        {
-                            audioSource.PlayOneShot(WalkingAudio);
-                            footstepsTimer = 0.0f;
-                        }
                     }
                     else
                     {
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                        if (Mathf.Abs(axisInput) > 0.0f)
+                        {
+                            // Character is walking
+                            animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
+                            animResetTimer = AnimTime;
+                            // check for when the last time was, that player input was recieved - if it was not recenlty, play footstep sound immediately
+                            if (movTimer <= 0)
+                            {
+                                movTimer = 0.3f;
+                                footstepsTimer = TimeBetweenFootsteps;
+                            }
+                            // Increment footsteps timer to see if a sound should be played
+                            footstepsTimer += Time.deltaTime;
+                            if (footstepsTimer >= TimeBetweenFootsteps)
+                            {
+                                audioSource.PlayOneShot(WalkingAudio);
+                                footstepsTimer = 0.0f;
+                            }
+                        }
+                        else
+                        {
+                            animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                        }
                     }
                 }
                 // If the player should jump...
                 if (grounded && jump)
                 {
-
+                    animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
                     // Add a vertical force to the player.
                     grounded = false;
                     float finalFwdForce = JumpFwdForce;
@@ -298,10 +307,11 @@ namespace UnityStandardAssets._2D
                     {
                         finalFwdForce *= -1;
                     }
-                    rigidbody2D.velocity = Vector2.zero;
                     Debug.Log(rigidbody2D.velocity);
-                    rigidbody2D.velocity = new Vector2(finalFwdForce, finalUpForce);
+                    rigidbody2D.velocity = new Vector2(0, 0);
+                    rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
                     audioSource.PlayOneShot(JumpAudio);
+                    jumpTimer = 0.3f;
                 }
             }
         }

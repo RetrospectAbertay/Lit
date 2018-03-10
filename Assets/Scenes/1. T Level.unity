@@ -1716,7 +1716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 830321033}
   - component: {fileID: 830321034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3426,17 +3426,27 @@ Prefab:
     - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
         type: 2}
       propertyPath: JumpUpForce
-      value: 10
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
         type: 2}
       propertyPath: JumpFwdForce
-      value: 5
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
         type: 2}
       propertyPath: AnimTime
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: WhatIsGround.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: HighJumpUpForce
+      value: 700
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
