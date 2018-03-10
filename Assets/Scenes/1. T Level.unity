@@ -3423,36 +3423,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: EndlessPlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: fpsClamp
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: JumpFwdForce
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: JumpUpForce
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: HighJumpFwdForce
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: HighJumpUpForce
-      value: 600
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
   m_IsPrefabParent: 0

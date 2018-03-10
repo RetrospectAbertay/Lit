@@ -202,7 +202,7 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void Move(float axisInput, bool highJump, bool jump, bool doubleJump)
+        public void Move(float axisInput, bool highJump, bool jump)
         {
             // create variables to determine the style of jump
             bool fwdJump = false;
@@ -280,7 +280,7 @@ namespace UnityStandardAssets._2D
                     grounded = false;
                     float finalFwdForce = JumpFwdForce;
                     float finalUpForce = JumpUpForce;
-                    if(doubleJump)
+                    if(highJump)
                     {
                         finalFwdForce = HighJumpFwdForce;
                         finalUpForce = HighJumpUpForce;
@@ -289,9 +289,11 @@ namespace UnityStandardAssets._2D
                     {
                         finalFwdForce *= -1;
                     }
-                    //rigidbody2D.velocity = Vector2.zero;
+                    Debug.Log(rigidbody2D.velocity);
+                    rigidbody2D.velocity = Vector2.zero;
+                    Debug.Log(rigidbody2D.velocity);
                     rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
-                    Debug.Log("Attempted to jump!");
+                    //Debug.Log("Attempted to jump!");
                     audioSource.PlayOneShot(JumpAudio);
                 }
             }
