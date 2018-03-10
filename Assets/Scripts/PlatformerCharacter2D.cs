@@ -102,6 +102,24 @@ namespace UnityStandardAssets._2D
             // Application.targetFrameRate = fpsClamp;
         }
 
+        private void Update()
+        {
+            if (grounded == false)
+            {
+                // reset belt force
+                beltForce = 0.0f;
+                platformForce = new Vector3(0, 0, 0);
+                if (!animator.RunningAirFrame())
+                {
+                    animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
+                }
+            }
+            else
+            {
+
+            }
+        }
+
         private void FixedUpdate()
         {
             // check if letter has been collected
@@ -204,8 +222,6 @@ namespace UnityStandardAssets._2D
 
         public void Move(float axisInput, bool highJump, bool jump)
         {
-            // create variables to determine the style of jump
-            bool fwdJump = false;
             if (!letterCollected)
             {
                 //only control the player if grounded or airControl is turned on
@@ -237,20 +253,10 @@ namespace UnityStandardAssets._2D
                 }
                 if (grounded == false)
                 {
-                    // reset belt force
-                    beltForce = 0.0f;
-                    platformForce = new Vector3(0, 0, 0);
-                    if (!animator.RunningAirFrame())
-                    {
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
-                    }
+
                 }
                 else
                 {
-                    if (animator.RunningAirFrame())
-                    {
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
-                    }
                     if (Mathf.Abs(axisInput) > 0.0f)
                     {
                         // Character is walking
@@ -269,13 +275,16 @@ namespace UnityStandardAssets._2D
                             audioSource.PlayOneShot(WalkingAudio);
                             footstepsTimer = 0.0f;
                         }
-                        // we have input on the axis - make a forward jump
-                        fwdJump = true;
+                    }
+                    else
+                    {
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     }
                 }
                 // If the player should jump...
                 if (grounded && jump)
                 {
+
                     // Add a vertical force to the player.
                     grounded = false;
                     float finalFwdForce = JumpFwdForce;
@@ -289,11 +298,9 @@ namespace UnityStandardAssets._2D
                     {
                         finalFwdForce *= -1;
                     }
-                    Debug.Log(rigidbody2D.velocity);
                     rigidbody2D.velocity = Vector2.zero;
                     Debug.Log(rigidbody2D.velocity);
-                    rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
-                    //Debug.Log("Attempted to jump!");
+                    rigidbody2D.velocity = new Vector2(finalFwdForce, finalUpForce);
                     audioSource.PlayOneShot(JumpAudio);
                 }
             }

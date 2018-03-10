@@ -261,8 +261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 6
-  JumpUpForce: 500
-  JumpFwdForce: 300
+  JumpUpForce: 400
+  JumpFwdForce: 400
   HighJumpUpForce: 600
   HighJumpFwdForce: 150
   AirControl: 0
