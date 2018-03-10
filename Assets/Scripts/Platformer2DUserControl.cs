@@ -9,7 +9,8 @@ namespace UnityStandardAssets._2D
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
-
+        private bool m_DoubleJump;
+        private float m_JumpTimer = 0.0f;
 
         private void Awake()
         {
@@ -23,6 +24,11 @@ namespace UnityStandardAssets._2D
             {
                 // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                m_JumpTimer = 0.1f;
+            }
+            if(m_JumpTimer > 0.0f)
+            {
+                m_JumpTimer -= Time.deltaTime;
             }
         }
 

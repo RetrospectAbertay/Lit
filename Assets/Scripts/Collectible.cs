@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour {
 
-    public Transform destinationTransform;
     public float moveSpeed;
     public Vector3 finalScale;
     public GameObject particle;
     public GameObject winningSound;
     public List<GameObject> previouslyCollectedObj;
+    private Transform destinationTransform;
     private float minDistance = 0.1f;
     bool isMoving;
     private float finalLerpAmnt;
@@ -18,6 +18,7 @@ public class Collectible : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         initPos = transform.position;
+        destinationTransform = GameObject.FindGameObjectWithTag("LetterUI").transform;
 	}
 	
 	// Update is called once per frame

@@ -9,14 +9,13 @@ namespace UnityStandardAssets._2D
     public class PlatformerCharacter2D : MonoBehaviour
     {
         [SerializeField] private float MaxSpeed = 6f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float JumpForce = 800f;                  // Amount of force added when the player jumps.
+        [SerializeField] private float JumpUpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private float JumpFwdForce = 200f;
-        [SerializeField] private float HighJumpForce = 800f;
-        [SerializeField] private float HighJumpFwdForce = 200f;
+        [SerializeField] private float HighJumpUpForce = 600f;
+        [SerializeField] private float HighJumpFwdForce = 100f;
         [SerializeField] private bool AirControl = true;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private int StartingHealth = 3;
-        [SerializeField] private int fpsClamp = 15;
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
@@ -100,7 +99,7 @@ namespace UnityStandardAssets._2D
                     break;
             }
             // clamp frame rate for that spectrum feel
-            Application.targetFrameRate = fpsClamp;
+            // Application.targetFrameRate = fpsClamp;
         }
 
         private void FixedUpdate()
@@ -203,8 +202,10 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void Move(float axisInput, bool highJump, bool jump)
+        public void Move(float axisInput, bool highJump, bool jump, bool doubleJump)
         {
+            // create variables to determine the style of jump
+            bool fwdJump = false;
             if (!letterCollected)
             {
                 //only control the player if grounded or airControl is turned on
@@ -268,6 +269,8 @@ namespace UnityStandardAssets._2D
                             audioSource.PlayOneShot(WalkingAudio);
                             footstepsTimer = 0.0f;
                         }
+                        // we have input on the axis - make a forward jump
+                        fwdJump = true;
                     }
                 }
                 // If the player should jump...
@@ -275,19 +278,19 @@ namespace UnityStandardAssets._2D
                 {
                     // Add a vertical force to the player.
                     grounded = false;
-                    rigidbody2D.velocity = Vector2.zero;
                     float finalFwdForce = JumpFwdForce;
-                    float highJumpForce = JumpForce;
-                    if (highJump)
+                    float finalUpForce = JumpUpForce;
+                    if(doubleJump)
                     {
                         finalFwdForce = HighJumpFwdForce;
-                        highJumpForce = HighJumpForce;
+                        finalUpForce = HighJumpUpForce;
                     }
                     if(!facingRight)
                     {
-                        finalFwdForce = -finalFwdForce;
+                        finalFwdForce *= -1;
                     }
-                    rigidbody2D.AddForce(new Vector2(finalFwdForce, highJumpForce));
+                    //rigidbody2D.velocity = Vector2.zero;
+                    rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
                     Debug.Log("Attempted to jump!");
                     audioSource.PlayOneShot(JumpAudio);
                 }

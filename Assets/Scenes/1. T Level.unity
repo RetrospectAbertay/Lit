@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 65924851}
   m_Layer: 0
   m_Name: letter_destination
-  m_TagString: Untagged
+  m_TagString: LetterUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3427,6 +3427,31 @@ Prefab:
         type: 2}
       propertyPath: EndlessPlayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: fpsClamp
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: JumpFwdForce
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: JumpUpForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: HighJumpFwdForce
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: HighJumpUpForce
+      value: 600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
