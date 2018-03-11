@@ -131,10 +131,15 @@ namespace UnityStandardAssets._2D
                 // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
                 // This can be done using layers instead but Sample Assets will not overwrite your project settings.
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, WhatIsGround);
+                bool onPlatform = false;
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     if (colliders[i].gameObject != gameObject)
                     {
+                        if(AirControl)
+                        {
+                            AirControl = false;
+                        }
                         grounded = true;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
@@ -147,8 +152,13 @@ namespace UnityStandardAssets._2D
                         {
                             // update platform momentum
                             platformForce = colliders[i].transform.GetComponent<PlatformMovement>().getPlatformMovement();
+                            onPlatform = true;
                         }
                     }
+                }
+                if(!onPlatform)
+                {
+                    platformForce = new Vector2(0, 0);
                 }
                 if (animResetTimer > 0.0f)
                 {
@@ -234,7 +244,7 @@ namespace UnityStandardAssets._2D
                 if (jumpTimer < 0.0f)
                 {
                     //only control the player if grounded or airControl is turned on
-                    if (grounded || AirControl)
+                    if (grounded)
                     {
                         float appliedForce = 0.0f;
                         // If the input is moving the player right and the player is facing left...
@@ -308,7 +318,6 @@ namespace UnityStandardAssets._2D
                     {
                         finalFwdForce *= -1;
                     }
-                    Debug.Log(rigidbody2D.velocity);
                     // reset velocity
                     rigidbody2D.velocity = new Vector2(0, 0);
                     // add jump force
@@ -352,20 +361,21 @@ namespace UnityStandardAssets._2D
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
                             grounded = false;
-                            rigidbody2D.velocity = Vector2.zero;
+                            rigidbody2D.velocity = new Vector2(0, 0);
                             rigidbody2D.AddForce(new Vector2(0f, BounceOnKillForce));
                         }
                     }
                 }
             }
-            //if (other.gameObject.GetComponent<BouncePad>())
-            //{
-            //    // apply force to bounce pad
-            //    m_grounded = false;
-            //    m_rigidbody2D.velocity = Vector2.zero;
-            //    m_rigidbody2D.gravityScale = m_DefaultGravScale;
-            //    m_rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
-            //}
+            if (other.gameObject.GetComponent<BouncePad>())
+            {
+                // apply force to bounce pad
+                grounded = false;
+                rigidbody2D.velocity = new Vector2(0, 0);
+                rigidbody2D.gravityScale = DefaultGravScale;
+                rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
+                jumpTimer = 0.3f;
+            }
             if (other.gameObject.tag == "Collectible")
             {
                 // other.gameObject.SetActive(false);
