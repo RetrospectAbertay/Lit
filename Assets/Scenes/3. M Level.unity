@@ -980,7 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecef1fdbdf0337d47bd4b7f8387224df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BounceForce: {x: -30, y: 200}
+  m_BounceForce: {x: -35, y: 230}
 --- !u!1 &330428603
 GameObject:
   m_ObjectHideFlags: 0
