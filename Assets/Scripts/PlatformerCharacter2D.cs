@@ -386,6 +386,7 @@ namespace UnityStandardAssets._2D
             {
                 if(EndlessPlayer == false)
                 {
+                    Debug.Log("player fell to their death!");
                     transform.position = respawnPosition.position;
                     invincibilityTimer = InvincibilityDuration;
                 }

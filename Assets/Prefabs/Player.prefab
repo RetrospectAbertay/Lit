@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982182018024362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.22, y: -3, z: 0}
+  m_LocalPosition: {x: 9.17, y: -2.91, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4111894111486366}
@@ -86,8 +86,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 0.19403893
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
@@ -261,10 +261,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 6
-  JumpUpForce: 500
-  JumpFwdForce: 200
-  HighJumpUpForce: 700
-  HighJumpFwdForce: 150
+  JumpUpForce: 100
+  JumpFwdForce: 50
+  HighJumpUpForce: 150
+  HighJumpFwdForce: 20
   AirControl: 0
   WhatIsGround:
     serializedVersion: 2
@@ -280,7 +280,7 @@ MonoBehaviour:
   JumpAudio: {fileID: 8300000, guid: 599d1fcff2ed4e84f81bdc90ad883b4a, type: 3}
   WalkingAudio: {fileID: 8300000, guid: 4e10d2ff3519e0a488bd7eb5419990e8, type: 3}
   CollectionAudio: {fileID: 8300000, guid: f68f6e8887bb0b74eab02cbaefcbff32, type: 3}
-  EndlessPlayer: 1
+  EndlessPlayer: 0
 --- !u!212 &212207895173101526
 SpriteRenderer:
   m_ObjectHideFlags: 1

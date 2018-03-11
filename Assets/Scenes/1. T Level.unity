@@ -3985,9 +3985,57 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: JumpUpForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: JumpFwdForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: HighJumpUpForce
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: HighJumpFwdForce
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1911673939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1911673940}
+  m_Layer: 0
+  m_Name: Respawn
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911673940
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1911673939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.61, y: -2.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1918212861
 GameObject:
   m_ObjectHideFlags: 0
