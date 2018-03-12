@@ -19,10 +19,13 @@ public class MenuNavigation : MonoBehaviour {
     public List<Image> SelectionIndicator;
     private int curSelection;
     private int selectedLevel;
+    private string levelSelectString = "TIMEX";
+    private int levelsUnlocked = 5;
 
 	// Use this for initialization
 	void Start () {
         SwitchMenu(MenuState.MAIN);
+
 	}
 	
 	// Update is called once per frame
@@ -41,7 +44,15 @@ public class MenuNavigation : MonoBehaviour {
         {
             ConfirmMenuSelection();
         }
-	}
+        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeLevel(true);
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangeLevel(false);
+        }
+    }
 
     void SwitchMenu(MenuState newState)
     {
@@ -121,6 +132,8 @@ public class MenuNavigation : MonoBehaviour {
                         case 0:
                             {
                                 SwitchMenu(MenuState.LEVELSELECT);
+                                selectedLevel = 0;
+                                UpdateLevelSelect();
                                 break;
                             }
                         case 1:
@@ -191,5 +204,53 @@ public class MenuNavigation : MonoBehaviour {
                     break;
                 }
         }
+    }
+
+    void ChangeLevel(bool selectionIncrement)
+    {
+        if(selectionIncrement)
+        {
+            selectedLevel++;
+            if(selectedLevel > (levelsUnlocked - 1))
+            {
+                selectedLevel = 0;
+            }
+        }
+        else
+        {
+            selectedLevel--;
+            if(selectedLevel < 0)
+            {
+                selectedLevel = levelsUnlocked - 1;
+            }
+        }
+        UpdateLevelSelect();
+    }
+
+    void UpdateLevelSelect()
+    {
+        string tempString = "LEVEL : ";
+        for(int i = 0; i < levelsUnlocked; i++)
+        {
+            if (i == selectedLevel)
+            {
+                tempString += "<color=#00ff00ff>";
+            }
+            else
+            {
+                tempString += "<color=#ffffffff>";
+            }
+            tempString += levelSelectString[i];
+            if(i == levelsUnlocked)
+            {
+                
+            }
+            else
+            {
+                tempString += " ";
+            }
+            tempString += "</color>";
+        }
+        LevelSelectMenuText[0].GetComponent<Text>().text = tempString;
     }
 }
