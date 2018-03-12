@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuNavigation : MonoBehaviour {
 
@@ -44,13 +45,16 @@ public class MenuNavigation : MonoBehaviour {
         {
             ConfirmMenuSelection();
         }
-        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (curSelection == 0 && curState == MenuState.LEVELSELECT)
         {
-            ChangeLevel(true);
-        }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            ChangeLevel(false);
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChangeLevel(true);
+            }
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                ChangeLevel(false);
+            }
         }
     }
 
@@ -164,6 +168,7 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         case 1:
                             {
+                                LoadSelectedLevel();
                                 break;
                             }
                         case 2:
@@ -252,5 +257,41 @@ public class MenuNavigation : MonoBehaviour {
             tempString += "</color>";
         }
         LevelSelectMenuText[0].GetComponent<Text>().text = tempString;
+    }
+
+    void LoadSelectedLevel()
+    {
+        switch(selectedLevel)
+        {
+            case 0:
+                {
+                    SceneManager.LoadScene("1. T Level");
+                    break;
+                }
+            case 1:
+                {
+                    SceneManager.LoadScene("2. I Level");
+                    break;
+                }
+            case 2:
+                {
+                    SceneManager.LoadScene("3. M Level");
+                    break;
+                }
+            case 3:
+                {
+                    SceneManager.LoadScene("4. E Level");
+                    break;
+                }
+            case 4:
+                {
+                    SceneManager.LoadScene("5. X Level");
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 }
