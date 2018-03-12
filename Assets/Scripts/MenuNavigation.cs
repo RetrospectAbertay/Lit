@@ -12,12 +12,13 @@ public class MenuNavigation : MonoBehaviour {
         LEVELSELECT
     }
 
+    private MenuState curState;
     private List<GameObject> CurMenuText = new List<GameObject>();
     public List<GameObject> MainMenuText;
     public List<GameObject> LevelSelectMenuText;
     public List<Image> SelectionIndicator;
     private int curSelection;
-    private MenuState curState;
+    private int selectedLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,10 @@ public class MenuNavigation : MonoBehaviour {
         {
             curSelection++;
             UpdateMenuSelection();
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            ConfirmMenuSelection();
         }
 	}
 
@@ -69,6 +74,11 @@ public class MenuNavigation : MonoBehaviour {
                     break;
                 }
         }
+        // Activate next menu screen
+        for (int i = 0; i < CurMenuText.Count; i++)
+        {
+            CurMenuText[i].SetActive(true);
+        }
         // setup selection
         curSelection = 0;
         // apply new selection
@@ -97,6 +107,89 @@ public class MenuNavigation : MonoBehaviour {
             {
                 CurMenuText[i].GetComponent<Text>().color = Color.white;
             }
+        }
+    }
+
+    void ConfirmMenuSelection()
+    {
+        switch(curState)
+        {
+            case MenuState.MAIN:
+                {
+                    switch(curSelection)
+                    {
+                        case 0:
+                            {
+                                SwitchMenu(MenuState.LEVELSELECT);
+                                break;
+                            }
+                        case 1:
+                            {
+                                SwitchMenu(MenuState.OPTIONS);
+                                break;
+                            }
+                        case 2:
+                            {
+                                Application.Quit();
+                                break;
+                            }
+                        default:
+                            {
+                                Debug.Log("Triggered default switch");
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case MenuState.LEVELSELECT:
+                {
+                    switch (curSelection)
+                    {
+                        case 0:
+                            {
+                                break;
+                            }
+                        case 1:
+                            {
+                                break;
+                            }
+                        case 2:
+                            {
+                                SwitchMenu(MenuState.MAIN);
+                                break;
+                            }
+                        default:
+                            {
+                                Debug.Log("Triggered default switch");
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case MenuState.OPTIONS:
+                {
+                    switch (curSelection)
+                    {
+                        case 0:
+                            {
+                                break;
+                            }
+                        case 1:
+                            {
+                                break;
+                            }
+                        case 2:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                Debug.Log("Triggered default switch");
+                                break;
+                            }
+                    }
+                    break;
+                }
         }
     }
 }
