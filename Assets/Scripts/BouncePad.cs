@@ -5,23 +5,40 @@ using UnityEngine;
 public class BouncePad : MonoBehaviour
 {
 
-    [SerializeField]
-    private Vector2 m_BounceForce;
+    [SerializeField] private Vector2 m_BounceForce;
+    public List<Sprite> animSprites = new List<Sprite>();
+    public float resetTime = 1.0f;
+    private float resetTimer = 0.0f;
+    private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
-
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(resetTimer > 0)
+        {
+            resetTimer -= Time.deltaTime;
+            if(resetTimer <= 0)
+            {
+                spriteRenderer.sprite = animSprites[0];
+            }
+        }
     }
 
     public Vector2 GetBounceForce()
     {
-        return m_BounceForce;
+        Vector2 curBounceForce = Vector2.zero;
+        if (resetTimer <= 0)
+        {
+            resetTimer = resetTime;
+            spriteRenderer.sprite = animSprites[1];
+            curBounceForce = m_BounceForce;
+        } 
+        return curBounceForce;
     }
 }
