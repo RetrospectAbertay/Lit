@@ -47,6 +47,7 @@ namespace UnityStandardAssets._2D
         private GameObject mainCam;
         private AudioSource audioSource;
         private float jumpTimer = 0.3f;
+        private GameObject menuCanvas;
         AnimationPlayer animator;
         int unlockedLetters = 0;
         bool letterCollected = false;
@@ -64,6 +65,7 @@ namespace UnityStandardAssets._2D
             audioSource = GetComponent<AudioSource>();
             footstepsTimer = 0.0f;
             mainCam = GameObject.FindGameObjectWithTag("MainCamera");
+            menuCanvas = GameObject.FindGameObjectWithTag("MenuCanvas");
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();

@@ -15,6 +15,7 @@ TagManager:
   - I
   - E
   - T
+  - MenuCanvas
   layers:
   - Default
   - TransparentFX
