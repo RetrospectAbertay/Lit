@@ -12,7 +12,8 @@ public class TransitionScript : MonoBehaviour {
         SecondLevel,
         ThirdLevel,
         FourthLevel,
-        FifthLevel
+        FifthLevel,
+        Menu
     }
 
     public TRANSITLEVEL nextLevel;
@@ -43,6 +44,9 @@ public class TransitionScript : MonoBehaviour {
                     break;
                 case TRANSITLEVEL.FifthLevel:
                     SceneManager.LoadScene("5. X Level");
+                    break;
+                case TRANSITLEVEL.Menu:
+                    SceneManager.LoadScene("Menu");
                     break;
             }
         }

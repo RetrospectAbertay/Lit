@@ -681,16 +681,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Paragraphs:
-  - iasm rarely seen this side of the Pond.rew new industries into She-Town from lands
+  - It was the magic of their hands which drew new industries into She-Town from lands
     far far away. They came here with ambition and an enthusiasm rarely seen this
     side of the Pond.
   - And things started to change in She-Town. The deafening clacking of the looms
     was quickly replaced by the soft purr of the assembly line. The jute industry
     went away to India and took its dust with it. She-Town started blushing a healthy
-    shade of pink. The women could finally breathe. Their magic touch was now split
-    between caring for their young and working the line at dusk. The work kept their
-    hands busy while their voices united in song, and gossip, and tales. And as their
-    hands grew versed their bonds grew stronger. Spring had finally arrived in She-Town.
+    shade of pink. The women could finally breathe.
+  - Their magic touch was now split between caring for their young and working the
+    line at dusk. The work kept their hands busy while their voices united in song,
+    and gossip, and tales. And as their hands grew versed their bonds grew stronger.
+    Spring had finally arrived in She-Town.
   maxWriteSpeed: 0.1
   minWriteSpeed: 0.03
   TimeBetweenParagraphs: 3
