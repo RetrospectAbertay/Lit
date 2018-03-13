@@ -164,14 +164,10 @@ public class MenuNavigation : MonoBehaviour {
                     {
                         case 0:
                             {
-                                break;
-                            }
-                        case 1:
-                            {
                                 LoadSelectedLevel();
                                 break;
                             }
-                        case 2:
+                        case 1:
                             {
                                 SwitchMenu(MenuState.MAIN);
                                 break;
