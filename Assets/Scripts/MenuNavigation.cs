@@ -10,14 +10,16 @@ public class MenuNavigation : MonoBehaviour {
     {
         MAIN,
         OPTIONS,
-        LEVELSELECT
+        LEVELSELECT,
+        LOADING
     }
 
     private MenuState curState;
     private List<GameObject> CurMenuText = new List<GameObject>();
-    public List<GameObject> MainMenuText;
-    public List<GameObject> LevelSelectMenuText;
-    public List<Image> SelectionIndicator;
+    public List<GameObject> MainMenuText = new List<GameObject>();
+    public List<GameObject> LevelSelect = new List<GameObject>();
+    public List<GameObject> LoadingText = new List<GameObject>();
+    public List<Image> SelectionIndicator = new List<Image>();
     private int curSelection;
     private int selectedLevel;
     private string levelSelectString = "TIMEX";
@@ -81,7 +83,12 @@ public class MenuNavigation : MonoBehaviour {
                 }
             case MenuState.LEVELSELECT:
                 {
-                    CurMenuText = LevelSelectMenuText;
+                    CurMenuText = LevelSelect;
+                    break;
+                }
+            case MenuState.LOADING:
+                {
+                    CurMenuText = LoadingText;
                     break;
                 }
             default:
@@ -114,7 +121,7 @@ public class MenuNavigation : MonoBehaviour {
         }
         for(int i = 0; i < CurMenuText.Count; i++)
         {
-            if(i == curSelection)
+            if(i == curSelection && CurMenuText != LoadingText)
             {
                 CurMenuText[i].GetComponent<Text>().color = Color.green;
             }
@@ -164,6 +171,7 @@ public class MenuNavigation : MonoBehaviour {
                     {
                         case 0:
                             {
+                                SwitchMenu(MenuState.LOADING);
                                 LoadSelectedLevel();
                                 break;
                             }
@@ -202,6 +210,10 @@ public class MenuNavigation : MonoBehaviour {
                                 break;
                             }
                     }
+                    break;
+                }
+            case MenuState.LOADING:
+                {
                     break;
                 }
         }
@@ -252,7 +264,7 @@ public class MenuNavigation : MonoBehaviour {
             }
             tempString += "</color>";
         }
-        LevelSelectMenuText[0].GetComponent<Text>().text = tempString;
+        LevelSelect[0].GetComponent<Text>().text = tempString;
     }
 
     void LoadSelectedLevel()
