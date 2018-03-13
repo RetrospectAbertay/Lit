@@ -12,15 +12,25 @@ namespace UnityStandardAssets._2D
         private bool m_Jump;
         private bool m_HighJump;
         private float m_JumpTimer = 0.0f;
+        private bool m_TogglingMenu = false;
+        private MenuInGame inGameMenu;
 
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
+            inGameMenu = GameObject.FindGameObjectWithTag("MenuCanvas").GetComponent<MenuInGame>();
         }
 
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (m_Character.FinishingGame() == false)
+                {
+                    m_TogglingMenu = true;
+                }
+            }
             if (!m_Jump)
             {
                 // Read the jump input in Update so button presses aren't missed.
@@ -48,30 +58,46 @@ namespace UnityStandardAssets._2D
                     m_Jump = true;
                 }
             }
+            if(inGameMenu.wantsToToggle())
+            {
+                m_Jump = false;
+                m_HighJump = false;
+            }
         }
 
 
         private void FixedUpdate()
         {
-            // Read the inputs.
-            bool highJump = m_HighJump;
-            float h = 0.0f;
-            if (CrossPlatformInputManager.GetButton("Right"))
+            if (m_TogglingMenu || inGameMenu.wantsToToggle())
             {
-                h = 1.0f;
+                m_Character.ToggleFreezeAllObjects();
+                inGameMenu.ToggleMenu();
+                m_TogglingMenu = false;
+                // make sure player doesnt jump because they need to press space to exit menu
+                m_Jump = false;
             }
-            if (CrossPlatformInputManager.GetButton("Left"))
+            if (!inGameMenu.IsInMenu())
             {
-                h = -1.0f;
-            }
-            // Pass all parameters to the character control script.
-            m_Character.Move(h, highJump, m_Jump);
-            // Reset jump variables 
-            m_Jump = false;
-            if(highJump)
-            {
-                Debug.Log("Performed high jump");
-                m_HighJump = false;
+                // Read the inputs.
+                bool highJump = m_HighJump;
+                float h = 0.0f;
+                if (CrossPlatformInputManager.GetButton("Right"))
+                {
+                    h = 1.0f;
+                }
+                if (CrossPlatformInputManager.GetButton("Left"))
+                {
+                    h = -1.0f;
+                }
+                // Pass all parameters to the character control script.
+                m_Character.Move(h, highJump, m_Jump);
+                // Reset jump variables 
+                m_Jump = false;
+                if (highJump)
+                {
+                    Debug.Log("Performed high jump");
+                    m_HighJump = false;
+                }
             }
         }
     }

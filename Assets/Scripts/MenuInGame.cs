@@ -13,18 +13,19 @@ public class MenuInGame : MonoBehaviour {
         LOADING
     }
 
-    private UnityStandardAssets._2D.Platformer2DUserControl player;
     private MenuState curState;
-    private List<GameObject> CurMenuText = new List<GameObject>();
+    private List<GameObject> curMenuText = new List<GameObject>();
     public List<GameObject> MainMenuText = new List<GameObject>();
     public List<GameObject> Options = new List<GameObject>();
     public List<GameObject> LoadingText = new List<GameObject>();
     private int curSelection;
     private bool menuIsOpen;
+    private bool signalToggle;
 
     // Use this for initialization
     void Start () {
         menuIsOpen = false;
+        curMenuText = MainMenuText;
 	}
 	
 	// Update is called once per frame
@@ -49,14 +50,20 @@ public class MenuInGame : MonoBehaviour {
         }
     }
 
+    public bool IsInMenu()
+    {
+        return menuIsOpen;
+    }
+
     public void ToggleMenu()
     {
         menuIsOpen = !menuIsOpen;
-        if(menuIsOpen)
+        curSelection = 0;
+        if(!menuIsOpen)
         {
-            for (int i = 0; i < CurMenuText.Count; i++)
+            for (int i = 0; i < curMenuText.Count; i++)
             {
-                CurMenuText[i].SetActive(false);
+                curMenuText[i].SetActive(false);
             }
         }
         else
@@ -70,15 +77,15 @@ public class MenuInGame : MonoBehaviour {
         // update state
         curState = newState;
         // turn of previous menu
-        for (int i = 0; i < CurMenuText.Count; i++)
+        for (int i = 0; i < curMenuText.Count; i++)
         {
-            CurMenuText[i].SetActive(false);
+            curMenuText[i].SetActive(false);
         }
         switch (curState)
         {
             case MenuState.MAIN:
                 {
-                    CurMenuText = MainMenuText;
+                    curMenuText = MainMenuText;
                     break;
                 }
             case MenuState.OPTIONS:
@@ -88,7 +95,7 @@ public class MenuInGame : MonoBehaviour {
                 }
             case MenuState.LOADING:
                 {
-                    CurMenuText = LoadingText;
+                    curMenuText = LoadingText;
                     break;
                 }
             default:
@@ -97,9 +104,9 @@ public class MenuInGame : MonoBehaviour {
                 }
         }
         // Activate next menu screen
-        for (int i = 0; i < CurMenuText.Count; i++)
+        for (int i = 0; i < curMenuText.Count; i++)
         {
-            CurMenuText[i].SetActive(true);
+            curMenuText[i].SetActive(true);
         }
         // setup selection
         curSelection = 0;
@@ -112,22 +119,22 @@ public class MenuInGame : MonoBehaviour {
         if (curSelection < 0)
         {
             Debug.Log("selection is less than zero!");
-            curSelection = (CurMenuText.Count - 1);
+            curSelection = (curMenuText.Count - 1);
         }
-        if (curSelection >= CurMenuText.Count)
+        if (curSelection >= curMenuText.Count)
         {
             Debug.Log("selection is bigger than menu text!");
             curSelection = 0;
         }
-        for (int i = 0; i < CurMenuText.Count; i++)
+        for (int i = 0; i < curMenuText.Count; i++)
         {
-            if (i == curSelection && CurMenuText != LoadingText)
+            if (i == curSelection && curMenuText != LoadingText)
             {
-                CurMenuText[i].GetComponent<Text>().color = Color.green;
+                curMenuText[i].GetComponent<Text>().color = Color.green;
             }
             else
             {
-                CurMenuText[i].GetComponent<Text>().color = Color.white;
+                curMenuText[i].GetComponent<Text>().color = Color.white;
             }
         }
     }
@@ -142,7 +149,7 @@ public class MenuInGame : MonoBehaviour {
                     {
                         case 0:
                             {
-                                
+                                signalToggle = true;
                                 break;
                             }
                         case 1:
@@ -193,5 +200,17 @@ public class MenuInGame : MonoBehaviour {
                     break;
                 }
         }
+    }
+
+    public bool wantsToToggle()
+    {
+        // function created to indicate that the player wants to exit the menu
+        // without accessing the player controller directly thougth this script
+        bool wantsToggle = signalToggle;
+        if(wantsToggle)
+        {
+            signalToggle = false;
+        }
+        return wantsToggle;
     }
 }

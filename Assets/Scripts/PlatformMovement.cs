@@ -9,28 +9,33 @@ public class PlatformMovement : MonoBehaviour
     [SerializeField] private Vector3 m_MovementVector;
     [SerializeField] private float m_MovementDuration = 2.0f;
     private float m_movementTimer;
+    private bool platformFrozen = false;
 
     // Use this for initialization
     void Start()
     {
         m_movementTimer = 0.0f;
+        platformFrozen = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        m_movementTimer += Time.deltaTime;
-        transform.position += (m_MovementVector * Time.deltaTime);
-        if (m_movementTimer > m_MovementDuration)
+        if (!platformFrozen)
         {
-            m_MovementVector *= -1;
-            m_movementTimer = 0;
+            m_movementTimer += Time.deltaTime;
+            transform.position += (m_MovementVector * Time.deltaTime);
+            if (m_movementTimer > m_MovementDuration)
+            {
+                m_MovementVector *= -1;
+                m_movementTimer = 0;
+            }
         }
     }
 
-    public void FreezePlatform()
+    public void TogglePlatformFreeze()
     {
-        m_MovementVector = new Vector3(0, 0, 0);
+        platformFrozen = !platformFrozen;
     }
 
     public Vector3 getPlatformMovement()

@@ -44,13 +44,14 @@ namespace UnityStandardAssets._2D
         private float animResetTimer;
         private float footstepsTimer;
         private float movTimer;
+        private bool inMenu;
         private GameObject mainCam;
         private AudioSource audioSource;
         private float jumpTimer = 0.3f;
-        private GameObject menuCanvas;
         AnimationPlayer animator;
         int unlockedLetters = 0;
         bool letterCollected = false;
+        bool frozen = false;
 
         private void Awake()
         {
@@ -65,7 +66,6 @@ namespace UnityStandardAssets._2D
             audioSource = GetComponent<AudioSource>();
             footstepsTimer = 0.0f;
             mainCam = GameObject.FindGameObjectWithTag("MainCamera");
-            menuCanvas = GameObject.FindGameObjectWithTag("MenuCanvas");
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();
@@ -302,30 +302,30 @@ namespace UnityStandardAssets._2D
                             animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                         }
                     }
-                }
-                // If the player should jump...
-                if (grounded && jump)
-                {
-                    animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
-                    // Add a vertical force to the player.
-                    grounded = false;
-                    float finalFwdForce = JumpFwdForce;
-                    float finalUpForce = JumpUpForce;
-                    if(highJump)
+                    // If the player should jump...
+                    if (grounded && jump)
                     {
-                        finalFwdForce = HighJumpFwdForce;
-                        finalUpForce = HighJumpUpForce;
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
+                        // Add a vertical force to the player.
+                        grounded = false;
+                        float finalFwdForce = JumpFwdForce;
+                        float finalUpForce = JumpUpForce;
+                        if (highJump)
+                        {
+                            finalFwdForce = HighJumpFwdForce;
+                            finalUpForce = HighJumpUpForce;
+                        }
+                        if (!facingRight)
+                        {
+                            finalFwdForce *= -1;
+                        }
+                        // reset velocity
+                        rigidbody2D.velocity = new Vector2(0, 0);
+                        // add jump force
+                        rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
+                        audioSource.PlayOneShot(JumpAudio);
+                        jumpTimer = 0.3f;
                     }
-                    if(!facingRight)
-                    {
-                        finalFwdForce *= -1;
-                    }
-                    // reset velocity
-                    rigidbody2D.velocity = new Vector2(0, 0);
-                    // add jump force
-                    rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
-                    audioSource.PlayOneShot(JumpAudio);
-                    jumpTimer = 0.3f;
                 }
             }
         }
@@ -396,8 +396,7 @@ namespace UnityStandardAssets._2D
                 // other.gameObject.SetActive(false);
                 letterCollected = true;
                 // freeze rigid body
-                rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-                FreezeOtherObjects();
+                ToggleFreezeAllObjects();
                 mainCam.GetComponent<AudioSource>().Stop();
                 animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                 if (other.GetComponent<Collectible>())
@@ -418,8 +417,19 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        void FreezeOtherObjects()
+        public void ToggleFreezeAllObjects()
         {
+            frozen = !frozen;
+            if(frozen)
+            { 
+                rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            }
+            else
+            {
+                rigidbody2D.constraints = RigidbodyConstraints2D.None;
+                rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+                transform.rotation = Quaternion.identity;
+            }
             GameObject[] movingObjects = GameObject.FindGameObjectsWithTag("MovingObject");
             // iterate through all moving objects
             for (int i = 0; i < movingObjects.Length; i++)
@@ -427,9 +437,14 @@ namespace UnityStandardAssets._2D
                 // freeze moving platforms
                 if (movingObjects[i].GetComponent<PlatformMovement>())
                 {
-                    movingObjects[i].GetComponent<PlatformMovement>().FreezePlatform();
+                    movingObjects[i].GetComponent<PlatformMovement>().TogglePlatformFreeze();
                 }
             }
+        }
+
+        public bool FinishingGame()
+        {
+            return letterCollected;
         }
 
         void OnCollisionEnter2D(Collision2D other)
