@@ -16,8 +16,8 @@ public class MenuInGame : MonoBehaviour {
     private MenuState curState;
     private List<GameObject> curMenuText = new List<GameObject>();
     public List<GameObject> MainMenuText = new List<GameObject>();
-    public List<GameObject> Options = new List<GameObject>();
     public List<GameObject> LoadingText = new List<GameObject>();
+    public GameObject Panel;
     private int curSelection;
     private bool menuIsOpen;
     private bool signalToggle;
@@ -26,6 +26,7 @@ public class MenuInGame : MonoBehaviour {
     void Start () {
         menuIsOpen = false;
         curMenuText = MainMenuText;
+        Panel.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -42,10 +43,6 @@ public class MenuInGame : MonoBehaviour {
             {
                 curSelection++;
                 UpdateMenuSelection();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ConfirmMenuSelection();
             }
         }
     }
@@ -72,6 +69,20 @@ public class MenuInGame : MonoBehaviour {
         }
     }
 
+    public void ToggleLoadScreen()
+    {
+        if (!menuIsOpen)
+        {
+            for (int i = 0; i < curMenuText.Count; i++)
+            {
+                curMenuText[i].SetActive(false);
+            }
+        }
+        Panel.SetActive(true);
+        SwitchMenu(MenuState.LOADING);
+    }
+
+
     void SwitchMenu(MenuState newState)
     {
         // update state
@@ -95,6 +106,7 @@ public class MenuInGame : MonoBehaviour {
                 }
             case MenuState.LOADING:
                 {
+                    Panel.SetActive(true);
                     curMenuText = LoadingText;
                     break;
                 }
@@ -153,11 +165,6 @@ public class MenuInGame : MonoBehaviour {
                                 break;
                             }
                         case 1:
-                            {
-                                SwitchMenu(MenuState.OPTIONS);
-                                break;
-                            }
-                        case 2:
                             {
                                 SwitchMenu(MenuState.LOADING);
                                 SceneManager.LoadScene("Menu");

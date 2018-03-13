@@ -52,6 +52,7 @@ namespace UnityStandardAssets._2D
         int unlockedLetters = 0;
         bool letterCollected = false;
         bool frozen = false;
+        private bool requireLoadScreen = false;
 
         private void Awake()
         {
@@ -207,6 +208,7 @@ namespace UnityStandardAssets._2D
                 }
                 if (FinalCollectTime <= 0)
                 {
+                    GameObject.FindGameObjectWithTag("MenuCanvas").GetComponent<MenuInGame>().ToggleLoadScreen();
                     switch (unlockedLetters)
                     {
                         case 0:
@@ -393,17 +395,20 @@ namespace UnityStandardAssets._2D
             }
             if (other.gameObject.tag == "Collectible")
             {
-                // other.gameObject.SetActive(false);
-                letterCollected = true;
-                // freeze rigid body
-                ToggleFreezeAllObjects();
-                mainCam.GetComponent<AudioSource>().Stop();
-                animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
-                if (other.GetComponent<Collectible>())
+                if (letterCollected == false)
                 {
-                    other.GetComponent<Collectible>().ToggleMovement();
+                    // other.gameObject.SetActive(false);
+                    letterCollected = true;
+                    // freeze rigid body
+                    ToggleFreezeAllObjects();
+                    mainCam.GetComponent<AudioSource>().Stop();
+                    animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                    if (other.GetComponent<Collectible>())
+                    {
+                        other.GetComponent<Collectible>().ToggleMovement();
+                    }
+                    audioSource.PlayOneShot(CollectionAudio);
                 }
-                audioSource.PlayOneShot(CollectionAudio);
             }
 
             if(other.gameObject.tag == "Death Collider")
@@ -421,7 +426,8 @@ namespace UnityStandardAssets._2D
         {
             frozen = !frozen;
             if(frozen)
-            { 
+            {
+                Debug.Log("constraining position and rotation");
                 rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
             else

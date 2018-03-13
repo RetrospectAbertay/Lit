@@ -65,3 +65,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/5. X Level.unity
     guid: 80c93038c0486c54298e7a4296c677e5
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 60fd72abff4c3e546bffc7f96b1e9d64

@@ -17,7 +17,8 @@ public class TransitionScript : MonoBehaviour {
     }
 
     public TRANSITLEVEL nextLevel;
-
+    public GameObject LoadCanvas;
+    public GameObject MainCanvas;
 	// Use this for initialization
 	void Start () {
 
@@ -28,6 +29,8 @@ public class TransitionScript : MonoBehaviour {
         // player press space - go to the next level
         if (Input.GetKeyDown("space"))
         {
+            MainCanvas.SetActive(false);
+            LoadCanvas.SetActive(true);
             switch(nextLevel)
             {
                 case TRANSITLEVEL.FirstLevel:

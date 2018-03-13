@@ -36,6 +36,7 @@ namespace UnityStandardAssets._2D
                 // Read the jump input in Update so button presses aren't missed.
                 if(CrossPlatformInputManager.GetButtonDown("Jump"))
                 {
+                    // only jump if player is in menu - otherwise, confirm selection
                     if (inGameMenu.IsInMenu())
                     {
                         inGameMenu.ConfirmMenuSelection();
