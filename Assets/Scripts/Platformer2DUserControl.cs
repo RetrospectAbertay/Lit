@@ -68,21 +68,21 @@ namespace UnityStandardAssets._2D
             }
             if(inGameMenu.wantsToToggle())
             {
-                m_Jump = false;
-                m_HighJump = false;
+                m_TogglingMenu = true;
             }
         }
 
 
         private void FixedUpdate()
         {
-            if (m_TogglingMenu || inGameMenu.wantsToToggle())
+            if (m_TogglingMenu)
             {
                 m_Character.ToggleFreezeAllObjects();
                 inGameMenu.ToggleMenu();
                 m_TogglingMenu = false;
                 // make sure player doesnt jump because they need to press space to exit menu
                 m_Jump = false;
+                m_HighJump = false;
             }
             if (!inGameMenu.IsInMenu())
             {
