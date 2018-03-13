@@ -369,11 +369,25 @@ namespace UnityStandardAssets._2D
             }
             if (other.gameObject.GetComponent<BouncePad>())
             {
-               // apply force to bounce pad
-               grounded = false;
-               rigidbody2D.velocity = new Vector2(0, 0);
-               rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
-               jumpTimer = 0.3f;
+                // apply force to bounce pad
+                grounded = false;
+                rigidbody2D.velocity = new Vector2(0, 0);
+                rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
+                if(other.gameObject.GetComponent<BouncePad>().GetBounceForce().x > 0)
+                {
+                    if(!facingRight)
+                    {
+                        Flip();
+                    }
+                }
+                if (other.gameObject.GetComponent<BouncePad>().GetBounceForce().x < 0)
+                {
+                    if(facingRight)
+                    {
+                        Flip();
+                    }
+                }
+                jumpTimer = 0.3f;
             }
             if (other.gameObject.tag == "Collectible")
             {
