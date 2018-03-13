@@ -31,21 +31,28 @@ namespace UnityStandardAssets._2D
                     m_TogglingMenu = true;
                 }
             }
-            if (!m_Jump)
+            if (!m_Jump || inGameMenu.IsInMenu())
             {
                 // Read the jump input in Update so button presses aren't missed.
                 if(CrossPlatformInputManager.GetButtonDown("Jump"))
-                {                
-                    if(m_JumpTimer > 0.0f)
+                {
+                    if (inGameMenu.IsInMenu())
                     {
-                        // pressed space again before the timer ran out - make sure we don't jump again later in the update
-                        m_HighJump = true;
-                        m_Jump = true;
-                        m_JumpTimer = -0.1f;
+                        inGameMenu.ConfirmMenuSelection();
                     }
                     else
                     {
-                        m_JumpTimer = HighJumpTime;
+                        if (m_JumpTimer > 0.0f)
+                        {
+                            // pressed space again before the timer ran out - make sure we don't jump again later in the update
+                            m_HighJump = true;
+                            m_Jump = true;
+                            m_JumpTimer = -0.1f;
+                        }
+                        else
+                        {
+                            m_JumpTimer = HighJumpTime;
+                        }
                     }
                 }
             }

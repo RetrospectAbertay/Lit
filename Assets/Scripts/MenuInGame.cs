@@ -139,7 +139,7 @@ public class MenuInGame : MonoBehaviour {
         }
     }
 
-    void ConfirmMenuSelection()
+    public void ConfirmMenuSelection()
     {
         switch (curState)
         {
