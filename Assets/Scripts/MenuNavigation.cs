@@ -30,12 +30,10 @@ public class MenuNavigation : MonoBehaviour {
     private int levelsUnlocked = 5;
     private int musicVolume = 0;
     private int soundVolume = 0;
-    OptionsManager optionsManager;
 
 	// Use this for initialization
 	void Start () {
         SwitchMenu(MenuState.MAIN);
-        optionsManager = GameObject.FindGameObjectWithTag("Options Manager").GetComponent<OptionsManager>();
         SoundSource = this.GetComponent<AudioSource>();
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetInt("Music Volume");
@@ -255,6 +253,7 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         case 2:
                             {
+                                SwitchMenu(MenuState.MAIN);
                                 break;
                             }
                         default:
