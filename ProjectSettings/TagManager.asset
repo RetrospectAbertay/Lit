@@ -16,6 +16,7 @@ TagManager:
   - E
   - T
   - MenuCanvas
+  - Options Manager
   layers:
   - Default
   - TransparentFX

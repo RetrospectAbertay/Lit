@@ -19,16 +19,24 @@ public class MenuNavigation : MonoBehaviour {
     public List<GameObject> MainMenuText = new List<GameObject>();
     public List<GameObject> LevelSelect = new List<GameObject>();
     public List<GameObject> LoadingText = new List<GameObject>();
+    public List<GameObject> OptionsText = new List<GameObject>();
     public List<Image> SelectionIndicator = new List<Image>();
+    public AudioClip UpdateSelectionSound;
+    public AudioSource MusicSource;
+    public AudioSource SoundSource;
     private int curSelection;
     private int selectedLevel;
     private string levelSelectString = "TIMEX";
     private int levelsUnlocked = 5;
+    private int musicVolume = 0;
+    private int soundVolume = 0;
+    OptionsManager optionsManager;
 
 	// Use this for initialization
 	void Start () {
         SwitchMenu(MenuState.MAIN);
-
+        optionsManager = GameObject.FindGameObjectWithTag("Options Manager").GetComponent<OptionsManager>();
+        SoundSource = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -78,7 +86,7 @@ public class MenuNavigation : MonoBehaviour {
                 }
             case MenuState.OPTIONS:
                 {
-                    
+                    CurMenuText = OptionsText;
                     break;
                 }
             case MenuState.LEVELSELECT:
@@ -109,7 +117,8 @@ public class MenuNavigation : MonoBehaviour {
 
     void UpdateMenuSelection()
     {
-        if(curSelection < 0)
+        SoundSource.PlayOneShot(UpdateSelectionSound);
+        if (curSelection < 0)
         {
             Debug.Log("selection is less than zero!");
             curSelection = (CurMenuText.Count - 1);
@@ -300,6 +309,61 @@ public class MenuNavigation : MonoBehaviour {
                 {
                     break;
                 }
+        }
+    }
+
+    void UpdateVolumeControls(bool updatingMusic, int newVolumeLevel)
+    {
+        string displayText = "";
+        switch(newVolumeLevel)
+        {
+            case 0:
+                {
+                    displayText = "OFF";
+                    break;
+                }
+            case 1:
+                {
+                    displayText = "VERY QUIET";
+                    break;
+                }
+            case 2:
+                {
+                    displayText = "QUIET";
+                    break;
+                }
+            case 3:
+                {
+                    displayText = "NORMAL";
+                    break;
+                }
+            case 4:
+                {
+                    displayText = "LOUD";
+                    break;
+                }
+            case 5:
+                {
+                    displayText = "VERY LOUD";
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("volume level out of range!");
+                    break;
+                }
+        }
+        if(updatingMusic)
+        {
+            OptionsText[1].GetComponent<Text>().text = ("MUSIC : " + displayText);
+            optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), true);
+            MusicSource.volume = (float)(newVolumeLevel * 0.2);
+        }
+        else
+        {
+            OptionsText[1].GetComponent<Text>().text = ("SOUND : " + displayText);
+            optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), false);
+            SoundSource.volume = (float)(newVolumeLevel * 0.2);
         }
     }
 }

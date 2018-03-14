@@ -377,20 +377,6 @@ namespace UnityStandardAssets._2D
                 grounded = false;
                 rigidbody2D.velocity = new Vector2(0, 0);
                 rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
-                if(other.gameObject.GetComponent<BouncePad>().GetBounceForce().x > 0)
-                {
-                    if(!facingRight)
-                    {
-                        Flip();
-                    }
-                }
-                if (other.gameObject.GetComponent<BouncePad>().GetBounceForce().x < 0)
-                {
-                    if(facingRight)
-                    {
-                        Flip();
-                    }
-                }
                 jumpTimer = 0.3f;
             }
             if (other.gameObject.tag == "Collectible")
