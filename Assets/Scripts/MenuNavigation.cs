@@ -37,6 +37,11 @@ public class MenuNavigation : MonoBehaviour {
         SoundSource = this.GetComponent<AudioSource>();
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetInt("Music Volume");
+        levelsUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
+        if(levelsUnlocked <= 0)
+        {
+            levelsUnlocked = 1;
+        }
     }
 	
 	// Update is called once per frame
