@@ -78,7 +78,7 @@ namespace UnityStandardAssets._2D
             {
                 case "1. T Level":
                     {
-
+                        unlockedLetters = 0;
                     }
                     break;
                 case "2. I Level":
@@ -385,6 +385,14 @@ namespace UnityStandardAssets._2D
                 {
                     // other.gameObject.SetActive(false);
                     letterCollected = true;
+                    int curSavedLettersUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
+                    if((unlockedLetters + 1) > curSavedLettersUnlocked)
+                    {
+                        curSavedLettersUnlocked++;
+                        PlayerPrefs.SetInt("Levels Unlocked", curSavedLettersUnlocked);
+                        Debug.Log(PlayerPrefs.GetInt("Levels Unlocked"));
+                        Debug.Log(curSavedLettersUnlocked);
+                    }
                     // freeze rigid body
                     ToggleFreezeAllObjects();
                     mainCam.GetComponent<AudioSource>().Stop();

@@ -38,10 +38,13 @@ public class MenuNavigation : MonoBehaviour {
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetInt("Music Volume");
         levelsUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
-        if(levelsUnlocked <= 0)
+        // player should always be able to play the level that they have no beaten yet
+        levelsUnlocked++;
+        if(levelsUnlocked > 5)
         {
-            levelsUnlocked = 1;
+            levelsUnlocked = 5;
         }
+        Debug.Log("Levels Unlocked " + levelsUnlocked);
     }
 	
 	// Update is called once per frame
