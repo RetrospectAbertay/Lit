@@ -37,7 +37,9 @@ public class MenuNavigation : MonoBehaviour {
         SwitchMenu(MenuState.MAIN);
         optionsManager = GameObject.FindGameObjectWithTag("Options Manager").GetComponent<OptionsManager>();
         SoundSource = this.GetComponent<AudioSource>();
-	}
+        soundVolume = PlayerPrefs.GetInt("Sound Volume");
+        musicVolume = PlayerPrefs.GetInt("Music Volume");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -64,6 +66,48 @@ public class MenuNavigation : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 ChangeLevel(false);
+            }
+        }
+        if(curSelection == 0 && curState == MenuState.OPTIONS)
+        {
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                soundVolume++;
+                if(soundVolume > 5)
+                {
+                    soundVolume = 0;
+                }
+                UpdateVolumeControls(false, soundVolume);
+            }
+            if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                soundVolume--;
+                if (soundVolume < 0)
+                {
+                    soundVolume = 5;
+                }
+                UpdateVolumeControls(false, soundVolume);
+            }
+        }
+        if (curSelection == 1 && curState == MenuState.OPTIONS)
+        {
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                musicVolume++;
+                if (musicVolume > 5)
+                {
+                    musicVolume = 0;
+                }
+                UpdateVolumeControls(true, musicVolume);
+            }
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                musicVolume--;
+                if (musicVolume < 0)
+                {
+                    musicVolume = 5;
+                }
+                UpdateVolumeControls(true, musicVolume);
             }
         }
     }
@@ -356,14 +400,16 @@ public class MenuNavigation : MonoBehaviour {
         if(updatingMusic)
         {
             OptionsText[1].GetComponent<Text>().text = ("MUSIC : " + displayText);
-            optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), true);
+            // optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), true);
             MusicSource.volume = (float)(newVolumeLevel * 0.2);
+            PlayerPrefs.SetInt("Music Volume", newVolumeLevel);
         }
         else
         {
-            OptionsText[1].GetComponent<Text>().text = ("SOUND : " + displayText);
-            optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), false);
+            OptionsText[0].GetComponent<Text>().text = ("SOUND : " + displayText);
+            // optionsManager.UpdateVolume((float)(newVolumeLevel * 0.2), false);
             SoundSource.volume = (float)(newVolumeLevel * 0.2);
+            PlayerPrefs.SetInt("Sound Volume", newVolumeLevel);
         }
     }
 }

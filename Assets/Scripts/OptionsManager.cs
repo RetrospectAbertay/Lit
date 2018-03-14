@@ -10,10 +10,8 @@ public class OptionsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        // dont destroy options manager when switching between scenes
-        DontDestroyOnLoad(this);
         // load saved settings
-        soundVolume = PlayerPrefs.GetFloat("Sound Volume");
+        soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetFloat("Music Volume");
         lvlsUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
         Debug.Log(lvlsUnlocked);
