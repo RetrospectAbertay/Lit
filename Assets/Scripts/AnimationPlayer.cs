@@ -8,11 +8,13 @@ public class AnimationPlayer : MonoBehaviour
     {
         IDLE,
         WALKING,
-        JUMPING
+        JUMPING,
+        CHARGING
     }
     public Sprite[] IdleAnimation;
     public Sprite[] WalkingAnimation;
     public Sprite[] JumpingAnimation;
+    public Sprite[] ChargingJumpAnimation;
     private Sprite[] curAnimation;
     public float FrameDuration;
     private int frameCounter = 0;
@@ -68,6 +70,10 @@ public class AnimationPlayer : MonoBehaviour
                 break;
             case AnimationState.WALKING:
                 curAnimation = WalkingAnimation;
+                break;
+            case AnimationState.CHARGING:
+                curAnimation = ChargingJumpAnimation;
+                frameCounter = 0;
                 break;
             default:
                 break;

@@ -62,7 +62,7 @@ namespace UnityStandardAssets._2D
             spriteRenderer = GetComponent<SpriteRenderer>();
             curHealth = StartingHealth;
             invincibilityTimer = 0.0f;
-            rigidbody2D.gravityScale = DefaultGravScale;
+            // rigidbody2D.gravityScale = DefaultGravScale;
             animator = GetComponent<AnimationPlayer>();
             audioSource = GetComponent<AudioSource>();
             footstepsTimer = 0.0f;

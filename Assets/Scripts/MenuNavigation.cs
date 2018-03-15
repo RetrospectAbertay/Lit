@@ -45,6 +45,8 @@ public class MenuNavigation : MonoBehaviour {
             levelsUnlocked = 5;
         }
         Debug.Log("Levels Unlocked " + levelsUnlocked);
+        UpdateVolumeControls(true, musicVolume);
+        UpdateVolumeControls(false, soundVolume);
     }
 	
 	// Update is called once per frame
