@@ -249,7 +249,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a1916115796b71b4ca1804e9169f0a87, type: 3}
   JumpingAnimation:
   - {fileID: 21300000, guid: f2146331dd0aa7648bc8b325376daed5, type: 3}
-  ChargingJumpAnimation: []
+  ChargingJumpAnimation:
+  - {fileID: 21300000, guid: fbd02a153e0d7784692ea245425edf39, type: 3}
+  - {fileID: 21300000, guid: cab450dd7cfca13459912832e82da25f, type: 3}
   FrameDuration: 0.3
 --- !u!114 &114829673831164092
 MonoBehaviour:
