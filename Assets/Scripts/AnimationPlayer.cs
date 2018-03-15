@@ -15,6 +15,7 @@ public class AnimationPlayer : MonoBehaviour
     public Sprite[] WalkingAnimation;
     public Sprite[] JumpingAnimation;
     public Sprite[] ChargingJumpAnimation;
+    private AnimationState curAnimState = AnimationState.IDLE;
     private Sprite[] curAnimation;
     public float FrameDuration;
     private int frameCounter = 0;
@@ -57,6 +58,12 @@ public class AnimationPlayer : MonoBehaviour
 
     public void ChangeAnimation(AnimationState newAnimation)
     {
+        if(curAnimState != newAnimation)
+        {
+            // skip frame
+            timer = FrameDuration;
+            curAnimState = newAnimation;
+        }
         //// switch statement checks for each possible animation state and allocates the right one
         switch (newAnimation)
         {
