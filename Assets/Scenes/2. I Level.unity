@@ -117,7 +117,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.63
+      value: 5.7
       objectReference: {fileID: 0}
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.y
@@ -146,6 +146,10 @@ Prefab:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_RootOrder
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.1787499
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
@@ -1262,7 +1266,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7.87
+      value: 7.76
       objectReference: {fileID: 0}
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1295,6 +1299,10 @@ Prefab:
     - target: {fileID: 1296087009792556, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_Name
       value: t_belt3green (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
@@ -2386,7 +2394,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.62
+      value: 5.69
       objectReference: {fileID: 0}
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2419,6 +2427,10 @@ Prefab:
     - target: {fileID: 1296087009792556, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_Name
       value: t_belt3green (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
@@ -2908,7 +2920,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7.84
+      value: 7.75
       objectReference: {fileID: 0}
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2941,6 +2953,10 @@ Prefab:
     - target: {fileID: 1296087009792556, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_Name
       value: t_belt3green (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
@@ -3380,7 +3396,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.6
+      value: 5.67
       objectReference: {fileID: 0}
     - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3413,6 +3429,10 @@ Prefab:
     - target: {fileID: 1296087009792556, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
       propertyPath: m_Name
       value: t_belt3green (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030849562183032, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5fc2a59294a4400499e0c9d69a092305, type: 2}

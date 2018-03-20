@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982182018024362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.482456, y: -3.05, z: 0}
+  m_LocalPosition: {x: 7.28, y: -2.83, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4111894111486366}
@@ -277,10 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 6
-  JumpUpForce: 110
-  JumpFwdForce: 50
-  HighJumpUpForce: 140
-  HighJumpFwdForce: 30
+  JumpUpForce: 140
+  JumpFwdForce: 25
+  HighJumpUpForce: 110
+  HighJumpFwdForce: 70
   AirControl: 0
   WhatIsGround:
     serializedVersion: 2
