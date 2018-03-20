@@ -102,8 +102,6 @@ namespace UnityStandardAssets._2D
                     }
                     break;
             }
-            // clamp frame rate for that spectrum feel
-            // Application.targetFrameRate = fpsClamp;
         }
 
         private void Update()

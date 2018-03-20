@@ -22,6 +22,7 @@ public class MenuNavigation : MonoBehaviour {
     public List<GameObject> OptionsText = new List<GameObject>();
     public List<Image> SelectionIndicator = new List<Image>();
     public AudioClip UpdateSelectionSound;
+    public AudioClip ToggleSelectionSound;
     public AudioSource MusicSource;
     public AudioSource SoundSource;
     private int curSelection;
@@ -70,10 +71,12 @@ public class MenuNavigation : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 ChangeLevel(true);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 ChangeLevel(false);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
         }
         if(curSelection == 0 && curState == MenuState.OPTIONS)
@@ -86,6 +89,7 @@ public class MenuNavigation : MonoBehaviour {
                     soundVolume = 0;
                 }
                 UpdateVolumeControls(false, soundVolume);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
             if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -95,6 +99,7 @@ public class MenuNavigation : MonoBehaviour {
                     soundVolume = 5;
                 }
                 UpdateVolumeControls(false, soundVolume);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
         }
         if (curSelection == 1 && curState == MenuState.OPTIONS)
@@ -107,6 +112,7 @@ public class MenuNavigation : MonoBehaviour {
                     musicVolume = 0;
                 }
                 UpdateVolumeControls(true, musicVolume);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -116,6 +122,7 @@ public class MenuNavigation : MonoBehaviour {
                     musicVolume = 5;
                 }
                 UpdateVolumeControls(true, musicVolume);
+                SoundSource.PlayOneShot(ToggleSelectionSound);
             }
         }
     }

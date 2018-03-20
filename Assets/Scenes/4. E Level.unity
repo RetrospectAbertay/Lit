@@ -2232,9 +2232,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114656890810709388, guid: 195b89bee9856bd49b7562a291b22d88,
+        type: 2}
+      propertyPath: bouncePadClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 51428516b19ece841b8dd4751bb9bfa0, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 195b89bee9856bd49b7562a291b22d88, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &397045180 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1883968251492324, guid: 195b89bee9856bd49b7562a291b22d88,
+    type: 2}
+  m_PrefabInternal: {fileID: 397045179}
+--- !u!114 &397045181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 397045180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9974a3c0e24077c4586f534890aebcfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: 0
 --- !u!1 &400752943
 GameObject:
   m_ObjectHideFlags: 0

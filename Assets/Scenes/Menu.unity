@@ -498,6 +498,8 @@ MonoBehaviour:
   SelectionIndicator: []
   UpdateSelectionSound: {fileID: 8300000, guid: e34e3753e27be0444bf3989769b67c17,
     type: 3}
+  ToggleSelectionSound: {fileID: 8300000, guid: 80ee8cb23663cab4a81877a0ffc42f71,
+    type: 3}
   MusicSource: {fileID: 164958887}
   SoundSource: {fileID: 335189208}
 --- !u!82 &335189208

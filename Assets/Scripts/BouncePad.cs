@@ -8,12 +8,15 @@ public class BouncePad : MonoBehaviour
     [SerializeField] private Vector2 m_BounceForce;
     public List<Sprite> animSprites = new List<Sprite>();
     public float resetTime = 1.0f;
+    public AudioClip bouncePadClip;
     private float resetTimer = 0.0f;
+    private AudioSource audioSrc;
     private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
+        audioSrc = gameObject.GetComponent<AudioSource>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
@@ -38,6 +41,7 @@ public class BouncePad : MonoBehaviour
             resetTimer = resetTime;
             spriteRenderer.sprite = animSprites[1];
             curBounceForce = m_BounceForce;
+            audioSrc.PlayOneShot(bouncePadClip);
         } 
         return curBounceForce;
     }
