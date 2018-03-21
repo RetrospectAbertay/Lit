@@ -977,7 +977,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.6331
+  orthographic size: 5.093778
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7229,12 +7229,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecef1fdbdf0337d47bd4b7f8387224df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BounceForce: {x: 15, y: 230}
+  m_BounceForce: {x: 15, y: 290}
   animSprites:
   - {fileID: 21300000, guid: 55e61adc2ea8af54292fbcf019a4c9d5, type: 3}
   - {fileID: 21300000, guid: 3369ffa507346d547b54bde58d732cb7, type: 3}
   resetTime: 1
   bouncePadClip: {fileID: 8300000, guid: 51428516b19ece841b8dd4751bb9bfa0, type: 3}
+  bouncePosTransform: {fileID: 1940488146}
 --- !u!61 &1366027312
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7313,7 +7314,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.53, y: -2.81, z: 0}
   m_LocalScale: {x: 0.8767841, y: 1.2182847, z: 1.2182847}
-  m_Children: []
+  m_Children:
+  - {fileID: 1940488146}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9802,7 +9804,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.37
+      value: -7.31
       objectReference: {fileID: 0}
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -9831,21 +9833,6 @@ Prefab:
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114876407265956278, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: AirControl
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 50701844015055882, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: m_UseAutoMass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 50701844015055882, guid: 53513d188bc0cd446941c0623fdd758f,
-        type: 2}
-      propertyPath: m_CollisionDetection
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
@@ -10571,6 +10558,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1940488145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1940488146}
+  m_Layer: 0
+  m_Name: bouncetrans
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1940488146
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1940488145}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0.01, z: 0}
+  m_LocalScale: {x: 1.1405315, y: 0.8208261, z: 0.8208261}
+  m_Children: []
+  m_Father: {fileID: 1366027314}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1941044998
 GameObject:
   m_ObjectHideFlags: 0

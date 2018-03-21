@@ -12,6 +12,7 @@ public class BouncePad : MonoBehaviour
     private float resetTimer = 0.0f;
     private AudioSource audioSrc;
     private SpriteRenderer spriteRenderer;
+    public Transform bouncePosTransform;
 
     // Use this for initialization
     void Start()
@@ -42,7 +43,12 @@ public class BouncePad : MonoBehaviour
             spriteRenderer.sprite = animSprites[1];
             curBounceForce = m_BounceForce;
             audioSrc.PlayOneShot(bouncePadClip);
-        } 
+        }
         return curBounceForce;
+    }
+
+    public Vector2 GetBouncePosition()
+    {
+        return bouncePosTransform.position;
     }
 }

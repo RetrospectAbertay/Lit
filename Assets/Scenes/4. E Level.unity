@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 92848001}
   - component: {fileID: 92848002}
   m_Layer: 0
-  m_Name: pipetransp (83)
+  m_Name: pipetransp (83) collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +698,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.20826, y: -0.0019049793}
+  m_Offset: {x: 1.2256725, y: -0.0019049793}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -709,7 +709,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.0565195, y: 0.20947707}
+  m_Size: {x: 3.0513449, y: 0.20947707}
   m_EdgeRadius: 0
 --- !u!1 &107672293
 GameObject:
@@ -2234,29 +2234,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114656890810709388, guid: 195b89bee9856bd49b7562a291b22d88,
         type: 2}
-      propertyPath: bouncePadClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 51428516b19ece841b8dd4751bb9bfa0, type: 3}
+      propertyPath: m_BounceForce.y
+      value: 230
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 195b89bee9856bd49b7562a291b22d88, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &397045180 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1883968251492324, guid: 195b89bee9856bd49b7562a291b22d88,
-    type: 2}
-  m_PrefabInternal: {fileID: 397045179}
---- !u!114 &397045181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 397045180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9974a3c0e24077c4586f534890aebcfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: 0
 --- !u!1 &400752943
 GameObject:
   m_ObjectHideFlags: 0
@@ -8534,11 +8517,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7.28
+      value: 2.02
       objectReference: {fileID: 0}
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.83
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: 4703628656314840, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
       propertyPath: m_LocalPosition.z

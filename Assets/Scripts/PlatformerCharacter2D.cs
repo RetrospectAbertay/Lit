@@ -23,10 +23,12 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
         [SerializeField] private float TimeBetweenFootsteps;
+        [SerializeField] private float SwitchRotationDelay = 0.2f;
         [SerializeField] private AudioClip JumpAudio;
         [SerializeField] private AudioClip WalkingAudio;
         [SerializeField] private AudioClip CollectionAudio;
         [SerializeField] private bool EndlessPlayer = false;
+        [SerializeField] private float ConstantJumpForce = 1.0f;
 
         private Transform respawnPosition;
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
@@ -48,11 +50,13 @@ namespace UnityStandardAssets._2D
         private GameObject mainCam;
         private AudioSource audioSource;
         private float jumpTimer = 0.3f;
+        private float switchDelayTimer = 0.2f;
         AnimationPlayer animator;
         int unlockedLetters = 0;
         bool letterCollected = false;
         bool frozen = false;
         private bool requireLoadScreen = false;
+        private bool jumping = false;
 
         private void Awake()
         {
@@ -102,6 +106,8 @@ namespace UnityStandardAssets._2D
                     }
                     break;
             }
+            // Set up continuous collision
+            rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         }
 
         private void Update()
@@ -142,6 +148,7 @@ namespace UnityStandardAssets._2D
                             AirControl = false;
                         }
                         grounded = true;
+                        jumping = false;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
                         {
@@ -189,9 +196,22 @@ namespace UnityStandardAssets._2D
                 if(jumpTimer > 0.0f)
                 {
                     jumpTimer -= Time.deltaTime;
+                    jumping = true;
                 }
                 // axisInput player along with the plattform
                 transform.position += (platformForce * Time.deltaTime);
+                // check if player is jumping, apply x-axis force
+                if(jumping)
+                {
+                    if (facingRight)
+                    {
+                        rigidbody2D.AddForce(new Vector2(ConstantJumpForce, 0));
+                    }
+                    else
+                    {
+                        rigidbody2D.AddForce(new Vector2(-ConstantJumpForce, 0));
+                    }
+                }
             }
             else
             {
@@ -236,6 +256,11 @@ namespace UnityStandardAssets._2D
             {
                 movTimer -= Time.deltaTime;
             }
+            // Run down timerto see if player can start moving again after switching directions
+            if(switchDelayTimer > 0)
+            {
+                switchDelayTimer -= Time.deltaTime;
+            }
         }
 
         public void Move(float axisInput, bool highJump, bool jump)
@@ -257,6 +282,7 @@ namespace UnityStandardAssets._2D
                             {
                                 // ... flip the player.
                                 Flip();
+                                switchDelayTimer = SwitchRotationDelay;
                             }
                         }
                         // Otherwise if the input is moving the player left and the player is facing right...
@@ -267,7 +293,13 @@ namespace UnityStandardAssets._2D
                             {
                                 // ... flip the player.
                                 Flip();
+                                switchDelayTimer = SwitchRotationDelay;
                             }
+                        }
+                        // Reset velocity if player switche direction recently
+                        if(switchDelayTimer > 0)
+                        {
+                            appliedForce = 0.0f;
                         }
                         // Move the character
                         rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
@@ -324,6 +356,7 @@ namespace UnityStandardAssets._2D
                         // add jump force
                         rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
                         audioSource.PlayOneShot(JumpAudio);
+                        jumping = true;
                         jumpTimer = 0.3f;
                     }
                 }
@@ -376,6 +409,7 @@ namespace UnityStandardAssets._2D
                 rigidbody2D.velocity = new Vector2(0, 0);
                 rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
                 jumpTimer = 0.3f;
+                transform.position = other.gameObject.GetComponent<BouncePad>().GetBouncePosition();
             }
             if (other.gameObject.tag == "Collectible")
             {

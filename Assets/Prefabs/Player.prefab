@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982182018024362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.28, y: -2.83, z: 0}
+  m_LocalPosition: {x: -8.482456, y: -3.05, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4111894111486366}
@@ -88,11 +88,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.19403893
+  m_Mass: 0.25163892
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 36452423a8686f84cb93f5230b2ca1c4, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -105,7 +105,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1982182018024362}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 36452423a8686f84cb93f5230b2ca1c4, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -120,11 +120,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1982182018024362}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 36452423a8686f84cb93f5230b2ca1c4, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.01}
+  m_Offset: {x: 0, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -135,7 +135,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.31}
+  m_Size: {x: 0.12, y: 0.43}
   m_EdgeRadius: 0
 --- !u!82 &82423664966218352
 AudioSource:
@@ -277,10 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 6
-  JumpUpForce: 140
-  JumpFwdForce: 25
-  HighJumpUpForce: 110
-  HighJumpFwdForce: 70
+  JumpUpForce: 180
+  JumpFwdForce: 30
+  HighJumpUpForce: 130
+  HighJumpFwdForce: 100
   AirControl: 0
   WhatIsGround:
     serializedVersion: 2
@@ -293,10 +293,12 @@ MonoBehaviour:
   FinalCollectTime: 5
   AnimTime: 0.1
   TimeBetweenFootsteps: 0.4
+  SwitchRotationDelay: 0.1
   JumpAudio: {fileID: 8300000, guid: 599d1fcff2ed4e84f81bdc90ad883b4a, type: 3}
   WalkingAudio: {fileID: 8300000, guid: 4e10d2ff3519e0a488bd7eb5419990e8, type: 3}
   CollectionAudio: {fileID: 8300000, guid: f68f6e8887bb0b74eab02cbaefcbff32, type: 3}
   EndlessPlayer: 0
+  ConstantJumpForce: 1
 --- !u!212 &212207895173101526
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -306,7 +308,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
@@ -322,7 +323,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
