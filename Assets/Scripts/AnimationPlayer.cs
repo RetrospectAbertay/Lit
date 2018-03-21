@@ -80,7 +80,6 @@ public class AnimationPlayer : MonoBehaviour
                 break;
             case AnimationState.CHARGING:
                 curAnimation = ChargingJumpAnimation;
-                frameCounter = 0;
                 break;
             default:
                 break;
