@@ -98,7 +98,7 @@ namespace UnityStandardAssets._2D
                         }
                     }
                     // Pass all parameters to the character control script.
-                    m_Character.Move(h, highJump, m_Jump);
+                    m_Character.Move(h, highJump, m_Jump, false);
                     if (m_Jump)
                     {
                         // Reset jump variables 
@@ -113,9 +113,12 @@ namespace UnityStandardAssets._2D
                 }
                 else
                 {
-                    float h = 0.0f;
-                    // Pass all parameters to the character control script.
-                    m_Character.Move(h, false, false);
+                    if (!animator.IsCurrentAnimation(AnimationPlayer.AnimationState.CHARGING))
+                    {
+                        Debug.Log("switching to charging");
+                        m_Character.ResetHorizontalMovement();
+                        animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
+                    }
                 }
             }
         }

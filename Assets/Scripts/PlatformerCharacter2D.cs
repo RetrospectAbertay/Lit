@@ -268,7 +268,15 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void Move(float axisInput, bool highJump, bool jump)
+        public void ResetHorizontalMovement()
+        {
+            if (grounded)
+            {
+                rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
+            }
+        }
+
+        public void Move(float axisInput, bool highJump, bool jump, bool charging)
         {
             if (!letterCollected)
             {

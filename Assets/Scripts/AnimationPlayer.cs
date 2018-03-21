@@ -64,7 +64,7 @@ public class AnimationPlayer : MonoBehaviour
             timer = FrameDuration;
             curAnimState = newAnimation;
         }
-        //// switch statement checks for each possible animation state and allocates the right one
+        // switch statement checks for each possible animation state and allocates the right one
         switch (newAnimation)
         {
             case AnimationState.IDLE:
@@ -94,5 +94,17 @@ public class AnimationPlayer : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool IsCurrentAnimation(AnimationState newAnim)
+    {
+        if(newAnim == curAnimState)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
