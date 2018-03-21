@@ -32,7 +32,7 @@ namespace UnityStandardAssets._2D
 
         private Transform respawnPosition;
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
-        const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        const float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
         private Rigidbody2D rigidbody2D;
         private bool facingRight = true;  // For determining which way the player is currently facing.
@@ -284,8 +284,8 @@ namespace UnityStandardAssets._2D
                             // Setup animation if its charging
                             if (charging)
                             {
-                                Debug.Log("charging");
-                                    animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
+                                animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
+                                animResetTimer = AnimTime;
                             }
                             float appliedForce = 0.0f;
                             // If the input is moving the player right and the player is facing left...
@@ -340,7 +340,10 @@ namespace UnityStandardAssets._2D
                             }
                             else
                             {
-                                animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                                if (!charging)
+                                {
+                                    animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                                }
                             }
                         }
                         else
@@ -435,10 +438,10 @@ namespace UnityStandardAssets._2D
                         Debug.Log(PlayerPrefs.GetInt("Levels Unlocked"));
                         Debug.Log(curSavedLettersUnlocked);
                     }
+                    animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     // freeze rigid body
                     ToggleFreezeAllObjects();
                     mainCam.GetComponent<AudioSource>().Stop();
-                    animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     if (other.GetComponent<Collectible>())
                     {
                         other.GetComponent<Collectible>().ToggleMovement();
