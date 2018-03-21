@@ -80,12 +80,13 @@ namespace UnityStandardAssets._2D
             }
             if (!inGameMenu.IsInMenu())
             {
-                if (!chargingJump)
+                // Read the inputs.
+                bool highJump = m_HighJump;
+                float h = 0.0f;
+                bool charging = false;
+                if (m_JumpTimer <= 0.0f)
                 {
-                    // Read the inputs.
-                    bool highJump = m_HighJump;
-                    float h = 0.0f;
-                    if (m_JumpTimer <= 0.0f)
+                    if (!chargingJump)
                     {
                         if (CrossPlatformInputManager.GetButton("Right"))
                         {
@@ -97,28 +98,23 @@ namespace UnityStandardAssets._2D
                             h = -1.0f;
                         }
                     }
-                    // Pass all parameters to the character control script.
-                    m_Character.Move(h, highJump, m_Jump, false);
-                    if (m_Jump)
+                    else
                     {
-                        // Reset jump variables 
-                        m_Jump = false;
-                        m_JumpTimer = 0.0f;
-                    }
-                    if (highJump)
-                    {
-                        Debug.Log("Performed high jump");
-                        m_HighJump = false;
+                        charging = true;
                     }
                 }
-                else
+                // Pass all parameters to the character control script.
+                m_Character.Move(h, highJump, m_Jump, charging);
+                if (m_Jump)
                 {
-                    if (!animator.IsCurrentAnimation(AnimationPlayer.AnimationState.CHARGING))
-                    {
-                        Debug.Log("switching to charging");
-                        m_Character.ResetHorizontalMovement();
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
-                    }
+                    // Reset jump variables 
+                    m_Jump = false;
+                    m_JumpTimer = 0.0f;
+                }
+                if (highJump)
+                {
+                    Debug.Log("Performed high jump");
+                    m_HighJump = false;
                 }
             }
         }

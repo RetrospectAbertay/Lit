@@ -3614,6 +3614,11 @@ Prefab:
       propertyPath: ConstantJumpForce
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 50701844015055882, guid: 53513d188bc0cd446941c0623fdd758f,
+        type: 2}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53513d188bc0cd446941c0623fdd758f, type: 2}
   m_IsPrefabParent: 0

@@ -150,6 +150,7 @@ namespace UnityStandardAssets._2D
                         }
                         grounded = true;
                         jumping = false;
+                        //rigidbody2D.velocity = Vector2.zero;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
                         {
@@ -268,14 +269,6 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void ResetHorizontalMovement()
-        {
-            if (grounded)
-            {
-                rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
-            }
-        }
-
         public void Move(float axisInput, bool highJump, bool jump, bool charging)
         {
             if (!letterCollected)
@@ -288,6 +281,12 @@ namespace UnityStandardAssets._2D
                     {
                         if (jump == false)
                         {
+                            // Setup animation if its charging
+                            if (charging)
+                            {
+                                Debug.Log("charging");
+                                    animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
+                            }
                             float appliedForce = 0.0f;
                             // If the input is moving the player right and the player is facing left...
                             if (axisInput > 0.01)
