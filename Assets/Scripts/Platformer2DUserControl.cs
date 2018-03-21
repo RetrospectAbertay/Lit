@@ -52,17 +52,7 @@ namespace UnityStandardAssets._2D
                 }
                 if (CrossPlatformInputManager.GetButtonUp("Jump"))
                 {
-                    if (m_JumpTimer <= 0)
-                    {
-                        Debug.Log("high jump");
-                        m_HighJump = true;
-                    }
-                    else
-                    {
-                        Debug.Log("normal jump");
-                    }
-                    m_Jump = true;
-                    chargingJump = false;
+                    OnReleasedJumpBtn();
                 }
                 if (m_JumpTimer > 0.0f)
                 {
@@ -88,36 +78,61 @@ namespace UnityStandardAssets._2D
                 m_Jump = false;
                 m_HighJump = false;
             }
-            if (!inGameMenu.IsInMenu() && !chargingJump)
+            if (!inGameMenu.IsInMenu())
             {
-                // Read the inputs.
-                bool highJump = m_HighJump;
-                float h = 0.0f;
-                if (m_JumpTimer >= 0.0f)
+                if (!chargingJump)
                 {
-                    if (CrossPlatformInputManager.GetButton("Right"))
+                    // Read the inputs.
+                    bool highJump = m_HighJump;
+                    float h = 0.0f;
+                    if (m_JumpTimer <= 0.0f)
                     {
-                        h = 1.0f;
+                        if (CrossPlatformInputManager.GetButton("Right"))
+                        {
+                            Debug.Log("Setting h input");
+                            h = 1.0f;
+                        }
+                        if (CrossPlatformInputManager.GetButton("Left"))
+                        {
+                            h = -1.0f;
+                        }
                     }
-                    if (CrossPlatformInputManager.GetButton("Left"))
+                    // Pass all parameters to the character control script.
+                    m_Character.Move(h, highJump, m_Jump);
+                    if (m_Jump)
                     {
-                        h = -1.0f;
+                        // Reset jump variables 
+                        m_Jump = false;
+                        m_JumpTimer = 0.0f;
+                    }
+                    if (highJump)
+                    {
+                        Debug.Log("Performed high jump");
+                        m_HighJump = false;
                     }
                 }
-                // Pass all parameters to the character control script.
-                m_Character.Move(h, highJump, m_Jump);
-                if(m_Jump)
+                else
                 {
-                    // Reset jump variables 
-                    m_Jump = false;
-                    m_JumpTimer = 0.0f;
-                }
-                if (highJump)
-                {
-                    Debug.Log("Performed high jump");
-                    m_HighJump = false;
+                    float h = 0.0f;
+                    // Pass all parameters to the character control script.
+                    m_Character.Move(h, false, false);
                 }
             }
+        }
+
+        void OnReleasedJumpBtn()
+        {
+            if (m_JumpTimer <= 0)
+            {
+                Debug.Log("high jump");
+                m_HighJump = true;
+            }
+            else
+            {
+                Debug.Log("normal jump");
+            }
+            m_Jump = true;
+            chargingJump = false;
         }
     }
 }

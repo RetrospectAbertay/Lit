@@ -108,6 +108,7 @@ namespace UnityStandardAssets._2D
             }
             // Set up continuous collision
             rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            jumpTimer = 0.0f;
         }
 
         private void Update()
@@ -192,11 +193,15 @@ namespace UnityStandardAssets._2D
                         flickerTimer = FlickerDuration;
                     }
                 }
-
+                // timer that checks if player is in air and jumped recently
                 if(jumpTimer > 0.0f)
                 {
                     jumpTimer -= Time.deltaTime;
                     jumping = true;
+                }
+                else
+                {
+                    jumping = false;
                 }
                 // axisInput player along with the plattform
                 transform.position += (platformForce * Time.deltaTime);
@@ -268,96 +273,94 @@ namespace UnityStandardAssets._2D
             if (!letterCollected)
             {
                 // this timer is used to make sure that axis input doesnt effect the jump
-                if (jumpTimer < 0.0f)
+                if (jumpTimer <= 0.0f)
                 {
                     //only control the player if grounded or airControl is turned on
                     if (grounded)
                     {
-                        float appliedForce = 0.0f;
-                        // If the input is moving the player right and the player is facing left...
-                        if (axisInput > 0.01)
+                        if (jump == false)
                         {
-                            appliedForce = MaxSpeed;
-                            if (!facingRight)
+                            float appliedForce = 0.0f;
+                            // If the input is moving the player right and the player is facing left...
+                            if (axisInput > 0.01)
                             {
-                                // ... flip the player.
-                                Flip();
-                                switchDelayTimer = SwitchRotationDelay;
+                                appliedForce = MaxSpeed;
+                                if (!facingRight)
+                                {
+                                    // ... flip the player.
+                                    Flip();
+                                    switchDelayTimer = SwitchRotationDelay;
+                                }
                             }
-                        }
-                        // Otherwise if the input is moving the player left and the player is facing right...
-                        else if (axisInput < -0.01)
-                        {
-                            appliedForce = -MaxSpeed;
-                            if (facingRight)
+                            // Otherwise if the input is moving the player left and the player is facing right...
+                            else if (axisInput < -0.01)
                             {
-                                // ... flip the player.
-                                Flip();
-                                switchDelayTimer = SwitchRotationDelay;
+                                appliedForce = -MaxSpeed;
+                                if (facingRight)
+                                {
+                                    // ... flip the player.
+                                    Flip();
+                                    switchDelayTimer = SwitchRotationDelay;
+                                }
                             }
-                        }
-                        // Reset velocity if player switche direction recently
-                        if(switchDelayTimer > 0)
-                        {
-                            appliedForce = 0.0f;
-                        }
-                        // Move the character
-                        rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
-                    }
-                    if (grounded == false)
-                    {
-
-                    }
-                    else
-                    {
-                        if (Mathf.Abs(axisInput) > 0.0f)
-                        {
-                            // Character is walking
-                            animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
-                            animResetTimer = AnimTime;
-                            // check for when the last time was, that player input was recieved - if it was not recenlty, play footstep sound immediately
-                            if (movTimer <= 0)
+                            // Reset velocity if player switche direction recently
+                            if (switchDelayTimer > 0)
                             {
-                                movTimer = 0.3f;
-                                footstepsTimer = TimeBetweenFootsteps;
+                                appliedForce = 0.0f;
                             }
-                            // Increment footsteps timer to see if a sound should be played
-                            footstepsTimer += Time.deltaTime;
-                            if (footstepsTimer >= TimeBetweenFootsteps)
+                            // Move the character
+                            rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
+                            Debug.Log("moving forward");
+                            // check for absolute input to trigger animations and sounds for walking
+                            if (Mathf.Abs(axisInput) > 0.0f)
                             {
-                                audioSource.PlayOneShot(WalkingAudio);
-                                footstepsTimer = 0.0f;
+                                // Character is walking
+                                animator.ChangeAnimation(AnimationPlayer.AnimationState.WALKING);
+                                animResetTimer = AnimTime;
+                                // check for when the last time was, that player input was recieved - if it was not recenlty, play footstep sound immediately
+                                if (movTimer <= 0)
+                                {
+                                    movTimer = 0.3f;
+                                    footstepsTimer = TimeBetweenFootsteps;
+                                }
+                                // Increment footsteps timer to see if a sound should be played
+                                footstepsTimer += Time.deltaTime;
+                                if (footstepsTimer >= TimeBetweenFootsteps)
+                                {
+                                    audioSource.PlayOneShot(WalkingAudio);
+                                    footstepsTimer = 0.0f;
+                                }
+                            }
+                            else
+                            {
+                                animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                             }
                         }
                         else
                         {
-                            animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                            // Player is trying to jump
+                            animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
+                            // Add a vertical force to the player.
+                            grounded = false;
+                            float finalFwdForce = JumpFwdForce;
+                            float finalUpForce = JumpUpForce;
+                            if (highJump)
+                            {
+                                finalFwdForce = HighJumpFwdForce;
+                                finalUpForce = HighJumpUpForce;
+                            }
+                            if (!facingRight)
+                            {
+                                finalFwdForce *= -1;
+                            }
+                            // reset velocity
+                            rigidbody2D.velocity = new Vector2(0, 0);
+                            // add jump force
+                            rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
+                            audioSource.PlayOneShot(JumpAudio);
+                            jumping = true;
+                            jumpTimer = 0.3f;
                         }
-                    }
-                    // If the player should jump...
-                    if (grounded && jump)
-                    {
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
-                        // Add a vertical force to the player.
-                        grounded = false;
-                        float finalFwdForce = JumpFwdForce;
-                        float finalUpForce = JumpUpForce;
-                        if (highJump)
-                        {
-                            finalFwdForce = HighJumpFwdForce;
-                            finalUpForce = HighJumpUpForce;
-                        }
-                        if (!facingRight)
-                        {
-                            finalFwdForce *= -1;
-                        }
-                        // reset velocity
-                        rigidbody2D.velocity = new Vector2(0, 0);
-                        // add jump force
-                        rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
-                        audioSource.PlayOneShot(JumpAudio);
-                        jumping = true;
-                        jumpTimer = 0.3f;
                     }
                 }
             }
