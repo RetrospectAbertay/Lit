@@ -57,6 +57,7 @@ namespace UnityStandardAssets._2D
         bool frozen = false;
         private bool requireLoadScreen = false;
         private bool jumping = false;
+        private Vector2 tempVelocity;
 
         private void Awake()
         {
@@ -467,6 +468,7 @@ namespace UnityStandardAssets._2D
             if(frozen)
             {
                 Debug.Log("constraining position and rotation");
+                tempVelocity = rigidbody2D.velocity;
                 rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
             else
@@ -474,6 +476,7 @@ namespace UnityStandardAssets._2D
                 rigidbody2D.constraints = RigidbodyConstraints2D.None;
                 rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 transform.rotation = Quaternion.identity;
+                rigidbody2D.velocity = tempVelocity;
             }
             GameObject[] movingObjects = GameObject.FindGameObjectsWithTag("MovingObject");
             // iterate through all moving objects

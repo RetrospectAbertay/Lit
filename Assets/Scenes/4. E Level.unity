@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 647960092}
   m_Layer: 0
   m_Name: t_belt3red
-  m_TagString: Untagged
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
