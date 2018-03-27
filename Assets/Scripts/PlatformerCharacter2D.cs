@@ -19,7 +19,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
-        [SerializeField] private float DefaultGravScale = 5.0f;
+        //[SerializeField] private float DefaultGravScale = 5.0f;
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
         [SerializeField] private float TimeBetweenFootsteps;
