@@ -436,8 +436,8 @@ namespace UnityStandardAssets._2D
                     {
                         curSavedLettersUnlocked++;
                         PlayerPrefs.SetInt("Levels Unlocked", curSavedLettersUnlocked);
-                        Debug.Log(PlayerPrefs.GetInt("Levels Unlocked"));
-                        Debug.Log(curSavedLettersUnlocked);
+                        //Debug.Log(PlayerPrefs.GetInt("Levels Unlocked"));
+                        //Debug.Log(curSavedLettersUnlocked);
                     }
                     animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     // freeze rigid body
@@ -455,7 +455,7 @@ namespace UnityStandardAssets._2D
             {
                 if(EndlessPlayer == false)
                 {
-                    Debug.Log("player fell to their death!");
+                    //Debug.Log("player fell to their death!");
                     transform.position = respawnPosition.position;
                     invincibilityTimer = InvincibilityDuration;
                 }
@@ -467,7 +467,7 @@ namespace UnityStandardAssets._2D
             frozen = !frozen;
             if(frozen)
             {
-                Debug.Log("constraining position and rotation");
+                //Debug.Log("constraining position and rotation");
                 tempVelocity = rigidbody2D.velocity;
                 rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
