@@ -130,12 +130,12 @@ public class MenuInGame : MonoBehaviour {
     {
         if (curSelection < 0)
         {
-            Debug.Log("selection is less than zero!");
+            //Debug.Log("selection is less than zero!");
             curSelection = (curMenuText.Count - 1);
         }
         if (curSelection >= curMenuText.Count)
         {
-            Debug.Log("selection is bigger than menu text!");
+            //Debug.Log("selection is bigger than menu text!");
             curSelection = 0;
         }
         for (int i = 0; i < curMenuText.Count; i++)
@@ -172,7 +172,7 @@ public class MenuInGame : MonoBehaviour {
                             }
                         default:
                             {
-                                Debug.Log("Triggered default switch");
+                                //Debug.Log("Triggered default switch");
                                 break;
                             }
                     }
@@ -196,7 +196,7 @@ public class MenuInGame : MonoBehaviour {
                             }
                         default:
                             {
-                                Debug.Log("Triggered default switch");
+                                //Debug.Log("Triggered default switch");
                                 break;
                             }
                     }

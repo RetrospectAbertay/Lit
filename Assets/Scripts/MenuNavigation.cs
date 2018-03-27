@@ -45,7 +45,7 @@ public class MenuNavigation : MonoBehaviour {
         {
             levelsUnlocked = 5;
         }
-        Debug.Log("Levels Unlocked " + levelsUnlocked);
+        //Debug.Log("Levels Unlocked " + levelsUnlocked);
         UpdateVolumeControls(true, musicVolume);
         UpdateVolumeControls(false, soundVolume);
     }
@@ -179,12 +179,12 @@ public class MenuNavigation : MonoBehaviour {
         SoundSource.PlayOneShot(UpdateSelectionSound);
         if (curSelection < 0)
         {
-            Debug.Log("selection is less than zero!");
+            //Debug.Log("selection is less than zero!");
             curSelection = (CurMenuText.Count - 1);
         }
         if(curSelection >= CurMenuText.Count)
         {
-            Debug.Log("selection is bigger than menu text!");
+            //Debug.Log("selection is bigger than menu text!");
             curSelection = 0;
         }
         for(int i = 0; i < CurMenuText.Count; i++)
@@ -227,7 +227,7 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         default:
                             {
-                                Debug.Log("Triggered default switch");
+                                //Debug.Log("Triggered default switch");
                                 break;
                             }
                     }
@@ -250,7 +250,7 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         default:
                             {
-                                Debug.Log("Triggered default switch");
+                                //Debug.Log("Triggered default switch");
                                 break;
                             }
                     }
@@ -275,7 +275,7 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         default:
                             {
-                                Debug.Log("Triggered default switch");
+                                //Debug.Log("Triggered default switch");
                                 break;
                             }
                     }
@@ -409,7 +409,7 @@ public class MenuNavigation : MonoBehaviour {
                 }
             default:
                 {
-                    Debug.Log("volume level out of range!");
+                    //Debug.Log("volume level out of range!");
                     break;
                 }
         }

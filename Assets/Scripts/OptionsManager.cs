@@ -14,7 +14,7 @@ public class OptionsManager : MonoBehaviour {
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetFloat("Music Volume");
         lvlsUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
-        Debug.Log(lvlsUnlocked);
+        //Debug.Log(lvlsUnlocked);
 	}
 	
 	// Update is called once per frame
