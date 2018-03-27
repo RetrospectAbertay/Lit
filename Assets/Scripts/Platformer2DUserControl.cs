@@ -113,7 +113,7 @@ namespace UnityStandardAssets._2D
                 }
                 if (highJump)
                 {
-                    Debug.Log("Performed high jump");
+                    //Debug.Log("Performed high jump");
                     m_HighJump = false;
                 }
             }
@@ -123,12 +123,12 @@ namespace UnityStandardAssets._2D
         {
             if (m_JumpTimer <= 0)
             {
-                Debug.Log("high jump");
+                //Debug.Log("high jump");
                 m_HighJump = true;
             }
             else
             {
-                Debug.Log("normal jump");
+                //Debug.Log("normal jump");
             }
             m_Jump = true;
             chargingJump = false;
