@@ -318,7 +318,7 @@ namespace UnityStandardAssets._2D
                             }
                             // Move the character
                             rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
-                            Debug.Log("moving forward");
+                            //Debug.Log("moving forward");
                             // check for absolute input to trigger animations and sounds for walking
                             if (Mathf.Abs(axisInput) > 0.0f)
                             {
