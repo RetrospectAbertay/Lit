@@ -90,7 +90,7 @@ namespace UnityStandardAssets._2D
                     {
                         if (CrossPlatformInputManager.GetButton("Right"))
                         {
-                            Debug.Log("Setting h input");
+                            //Debug.Log("Setting h input");
                             h = 1.0f;
                         }
                         if (CrossPlatformInputManager.GetButton("Left"))
