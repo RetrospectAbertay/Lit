@@ -34,7 +34,7 @@ namespace UnityStandardAssets._2D
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
         const float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
-        private Rigidbody2D rigidbody2D;
+		private Rigidbody2D rigidbody2D = new Rigidbody2D();
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private float beltForce = 0.0f;
         private int curHealth;
