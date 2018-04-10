@@ -17,6 +17,7 @@ TagManager:
   - T
   - MenuCanvas
   - Options Manager
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - 
   - 
   - Floor
-  - 
+  - Wall
   - 
   - 
   - 

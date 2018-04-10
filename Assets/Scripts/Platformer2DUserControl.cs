@@ -7,7 +7,7 @@ namespace UnityStandardAssets._2D
     [RequireComponent(typeof(PlatformerCharacter2D))]
     public class Platformer2DUserControl : MonoBehaviour
     {
-        public float JumpDelay;
+        public float m_LongJumpTime;
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
         private bool m_HighJump;
@@ -36,7 +36,7 @@ namespace UnityStandardAssets._2D
             if (!m_Jump || inGameMenu.IsInMenu())
             {
                 // Read the jump input in Update so button presses aren't missed.
-                if (CrossPlatformInputManager.GetButtonDown("Jump"))
+                if (CrossPlatformInputManager.GetButtonDown("Charging Jump"))
                 {
                     // only jump if player is in menu - otherwise, confirm selection
                     if (inGameMenu.IsInMenu())
@@ -45,14 +45,21 @@ namespace UnityStandardAssets._2D
                     }
                     else
                     {
-                        m_JumpTimer = JumpDelay;
+                        m_JumpTimer = m_LongJumpTime;
                         chargingJump = true;
-                        animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
+                        // animator.ChangeAnimation(AnimationPlayer.AnimationState.CHARGING);
                     }
                 }
-                if (CrossPlatformInputManager.GetButtonUp("Jump"))
+                if (CrossPlatformInputManager.GetButtonUp("Charging Jump"))
                 {
                     OnReleasedJumpBtn();
+                }
+                if (CrossPlatformInputManager.GetButtonDown("Jump"))
+                {
+                    if (!chargingJump)
+                    {
+                        m_Jump = true;
+                    }
                 }
                 if (m_JumpTimer > 0.0f)
                 {
@@ -81,7 +88,6 @@ namespace UnityStandardAssets._2D
             if (!inGameMenu.IsInMenu())
             {
                 // Read the inputs.
-                bool highJump = m_HighJump;
                 float h = 0.0f;
                 bool charging = false;
                 if (m_JumpTimer <= 0.0f)
@@ -90,7 +96,7 @@ namespace UnityStandardAssets._2D
                     {
                         if (CrossPlatformInputManager.GetButton("Right"))
                         {
-                            //Debug.Log("Setting h input");
+                            Debug.Log("Setting h input");
                             h = 1.0f;
                         }
                         if (CrossPlatformInputManager.GetButton("Left"))
@@ -104,16 +110,16 @@ namespace UnityStandardAssets._2D
                     }
                 }
                 // Pass all parameters to the character control script.
-                m_Character.Move(h, highJump, m_Jump, charging);
+                m_Character.Move(h, m_HighJump, m_Jump, charging);
                 if (m_Jump)
                 {
                     // Reset jump variables 
                     m_Jump = false;
                     m_JumpTimer = 0.0f;
                 }
-                if (highJump)
+                if (m_HighJump)
                 {
-                    //Debug.Log("Performed high jump");
+                    Debug.Log("Performed high jump");
                     m_HighJump = false;
                 }
             }
@@ -123,14 +129,13 @@ namespace UnityStandardAssets._2D
         {
             if (m_JumpTimer <= 0)
             {
-                //Debug.Log("high jump");
+                Debug.Log("charged jump");
                 m_HighJump = true;
             }
             else
             {
-                //Debug.Log("normal jump");
+                Debug.Log("cancelled charged jump");
             }
-            m_Jump = true;
             chargingJump = false;
         }
     }

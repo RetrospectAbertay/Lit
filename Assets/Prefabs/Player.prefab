@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7420b1b92b6f5458daf48db4d332ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpDelay: 0.3
+  m_LongJumpTime: 0
 --- !u!114 &114876407265956278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -278,13 +278,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 6
   JumpUpForce: 180
-  JumpFwdForce: 30
+  JumpFwdForce: 15
   HighJumpUpForce: 130
   HighJumpFwdForce: 100
   AirControl: 0
   WhatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   StartingHealth: 3
   InvincibilityDuration: 2
   FlickerDuration: 0.3

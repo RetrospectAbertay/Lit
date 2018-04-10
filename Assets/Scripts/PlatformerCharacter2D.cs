@@ -19,7 +19,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
-        //[SerializeField] private float DefaultGravScale = 5.0f;
+        [SerializeField] private float DefaultGravScale = 5.0f;
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
         [SerializeField] private float TimeBetweenFootsteps;
@@ -32,9 +32,9 @@ namespace UnityStandardAssets._2D
 
         private Transform respawnPosition;
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
-        const float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+        const float groundedRadius = .15f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
-		private Rigidbody2D rigidbody2D = new Rigidbody2D();
+        private Rigidbody2D rigidbody2D;
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private float beltForce = 0.0f;
         private int curHealth;
@@ -75,7 +75,7 @@ namespace UnityStandardAssets._2D
             // Determine the level that the player is in
             Scene curScene;
             curScene = SceneManager.GetActiveScene();
-            if(!EndlessPlayer)
+            if (!EndlessPlayer)
             {
                 respawnPosition = GameObject.FindGameObjectWithTag("Respawn").transform;
             }
@@ -145,13 +145,8 @@ namespace UnityStandardAssets._2D
                 {
                     if (colliders[i].gameObject != gameObject)
                     {
-                        if(AirControl)
-                        {
-                            AirControl = false;
-                        }
                         grounded = true;
                         jumping = false;
-                        //rigidbody2D.velocity = Vector2.zero;
                         // check if the player is on a conveyer belt
                         if (colliders[i].transform.GetComponent<ConveyourBelt>())
                         {
@@ -167,7 +162,7 @@ namespace UnityStandardAssets._2D
                         }
                     }
                 }
-                if(!onPlatform)
+                if (!onPlatform)
                 {
                     platformForce = new Vector2(0, 0);
                 }
@@ -196,7 +191,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
                 // timer that checks if player is in air and jumped recently
-                if(jumpTimer > 0.0f)
+                if (jumpTimer > 0.0f)
                 {
                     jumpTimer -= Time.deltaTime;
                     jumping = true;
@@ -208,7 +203,7 @@ namespace UnityStandardAssets._2D
                 // axisInput player along with the plattform
                 transform.position += (platformForce * Time.deltaTime);
                 // check if player is jumping, apply x-axis force
-                if(jumping)
+                if (jumping)
                 {
                     if (facingRight)
                     {
@@ -259,12 +254,12 @@ namespace UnityStandardAssets._2D
                 }
             }
             // update timer that checks the last time player input was recieved
-            if(movTimer > 0)
+            if (movTimer > 0)
             {
                 movTimer -= Time.deltaTime;
             }
             // Run down timerto see if player can start moving again after switching directions
-            if(switchDelayTimer > 0)
+            if (switchDelayTimer > 0)
             {
                 switchDelayTimer -= Time.deltaTime;
             }
@@ -318,7 +313,7 @@ namespace UnityStandardAssets._2D
                             }
                             // Move the character
                             rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
-                            //Debug.Log("moving forward");
+                            Debug.Log("moving forward");
                             // check for absolute input to trigger animations and sounds for walking
                             if (Mathf.Abs(axisInput) > 0.0f)
                             {
@@ -347,7 +342,7 @@ namespace UnityStandardAssets._2D
                                 }
                             }
                         }
-                        else
+                        if (jump || highJump)
                         {
                             // Player is trying to jump
                             animator.ChangeAnimation(AnimationPlayer.AnimationState.JUMPING);
@@ -432,7 +427,7 @@ namespace UnityStandardAssets._2D
                     // other.gameObject.SetActive(false);
                     letterCollected = true;
                     int curSavedLettersUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
-                    if((unlockedLetters + 1) > curSavedLettersUnlocked)
+                    if ((unlockedLetters + 1) > curSavedLettersUnlocked)
                     {
                         curSavedLettersUnlocked++;
                         PlayerPrefs.SetInt("Levels Unlocked", curSavedLettersUnlocked);
@@ -451,9 +446,9 @@ namespace UnityStandardAssets._2D
                 }
             }
 
-            if(other.gameObject.tag == "Death Collider")
+            if (other.gameObject.tag == "Death Collider")
             {
-                if(EndlessPlayer == false)
+                if (EndlessPlayer == false)
                 {
                     Debug.Log("player fell to their death!");
                     transform.position = respawnPosition.position;
@@ -465,7 +460,7 @@ namespace UnityStandardAssets._2D
         public void ToggleFreezeAllObjects()
         {
             frozen = !frozen;
-            if(frozen)
+            if (frozen)
             {
                 Debug.Log("constraining position and rotation");
                 tempVelocity = rigidbody2D.velocity;
