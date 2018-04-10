@@ -40,8 +40,11 @@ public class AnimationPlayer : MonoBehaviour
         {
             if (frameCounter <= curAnimation.Length)
             {
-                // allocate the sprite renderer to display the frame correllating to the frame counter
-                spriteRenderer.sprite = curAnimation[frameCounter];
+                if(curAnimation[frameCounter])
+                {
+                    // allocate the sprite renderer to display the frame correllating to the frame counter
+                    spriteRenderer.sprite = curAnimation[frameCounter];
+                }
             }
             // increment frame counter
             frameCounter++;
