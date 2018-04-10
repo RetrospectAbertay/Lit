@@ -13,13 +13,11 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float JumpFwdForce = 200f;
         [SerializeField] private float HighJumpUpForce = 600f;
         [SerializeField] private float HighJumpFwdForce = 100f;
-        [SerializeField] private bool AirControl = true;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private int StartingHealth = 3;
         [SerializeField] private float InvincibilityDuration = 2;
         [SerializeField] private float FlickerDuration = 0.3f;
         [SerializeField] private float BounceOnKillForce = 300.0f;
-        [SerializeField] private float DefaultGravScale = 5.0f;
         [SerializeField] private float FinalCollectTime = 2.0f;
         [SerializeField] private float AnimTime = 1.0f;
         [SerializeField] private float TimeBetweenFootsteps;
@@ -34,7 +32,7 @@ namespace UnityStandardAssets._2D
         private Transform groundCheck;    // A position marking where to check if the player is grounded.
         const float groundedRadius = .15f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
-        private Rigidbody2D rigidbody2D;
+        private Rigidbody2D plRigidbody2D;
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private float beltForce = 0.0f;
         private int curHealth;
@@ -42,7 +40,6 @@ namespace UnityStandardAssets._2D
         private float flickerTimer;
         private SpriteRenderer spriteRenderer;
         private Vector3 platformForce;
-        private float dropTimer = 0.0f;
         private float animResetTimer;
         private float footstepsTimer;
         private float movTimer;
@@ -55,7 +52,6 @@ namespace UnityStandardAssets._2D
         int unlockedLetters = 0;
         bool letterCollected = false;
         bool frozen = false;
-        private bool requireLoadScreen = false;
         private bool jumping = false;
         private Vector2 tempVelocity;
 
@@ -63,7 +59,7 @@ namespace UnityStandardAssets._2D
         {
             // Setting up references.
             groundCheck = transform.Find("GroundCheck");
-            rigidbody2D = GetComponent<Rigidbody2D>();
+            plRigidbody2D = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             curHealth = StartingHealth;
             invincibilityTimer = 0.0f;
@@ -108,7 +104,7 @@ namespace UnityStandardAssets._2D
                     break;
             }
             // Set up continuous collision
-            rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            plRigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             jumpTimer = 0.0f;
         }
 
@@ -207,11 +203,11 @@ namespace UnityStandardAssets._2D
                 {
                     if (facingRight)
                     {
-                        rigidbody2D.AddForce(new Vector2(ConstantJumpForce, 0));
+                        plRigidbody2D.AddForce(new Vector2(ConstantJumpForce, 0));
                     }
                     else
                     {
-                        rigidbody2D.AddForce(new Vector2(-ConstantJumpForce, 0));
+                        plRigidbody2D.AddForce(new Vector2(-ConstantJumpForce, 0));
                     }
                 }
             }
@@ -312,8 +308,7 @@ namespace UnityStandardAssets._2D
                                 appliedForce = 0.0f;
                             }
                             // Move the character
-                            rigidbody2D.velocity = new Vector2(appliedForce + beltForce, rigidbody2D.velocity.y);
-                            Debug.Log("moving forward");
+                            plRigidbody2D.velocity = new Vector2(appliedForce + beltForce, plRigidbody2D.velocity.y);
                             // check for absolute input to trigger animations and sounds for walking
                             if (Mathf.Abs(axisInput) > 0.0f)
                             {
@@ -360,9 +355,9 @@ namespace UnityStandardAssets._2D
                                 finalFwdForce *= -1;
                             }
                             // reset velocity
-                            rigidbody2D.velocity = new Vector2(0, 0);
+                            plRigidbody2D.velocity = new Vector2(0, 0);
                             // add jump force
-                            rigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
+                            plRigidbody2D.AddForce(new Vector2(finalFwdForce, finalUpForce));
                             audioSource.PlayOneShot(JumpAudio);
                             jumping = true;
                             jumpTimer = 0.3f;
@@ -405,8 +400,8 @@ namespace UnityStandardAssets._2D
                             other.GetComponentInParent<BasicEnemy>().KillEnemy();
                             // add force after killing enemy
                             grounded = false;
-                            rigidbody2D.velocity = new Vector2(0, 0);
-                            rigidbody2D.AddForce(new Vector2(0f, BounceOnKillForce));
+                            plRigidbody2D.velocity = new Vector2(0, 0);
+                            plRigidbody2D.AddForce(new Vector2(0f, BounceOnKillForce));
                         }
                     }
                 }
@@ -415,8 +410,8 @@ namespace UnityStandardAssets._2D
             {
                 // apply force to bounce pad
                 grounded = false;
-                rigidbody2D.velocity = new Vector2(0, 0);
-                rigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
+                plRigidbody2D.velocity = new Vector2(0, 0);
+                plRigidbody2D.AddForce(other.gameObject.GetComponent<BouncePad>().GetBounceForce());
                 jumpTimer = 0.3f;
                 transform.position = other.gameObject.GetComponent<BouncePad>().GetBouncePosition();
             }
@@ -463,15 +458,15 @@ namespace UnityStandardAssets._2D
             if (frozen)
             {
                 Debug.Log("constraining position and rotation");
-                tempVelocity = rigidbody2D.velocity;
-                rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                tempVelocity = plRigidbody2D.velocity;
+                plRigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
             else
             {
-                rigidbody2D.constraints = RigidbodyConstraints2D.None;
-                rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+                plRigidbody2D.constraints = RigidbodyConstraints2D.None;
+                plRigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 transform.rotation = Quaternion.identity;
-                rigidbody2D.velocity = tempVelocity;
+                plRigidbody2D.velocity = tempVelocity;
             }
             GameObject[] movingObjects = GameObject.FindGameObjectsWithTag("MovingObject");
             // iterate through all moving objects

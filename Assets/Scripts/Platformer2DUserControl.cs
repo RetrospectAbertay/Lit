@@ -15,13 +15,11 @@ namespace UnityStandardAssets._2D
         private bool m_TogglingMenu = false;
         private bool chargingJump = false;
         private MenuInGame inGameMenu;
-        AnimationPlayer animator;
 
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
             inGameMenu = GameObject.FindGameObjectWithTag("MenuCanvas").GetComponent<MenuInGame>();
-            animator = GetComponent<AnimationPlayer>();
         }
 
         private void Update()
@@ -96,7 +94,6 @@ namespace UnityStandardAssets._2D
                     {
                         if (CrossPlatformInputManager.GetButton("Right"))
                         {
-                            Debug.Log("Setting h input");
                             h = 1.0f;
                         }
                         if (CrossPlatformInputManager.GetButton("Left"))
@@ -119,7 +116,6 @@ namespace UnityStandardAssets._2D
                 }
                 if (m_HighJump)
                 {
-                    Debug.Log("Performed high jump");
                     m_HighJump = false;
                 }
             }
@@ -129,12 +125,11 @@ namespace UnityStandardAssets._2D
         {
             if (m_JumpTimer <= 0)
             {
-                Debug.Log("charged jump");
                 m_HighJump = true;
             }
             else
             {
-                Debug.Log("cancelled charged jump");
+
             }
             chargingJump = false;
         }
