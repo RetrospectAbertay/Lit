@@ -26,12 +26,14 @@ public class TransitionScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // player press space - go to the next level
-        if (Input.GetKeyDown("space"))
-        {
+      
+    }
+
+    public void TransitionToNextLvl()
+    {
             MainCanvas.SetActive(false);
             LoadCanvas.SetActive(true);
-            switch(nextLevel)
+            switch (nextLevel)
             {
                 case TRANSITLEVEL.FirstLevel:
                     SceneManager.LoadScene("1. T Level");
@@ -52,6 +54,5 @@ public class TransitionScript : MonoBehaviour {
                     SceneManager.LoadScene("Menu");
                     break;
             }
-        }
     }
 }

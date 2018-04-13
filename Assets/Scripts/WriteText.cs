@@ -8,7 +8,6 @@ public class WriteText : MonoBehaviour
     public List<string> Paragraphs;
     public float maxWriteSpeed;
     public float minWriteSpeed;
-    public float TimeBetweenParagraphs = 2.0f;
     public AudioClip TypingSound;
     private AudioSource audioSource;
     Text textObject;
@@ -19,6 +18,7 @@ public class WriteText : MonoBehaviour
     int curChar = 0;
     int curParagraph = 0;
     bool finishedWriting = false;
+    TransitionScript transitScript;
 
     // Use this for initialization
     void Start()
@@ -34,11 +34,46 @@ public class WriteText : MonoBehaviour
         // clamp frame rate for that spectrum feel
         Application.targetFrameRate = 60;
         curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
+        transitScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TransitionScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Check for space input
+        if (Input.GetKeyDown("space"))
+        {
+            // Complete text if still writing
+            if (!finishedWriting)
+            {
+                textObject.text = Paragraphs[curParagraph];
+                finishedWriting = true;
+            }
+            else
+            {
+                // Check if another paragraph needs to be written
+                if (curParagraph < (Paragraphs.Count - 1))
+                {
+                    // increment paragraph to display
+                    curParagraph++;
+                    if (curParagraph < (Paragraphs.Count))
+                    {
+                        // continue writing
+                        finishedWriting = false;
+                        // set string to display
+                        stringToDisplay = Paragraphs[curParagraph];
+                        // reset text
+                        curChar = 0;
+                        textObject.text = "";
+                    }
+                }
+                else
+                {
+                    // If not transition to the next level
+                    transitScript.TransitionToNextLvl();
+                }
+            }
+        }
         // check if we still need to write
         if (!finishedWriting)
         {
@@ -56,33 +91,8 @@ public class WriteText : MonoBehaviour
                 curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
             }
         }
-        if (Input.GetKeyDown("space"))
-        {
-            // Complete text if still writing
-            if(!finishedWriting)
-            {
-                textObject.text = Paragraphs[curParagraph];
-                finishedWriting = true;
-            }
-            else
-            {
-                if (curParagraph < Paragraphs.Count)
-                {
-                    // increment paragraph to display
-                    curParagraph++;
-                    // set string to display
-                    stringToDisplay = Paragraphs[curParagraph];
-                    // changing paragraph - need to wait for a short period before switching
-                    paraTimer = TimeBetweenParagraphs;
-                    // continue writing
-                    finishedWriting = false;
-                    // reset text
-                    curChar = 0;
-                    textObject.text = "";
-                }
-            }
-        }
     }
+
     void updateText()
     {
         // check if we need to switch paragraphs
