@@ -426,8 +426,6 @@ namespace UnityStandardAssets._2D
                     {
                         curSavedLettersUnlocked++;
                         PlayerPrefs.SetInt("Levels Unlocked", curSavedLettersUnlocked);
-                        Debug.Log(PlayerPrefs.GetInt("Levels Unlocked"));
-                        Debug.Log(curSavedLettersUnlocked);
                     }
                     animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
                     // freeze rigid body
@@ -456,8 +454,7 @@ namespace UnityStandardAssets._2D
         {
             frozen = !frozen;
             if (frozen)
-            {
-                Debug.Log("constraining position and rotation");
+            { 
                 tempVelocity = plRigidbody2D.velocity;
                 plRigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             }
