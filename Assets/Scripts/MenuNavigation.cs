@@ -11,6 +11,7 @@ public class MenuNavigation : MonoBehaviour {
         MAIN,
         OPTIONS,
         LEVELSELECT,
+        CREDITS,
         LOADING
     }
 
@@ -19,6 +20,7 @@ public class MenuNavigation : MonoBehaviour {
     public List<GameObject> MainMenuText = new List<GameObject>();
     public List<GameObject> LevelSelect = new List<GameObject>();
     public List<GameObject> LoadingText = new List<GameObject>();
+    public List<GameObject> Credits = new List<GameObject>();
     public List<GameObject> OptionsText = new List<GameObject>();
     public List<Image> SelectionIndicator = new List<Image>();
     public AudioClip UpdateSelectionSound;
@@ -148,6 +150,11 @@ public class MenuNavigation : MonoBehaviour {
                     CurMenuText = OptionsText;
                     break;
                 }
+            case MenuState.CREDITS:
+                {
+                    CurMenuText = Credits;
+                    break;
+                }
             case MenuState.LEVELSELECT:
                 {
                     CurMenuText = LevelSelect;
@@ -222,6 +229,11 @@ public class MenuNavigation : MonoBehaviour {
                             }
                         case 2:
                             {
+                                SwitchMenu(MenuState.CREDITS);
+                                break;
+                            }
+                        case 3:
+                            {
                                 Application.Quit();
                                 break;
                             }
@@ -276,6 +288,18 @@ public class MenuNavigation : MonoBehaviour {
                         default:
                             {
                                 Debug.Log("Triggered default switch");
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case MenuState.CREDITS:
+                {
+                    switch (curSelection)
+                    {
+                        case 0:
+                            {
+                                SwitchMenu(MenuState.MAIN);
                                 break;
                             }
                     }
