@@ -42,53 +42,54 @@ public class WriteText : MonoBehaviour
         // check if we still need to write
         if (!finishedWriting)
         {
-            if (paraTimer > 0)
+            // increment timer
+            timer += Time.deltaTime;
+            if (timer > curWriteSpeed)
             {
-                paraTimer -= Time.deltaTime;
-                // clear screen before starting to update again
-                if (paraTimer <= 0)
-                {
-                    textObject.text = "";
-                    curChar = 0;
-                }
+                // display a new character
+                updateText();
+                // increment cur char
+                curChar++;
+                // reset timer
+                timer = 0.0f;
+                // randomise the speed at which the next letter should be written
+                curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
+            }
+        }
+        if (Input.GetKeyDown("space"))
+        {
+            // Complete text if still writing
+            if(!finishedWriting)
+            {
+                textObject.text = Paragraphs[curParagraph];
+                finishedWriting = true;
             }
             else
             {
-                // increment timer
-                timer += Time.deltaTime;
-                if (timer > curWriteSpeed)
+                if (curParagraph < Paragraphs.Count)
                 {
-                    // display a new character
-                    updateText();
-                    // increment cur char
-                    curChar++;
-                    // reset timer
-                    timer = 0.0f;
-                    // randomise the speed at which the next letter should be written
-                    curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
+                    // increment paragraph to display
+                    curParagraph++;
+                    // set string to display
+                    stringToDisplay = Paragraphs[curParagraph];
+                    // changing paragraph - need to wait for a short period before switching
+                    paraTimer = TimeBetweenParagraphs;
+                    // continue writing
+                    finishedWriting = false;
+                    // reset text
+                    curChar = 0;
+                    textObject.text = "";
                 }
             }
         }
     }
-
     void updateText()
     {
         // check if we need to switch paragraphs
         if (curChar >= stringToDisplay.Length)
         {
-            if (curParagraph < Paragraphs.Count)
-            {
-                // increment paragraph to display
-                curParagraph++;
-                // set string to display
-                stringToDisplay = Paragraphs[curParagraph];
-                // changing paragraph - need to wait for a short period before switching
-                paraTimer = TimeBetweenParagraphs;
-            }
-            else
-            {
-                finishedWriting = true;
-            }
+            // stop writing
+            finishedWriting = true;
         }
         else
         {
