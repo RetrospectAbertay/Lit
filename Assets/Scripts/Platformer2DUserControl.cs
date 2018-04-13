@@ -15,7 +15,6 @@ namespace UnityStandardAssets._2D
         private bool m_TogglingMenu = false;
         private bool chargingJump = false;
         private MenuInGame inGameMenu;
-        private float chargeTimer = 0.0f;
 
         private void Awake()
         {
@@ -118,7 +117,6 @@ namespace UnityStandardAssets._2D
                 if (m_HighJump)
                 {
                     m_HighJump = false;
-                    chargeTimer = 0.0f;
                 }
             }
         }

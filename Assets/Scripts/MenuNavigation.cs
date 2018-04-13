@@ -40,6 +40,17 @@ public class MenuNavigation : MonoBehaviour {
         SoundSource = this.GetComponent<AudioSource>();
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
         musicVolume = PlayerPrefs.GetInt("Music Volume");
+        // Make sure that if sound was off before quitting, that it plays back
+        if(musicVolume == 0)
+        {
+            musicVolume = 1;
+            PlayerPrefs.SetInt("Music Volume", musicVolume);
+        }
+        if(soundVolume == 0)
+        {
+            soundVolume = 1;
+            PlayerPrefs.SetInt("Sound Volume", soundVolume);
+        }
         levelsUnlocked = PlayerPrefs.GetInt("Levels Unlocked");
         // player should always be able to play the level that they have no beaten yet
         levelsUnlocked++;
