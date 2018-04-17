@@ -21,6 +21,7 @@ public class MenuNavigation : MonoBehaviour {
     public List<GameObject> LevelSelect = new List<GameObject>();
     public List<GameObject> LoadingText = new List<GameObject>();
     public List<GameObject> Credits = new List<GameObject>();
+    public GameObject CreditsList;
     public List<GameObject> OptionsText = new List<GameObject>();
     public List<Image> SelectionIndicator = new List<Image>();
     public AudioClip UpdateSelectionSound;
@@ -36,6 +37,7 @@ public class MenuNavigation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        CreditsList.SetActive(false);
         SwitchMenu(MenuState.MAIN);
         SoundSource = this.GetComponent<AudioSource>();
         soundVolume = PlayerPrefs.GetInt("Sound Volume");
@@ -164,6 +166,7 @@ public class MenuNavigation : MonoBehaviour {
             case MenuState.CREDITS:
                 {
                     CurMenuText = Credits;
+                    CreditsList.SetActive(true);
                     break;
                 }
             case MenuState.LEVELSELECT:
@@ -311,6 +314,7 @@ public class MenuNavigation : MonoBehaviour {
                         case 0:
                             {
                                 SwitchMenu(MenuState.MAIN);
+                                CreditsList.SetActive(false);
                                 break;
                             }
                     }
