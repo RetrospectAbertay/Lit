@@ -26,8 +26,6 @@ public class WriteText : MonoBehaviour
         // get the text object iself
         textObject = this.GetComponent<Text>();
         textObject.text = "";
-        // get the contents of the string
-        stringToDisplay = Paragraphs[0];
         // setup timer to init to 0
         timer = 0.0f;
         audioSource = GetComponent<AudioSource>();
@@ -35,6 +33,17 @@ public class WriteText : MonoBehaviour
         Application.targetFrameRate = 60;
         curWriteSpeed = Random.Range(minWriteSpeed, maxWriteSpeed);
         transitScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TransitionScript>();
+        // Check if we need to write
+        if (Paragraphs.Count > 0)
+        {
+            // get the contents of the string
+            stringToDisplay = Paragraphs[0];
+        }
+        else
+        {
+            finishedWriting = true;
+            stringToDisplay = "";
+        }
     }
 
     // Update is called once per frame

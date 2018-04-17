@@ -381,7 +381,7 @@ public class MenuNavigation : MonoBehaviour {
         {
             case 0:
                 {
-                    SceneManager.LoadScene("1. T Level");
+                    SceneManager.LoadScene("Controls");
                     break;
                 }
             case 1:
