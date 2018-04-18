@@ -877,8 +877,7 @@ MonoBehaviour:
     transformed She-Town into a land of imagination.
   maxWriteSpeed: 0.1
   minWriteSpeed: 0.03
-  TimeBetweenParagraphs: 3
-  TypingSound: {fileID: 8300000, guid: e5fc97563ab33be4f9d6e902171aca41, type: 3}
+  TypingSound: {fileID: 8300000, guid: 1c6f39c7c0eb33f489fcffdba559247c, type: 3}
 --- !u!82 &1314809596
 AudioSource:
   m_ObjectHideFlags: 0
