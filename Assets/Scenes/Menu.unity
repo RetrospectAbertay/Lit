@@ -210,7 +210,6 @@ RectTransform:
   - {fileID: 1737430150}
   - {fileID: 1340427407}
   - {fileID: 14474664}
-  - {fileID: 816115379}
   m_Father: {fileID: 186402408}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -597,7 +596,6 @@ MonoBehaviour:
   - {fileID: 1737430149}
   - {fileID: 1340427406}
   - {fileID: 14474663}
-  - {fileID: 816115378}
   LevelSelect:
   - {fileID: 1903997892}
   - {fileID: 1523096623}
@@ -606,6 +604,8 @@ MonoBehaviour:
   Credits:
   - {fileID: 2041378305}
   CreditsList: {fileID: 789002335}
+  Logo: {fileID: 0}
+  Menu: {fileID: 71266897}
   OptionsText:
   - {fileID: 1508609056}
   - {fileID: 1216801448}
@@ -617,6 +617,7 @@ MonoBehaviour:
     type: 3}
   MusicSource: {fileID: 164958887}
   SoundSource: {fileID: 335189208}
+  LogoTime: 2
 --- !u!82 &335189208
 AudioSource:
   m_ObjectHideFlags: 0
@@ -945,80 +946,6 @@ Transform:
   m_Father: {fileID: 260430059}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &816115378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 816115379}
-  - component: {fileID: 816115381}
-  - component: {fileID: 816115380}
-  m_Layer: 5
-  m_Name: Quit Game
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &816115379
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 816115378}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 44155049}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.5, y: -310.8}
-  m_SizeDelta: {x: 547, y: 83.100006}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &816115380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 816115378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 35cb14f9f35e5ee4f8e3bef8ee055e6d, type: 3}
-    m_FontSize: 25
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: QUIT GAME
---- !u!222 &816115381
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 816115378}
 --- !u!1 &901872881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,7 +1025,7 @@ MonoBehaviour:
 
     Robert Clark
 
-    Phillip McCaferty
+    Phillip McCafferty
 
     Sean Connaghan'
 --- !u!222 &901872884

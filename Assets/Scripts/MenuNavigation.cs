@@ -22,12 +22,15 @@ public class MenuNavigation : MonoBehaviour {
     public List<GameObject> LoadingText = new List<GameObject>();
     public List<GameObject> Credits = new List<GameObject>();
     public GameObject CreditsList;
+    public GameObject Logo;
+    public GameObject Menu;
     public List<GameObject> OptionsText = new List<GameObject>();
     public List<Image> SelectionIndicator = new List<Image>();
     public AudioClip UpdateSelectionSound;
     public AudioClip ToggleSelectionSound;
     public AudioSource MusicSource;
     public AudioSource SoundSource;
+    public int LogoTime = 2;
     private int curSelection;
     private int selectedLevel;
     private string levelSelectString = "TIMEX";
@@ -37,6 +40,7 @@ public class MenuNavigation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         CreditsList.SetActive(false);
         SwitchMenu(MenuState.MAIN);
         SoundSource = this.GetComponent<AudioSource>();
@@ -63,7 +67,7 @@ public class MenuNavigation : MonoBehaviour {
         UpdateVolumeControls(true, musicVolume);
         UpdateVolumeControls(false, soundVolume);
     }
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -241,11 +245,6 @@ public class MenuNavigation : MonoBehaviour {
                         case 2:
                             {
                                 SwitchMenu(MenuState.CREDITS);
-                                break;
-                            }
-                        case 3:
-                            {
-                                Application.Quit();
                                 break;
                             }
                         default:
