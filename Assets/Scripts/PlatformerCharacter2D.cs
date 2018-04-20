@@ -428,8 +428,10 @@ namespace UnityStandardAssets._2D
                         PlayerPrefs.SetInt("Levels Unlocked", curSavedLettersUnlocked);
                     }
                     animator.ChangeAnimation(AnimationPlayer.AnimationState.IDLE);
+                    Quaternion initRot = transform.rotation;
                     // freeze rigid body
                     ToggleFreezeAllObjects();
+                    transform.rotation = initRot;
                     mainCam.GetComponent<AudioSource>().Stop();
                     if (other.GetComponent<Collectible>())
                     {
@@ -456,7 +458,7 @@ namespace UnityStandardAssets._2D
             if (frozen)
             { 
                 tempVelocity = plRigidbody2D.velocity;
-                plRigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                plRigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             }
             else
             {

@@ -31,6 +31,11 @@ public class TransitionScript : MonoBehaviour {
 
     public void TransitionToNextLvl()
     {
+        GameObject ControlLayoutAnimation = GameObject.Find("Controls");
+        if (ControlLayoutAnimation)
+            {
+            ControlLayoutAnimation.SetActive(false);
+            }
             MainCanvas.SetActive(false);
             LoadCanvas.SetActive(true);
             switch (nextLevel)
