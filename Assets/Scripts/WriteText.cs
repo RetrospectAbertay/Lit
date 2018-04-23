@@ -8,7 +8,7 @@ public class WriteText : MonoBehaviour
     public List<string> Paragraphs;
     public float maxWriteSpeed;
     public float minWriteSpeed;
-    public AudioClip TypingSound;
+    public AudioClip[] TypingSounds;
     private AudioSource audioSource;
     Text textObject;
     string stringToDisplay;
@@ -115,7 +115,8 @@ public class WriteText : MonoBehaviour
             // update text
             textObject.text += stringToDisplay[curChar];
             // play audio
-            audioSource.PlayOneShot(TypingSound);
+            int clipToPlay = Random.Range(0, TypingSounds.Length);
+            audioSource.PlayOneShot(TypingSounds[clipToPlay]);
         }
     }
 }

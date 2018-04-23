@@ -1035,7 +1035,13 @@ MonoBehaviour:
     Camperdown House. Tickets available at Eventbrite!
   maxWriteSpeed: 0.1
   minWriteSpeed: 0.03
-  TypingSound: {fileID: 8300000, guid: 1c6f39c7c0eb33f489fcffdba559247c, type: 3}
+  TypingSounds:
+  - {fileID: 8300000, guid: 0b2db15067dee1f45b6d580e860f9311, type: 3}
+  - {fileID: 8300000, guid: ca8baf339acd04b4f979845fcdc86d06, type: 3}
+  - {fileID: 8300000, guid: 4add3e8f5056c0445beabe60e4a6f8cd, type: 3}
+  - {fileID: 8300000, guid: 2af93c1ddd3391840be8651b26de7dc2, type: 3}
+  - {fileID: 8300000, guid: afc992fe0bd25214c877ead3f4224670, type: 3}
+  - {fileID: 8300000, guid: 509a123bd6b71e9469c4ba8c62524831, type: 3}
 --- !u!82 &1314809596
 AudioSource:
   m_ObjectHideFlags: 0

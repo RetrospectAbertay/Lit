@@ -4562,7 +4562,7 @@ GameObject:
   - component: {fileID: 1218167433}
   m_Layer: 0
   m_Name: t_belt3red (1)
-  m_TagString: Untagged
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5782,7 +5782,7 @@ GameObject:
   - component: {fileID: 1454584716}
   m_Layer: 0
   m_Name: t_belt3red
-  m_TagString: Untagged
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
