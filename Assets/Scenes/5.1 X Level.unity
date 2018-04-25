@@ -1031,8 +1031,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Paragraphs:
-  - Thank you for playing! Please visit our exhibition on the 4th of May, 2018, at
-    Camperdown House. Tickets available at Eventbrite!
+  - "The XX makes up Dundee\u2019s genetic code, a heritage worth celebrating. These
+    stories will live on in Camperdown Park long after we\u2019re gone, a testament
+    to the amazing women on whose shoulders we are proudly standing."
   maxWriteSpeed: 0.1
   minWriteSpeed: 0.03
   TypingSounds:
