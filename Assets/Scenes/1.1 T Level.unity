@@ -760,10 +760,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Paragraphs:
-  - "The river Tay lies sparkling before you. You cross the bridge with growing excitement
+  - The river Tay lies sparkling before you. You cross the bridge with growing excitement
     as the first buildings of She-Town are starting to take shape. She-Town, just
-    as you remember it, beautiful and brutal\u2026no place for the faint-hearted or
-    the dainty-handed."
+    as you remember it, beautiful and brutal...no place for the faint-hearted or the
+    dainty-handed.
   - "You know that you\u2019ll be safe here, She-Town belonged to them. And that\u2019s
     the way it\u2019s been since those first bales of jute docked in 1820. Even further
     back, to the women weaving linen in the flax mills. Perhaps even further back
